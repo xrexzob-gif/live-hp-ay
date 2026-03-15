@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XREXZOB LIVE MONITOR</title>
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; text-align: center; margin: 0; padding: 20px; }
+        .box { border: 1px solid #0f0; padding: 20px; border-radius: 10px; display: inline-block; margin-top: 20px; }
+        video { width: 95%; max-width: 500px; border: 2px solid #0f0; margin-top: 20px; border-radius: 5px; background: #111; }
+        button { background: #0f0; color: #000; border: none; padding: 12px 20px; font-weight: bold; cursor: pointer; border-radius: 5px; margin: 5px; }
+        input { background: #111; border: 1px solid #0f0; color: #0f0; padding: 10px; margin: 5px; width: 80%; }
+    </style>
+</head>
+<body>
+    <h1>[ XREXZOB MONITOR ]</h1>
+    <div class="box">
+        <p>ID Kamu: <span id="my-id" style="color: white; font-weight: bold;">Menghubungkan...</span></p>
+        <hr style="border: 0.5px solid #0f0;">
+        
+        <h3>1. MODE NONTON (Kamu)</h3>
+        <p>Klik tombol ini dulu baru tunggu ID target.</p>
+        <button onclick="watchStream()">AKTIFKAN MODE NONTON</button>
+        
+        <br><br>
+        
+        <h3>2. MODE SHARE (Target)</h3>
+        <p>Target masukkan ID kamu lalu klik Share.</p>
+        <input type="text" id="target-id" placeholder="Masukkan ID Penonton">
+        <br>
+        <button onclick="startShare()">START SHARE SCREEN</button>
+    </div>
+
+    <div id="video-container"></div>
+
+    <script>
+        const peer = new Peer();
+        const myIdDisplay = document.getElementById('my-id');
+
+        peer.on('open', id => {
+            myIdDisplay.innerText = id;
+        });
+
+        // UNTUK TARGET (Yang dipantau)
+        async function startShare() {
+            const idNonton = document.getElementById('target-id').value;
+            if(!idNonton) return alert("Masukkan ID Penonton dulu!");
+            
+            try {
+                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                peer.call(idNonton, stream);
+            } catch (err) {
+                alert("Gagal share screen: " + err);
+            }
+        }
+
+        // UNTUK PENONTON (Kamu)
+        function watchStream() {
+            alert("Mode nonton aktif. ID kamu: " + myIdDisplay.innerText + "\nKasih ID ini ke target.");
+            peer.on('call', call => {
+                call.answer();
+                call.on('stream', remoteStream => {
+                    const video = document.createElement('video');
+                    video.srcObject = remoteStream;
+                    video.autoplay = true;
+                    video.playsinline = true;
+                    video.controls = true;
+                    const container = document.getElementById('video-container');
+                    container.innerHTML = '<h3>Menerima Gambar...</h3>';
+                    container.append(video);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
