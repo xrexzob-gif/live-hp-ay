@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untuk Raisya ❤️</title>
+    <title>Untuk Raisya Tersayang ❤️</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             background-color: #ffeef2;
+            /* Memanggil foto kamu */
             background-image: url('IMG-Foto-Gue.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             height: 100vh;
             display: flex;
             align-items: center;
@@ -22,62 +23,58 @@
             overflow: hidden;
         }
 
-        /* Layer pink lembut transparan */
+        /* Overlay Pink Lembut biar foto makin estetik */
         .overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 182, 193, 0.4); 
+            background: rgba(255, 182, 193, 0.3); 
             z-index: 1;
         }
 
         .container {
             position: relative;
             z-index: 10;
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.85); /* Putih bening */
-            backdrop-filter: blur(5px);
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
             width: 85%;
-            max-width: 380px;
+            max-width: 350px;
             text-align: center;
             border: 2px solid #fff;
         }
 
         h1 {
-            font-size: 1.6rem;
-            color: #d63384; /* Warna pink gelap */
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-size: 1.5rem;
+            color: #d63384;
+            margin-bottom: 5px;
         }
 
         #timer {
-            font-size: 1rem;
-            margin: 20px 0;
+            font-size: 0.95rem;
+            margin: 15px 0;
             color: #444;
-            padding: 15px;
+            padding: 12px;
             border-radius: 15px;
             background: #fff;
-            box-shadow: inset 0 0 10px rgba(255, 182, 193, 0.5);
+            box-shadow: inset 0 0 10px rgba(255, 182, 193, 0.3);
             font-weight: bold;
         }
 
         .btn-music {
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
             color: #fff;
             border: none;
-            padding: 12px 25px;
+            padding: 12px 20px;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            margin-top: 15px;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
         }
 
-        .btn-music:active { transform: scale(0.95); }
-
-        /* Efek Kelopak Bunga Sakura */
+        /* Gaya Kelopak Bunga Sakura */
         .petal {
             position: absolute;
             top: -10px;
@@ -92,13 +89,6 @@
             0% { transform: translateY(0) rotate(0deg); }
             100% { transform: translateY(105vh) rotate(360deg); }
         }
-
-        .footer {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #888;
-            font-style: italic;
-        }
     </style>
 </head>
 <body>
@@ -106,26 +96,26 @@
     <div class="overlay"></div>
 
     <audio id="audioMp3" loop>
-        <source src="musik.mp3" type="audio/mpeg">
+        <source src="musik%20x.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
-        <div style="font-size: 40px; margin-bottom: 10px;">🌸</div>
+        <div style="font-size: 40px; margin-bottom: 5px;">🌸</div>
         <h1>XREXZOB & RAISYA</h1>
-        <p style="color: #666; font-size: 0.9rem;">Sudah sejauh ini kita melangkah:</p>
+        <p style="color: #888; font-size: 0.8rem;">Sudah sejauh ini kita melangkah:</p>
         
-        <div id="timer">Menghitung cinta...</div>
+        <div id="timer">Loading...</div>
 
-        <p style="color: #d63384; font-size: 0.95rem; margin-top: 10px; line-height: 1.4;">
+        <p style="color: #d63384; font-size: 0.9rem; margin-top: 10px; font-weight: 500;">
             "Gak perlu monitor layar kamu, aku cuma mau monitor kebahagiaan kamu."
         </p>
 
         <button class="btn-music" onclick="playMusic()">Dengerin Musiknya ✨</button>
-        
-        <div class="footer">Happy Anniversary, Sayang</div>
+        <p style="font-size: 0.7rem; color: #aaa; margin-top: 15px;">Happy Anniversary ❤️</p>
     </div>
 
     <script>
+        // Timer Jadian: 5 Feb 2026
         const startDate = new Date("February 5, 2026 00:00:00").getTime();
 
         setInterval(function() {
@@ -138,8 +128,11 @@
             document.getElementById("timer").innerHTML = days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds + " Detik";
         }, 1000);
 
-        function playMusic() { document.getElementById("audioMp3").play(); }
+        function playMusic() {
+            document.getElementById("audioMp3").play();
+        }
 
+        // Efek Kelopak Sakura
         function createPetal() {
             const petal = document.createElement('div');
             petal.classList.add('petal');
