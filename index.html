@@ -41,4 +41,105 @@
         }
 
         @keyframes rainbow {
-            0% { color: #ff0000; text-shadow: 0 0 10px #
+            0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+            25% { color: #ffcc00; text-shadow: 0 0 10px #ffcc00; }
+            50% { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
+            75% { color: #00ccff; text-shadow: 0 0 10px #00ccff; }
+            100% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
+        }
+
+        /* Timer Digital */
+        #timer {
+            font-size: 1.1rem;
+            margin: 20px 0;
+            color: #fff;
+            background: rgba(0, 255, 0, 0.05);
+            padding: 15px;
+            border: 1px solid #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+
+        .main-x {
+            color: #0f0;
+            font-size: 60px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px #0f0;
+        }
+
+        /* Efek X Berjatuhan */
+        .fall-x {
+            position: absolute;
+            top: -30px;
+            color: #0f0;
+            font-size: 15px;
+            font-weight: bold;
+            user-select: none;
+            z-index: 1;
+            animation: fall linear forwards;
+            opacity: 0.5;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh); }
+        }
+
+        .quote {
+            color: #0f0;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            border-top: 1px solid #0f0;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="main-x">X</div>
+        <h1>XREXZOB X RAISYA</h1>
+        <p style="color: #888;">CONNECTION ESTABLISHED SINCE:</p>
+        
+        <div id="timer">SYSTEM LOADING...</div>
+
+        <p class="quote">"Gak perlu monitor layar kamu, aku cuma mau monitor kebahagiaan kamu."</p>
+        
+        <div style="margin-top: 20px; font-size: 0.7rem; color: #444; letter-spacing: 3px;">
+            05.02.2026
+        </div>
+    </div>
+
+    <script>
+        // Tanggal Jadian
+        const startDate = new Date("February 5, 2026 00:00:00").getTime();
+
+        // Update Timer
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").innerHTML = 
+                days + "D : " + hours + "H : " + minutes + "M : " + seconds + "S";
+        }, 1000);
+
+        // Efek X Jatuh
+        function createX() {
+            const x = document.createElement('div');
+            x.classList.add('fall-x');
+            x.innerHTML = 'X';
+            x.style.left = Math.random() * 100 + 'vw';
+            x.style.animationDuration = Math.random() * 2 + 3 + 's';
+            x.style.fontSize = Math.random() * 10 + 10 + 'px';
+            document.body.appendChild(x);
+
+            setTimeout(() => { x.remove(); }, 5000);
+        }
+        setInterval(createX, 200);
+    </script>
+</body>
+</html>
