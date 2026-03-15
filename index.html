@@ -3,143 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XREXZOB X RAISYA</title>
+    <title>Untuk Raisya ❤️</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background-color: #000;
-            color: #0f0;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: #ffeef2;
+            background-image: url('IMG-Foto-Gue.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
             overflow: hidden;
-            text-align: center;
         }
 
-        /* Container Utama */
+        /* Layer pink lembut transparan */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 182, 193, 0.4); 
+            z-index: 1;
+        }
+
         .container {
-            border: 2px solid #0f0;
-            padding: 30px 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 20px #0f0;
-            background: rgba(0, 10, 0, 0.9);
-            width: 85%;
-            max-width: 400px;
-            z-index: 10;
             position: relative;
+            z-index: 10;
+            border-radius: 20px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.85); /* Putih bening */
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            width: 85%;
+            max-width: 380px;
+            text-align: center;
+            border: 2px solid #fff;
         }
 
-        /* Efek Rainbow Nama */
         h1 {
             font-size: 1.6rem;
-            animation: rainbow 3s linear infinite;
+            color: #d63384; /* Warna pink gelap */
             margin-bottom: 10px;
-            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
-        @keyframes rainbow {
-            0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
-            25% { color: #ffcc00; text-shadow: 0 0 10px #ffcc00; }
-            50% { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
-            75% { color: #00ccff; text-shadow: 0 0 10px #00ccff; }
-            100% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
-        }
-
-        /* Timer Digital */
         #timer {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin: 20px 0;
-            color: #fff;
-            background: rgba(0, 255, 0, 0.05);
+            color: #444;
             padding: 15px;
-            border: 1px solid #0f0;
-            text-shadow: 0 0 5px #0f0;
-        }
-
-        .main-x {
-            color: #0f0;
-            font-size: 60px;
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: inset 0 0 10px rgba(255, 182, 193, 0.5);
             font-weight: bold;
-            margin-bottom: 10px;
-            text-shadow: 0 0 15px #0f0;
         }
 
-        /* Efek X Berjatuhan */
-        .fall-x {
+        .btn-music {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-music:active { transform: scale(0.95); }
+
+        /* Efek Kelopak Bunga Sakura */
+        .petal {
             position: absolute;
-            top: -30px;
-            color: #0f0;
-            font-size: 15px;
-            font-weight: bold;
+            top: -10px;
+            color: #ffb7c5;
             user-select: none;
-            z-index: 1;
+            z-index: 5;
+            pointer-events: none;
             animation: fall linear forwards;
-            opacity: 0.5;
         }
 
         @keyframes fall {
-            to { transform: translateY(105vh); }
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(105vh) rotate(360deg); }
         }
 
-        .quote {
-            color: #0f0;
-            font-size: 0.9rem;
+        .footer {
             margin-top: 15px;
-            border-top: 1px solid #0f0;
-            padding-top: 10px;
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="main-x">X</div>
-        <h1>XREXZOB X RAISYA</h1>
-        <p style="color: #888;">CONNECTION ESTABLISHED SINCE:</p>
-        
-        <div id="timer">SYSTEM LOADING...</div>
+    <div class="overlay"></div>
 
-        <p class="quote">"Gak perlu monitor layar kamu, aku cuma mau monitor kebahagiaan kamu."</p>
+    <audio id="audioMp3" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <div style="font-size: 40px; margin-bottom: 10px;">🌸</div>
+        <h1>XREXZOB & RAISYA</h1>
+        <p style="color: #666; font-size: 0.9rem;">Sudah sejauh ini kita melangkah:</p>
         
-        <div style="margin-top: 20px; font-size: 0.7rem; color: #444; letter-spacing: 3px;">
-            05.02.2026
-        </div>
+        <div id="timer">Menghitung cinta...</div>
+
+        <p style="color: #d63384; font-size: 0.95rem; margin-top: 10px; line-height: 1.4;">
+            "Gak perlu monitor layar kamu, aku cuma mau monitor kebahagiaan kamu."
+        </p>
+
+        <button class="btn-music" onclick="playMusic()">Dengerin Musiknya ✨</button>
+        
+        <div class="footer">Happy Anniversary, Sayang</div>
     </div>
 
     <script>
-        // Tanggal Jadian
         const startDate = new Date("February 5, 2026 00:00:00").getTime();
 
-        // Update Timer
         setInterval(function() {
             const now = new Date().getTime();
             const distance = now - startDate;
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("timer").innerHTML = 
-                days + "D : " + hours + "H : " + minutes + "M : " + seconds + "S";
+            document.getElementById("timer").innerHTML = days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds + " Detik";
         }, 1000);
 
-        // Efek X Jatuh
-        function createX() {
-            const x = document.createElement('div');
-            x.classList.add('fall-x');
-            x.innerHTML = 'X';
-            x.style.left = Math.random() * 100 + 'vw';
-            x.style.animationDuration = Math.random() * 2 + 3 + 's';
-            x.style.fontSize = Math.random() * 10 + 10 + 'px';
-            document.body.appendChild(x);
+        function playMusic() { document.getElementById("audioMp3").play(); }
 
-            setTimeout(() => { x.remove(); }, 5000);
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.innerHTML = '🌸'; 
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = Math.random() * 10 + 15 + 'px';
+            petal.style.animationDuration = Math.random() * 5 + 3 + 's';
+            petal.style.opacity = Math.random() * 0.7 + 0.3;
+            document.body.appendChild(petal);
+            setTimeout(() => { petal.remove(); }, 8000);
         }
-        setInterval(createX, 200);
+        setInterval(createPetal, 300);
     </script>
 </body>
 </html>
