@@ -1,180 +1,215 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XRexzob ❤️ Raisya</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anniversary - XreXzob & Raisya</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'sans-serif'; }
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: url('IMG-Foto-Gue.jpg') no-repeat center/cover;
-  height: 100vh;
-  overflow: hidden;
-  color: white;
-}
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* MANGGIL WALLPAPER DARI GITHUB LO */
+            background: url('IMG-Foto-Gue.jpg') no-repeat center center;
+            background-size: cover;
+            overflow: hidden;
+            position: relative;
+        }
 
-/* overlay tipis biar teks kebaca */
-body::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.3);
-}
+        /* PELANGI GERAK DI BELAKANG CARD (LEBIH JELAS) */
+        .rainbow-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50vh; /* Setengah layar atas */
+            background: linear-gradient(120deg, 
+                rgba(255,0,0,0.15), 
+                rgba(255,165,0,0.15), 
+                rgba(255,255,0,0.15), 
+                rgba(0,128,0,0.15), 
+                rgba(0,0,255,0.15), 
+                rgba(75,0,130,0.15), 
+                rgba(238,130,238,0.15));
+            background-size: 300% 300%;
+            animation: moveRainbow 6s linear infinite; /* Gerak lebih cepet */
+            z-index: 2; /* Di atas foto, di bawah card */
+            filter: blur(15px); /* Biar smooth */
+        }
 
-/* HALAMAN */
-.page {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
-}
+        @keyframes moveRainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
 
-.hidden {
-  display: none;
-}
+        /* FITUR PESAN KANAN ATAS */
+        .fitur-pesan {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #fff;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
 
-/* tombol kanan atas */
-.top-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  z-index: 3;
-  background: #ff4d88;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 20px;
-  color: white;
-  cursor: pointer;
-}
+        /* CARD UTAMA (Sesuai Foto) */
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            width: 85%;
+            max-width: 380px;
+            padding: 40px 20px;
+            border-radius: 40px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
 
-/* tombol musik */
-.music-btn {
-  margin-top: 15px;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 20px;
-  background: #ff4d88;
-  color: white;
-  cursor: pointer;
-}
+        .flower-top { font-size: 35px; margin-bottom: 10px; }
 
-/* TEXT */
-h1 {
-  color: #ff4d88;
-}
+        h2 { 
+            color: #d63384; 
+            font-size: 22px; 
+            font-weight: bold; 
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        .sub-title { color: #888; font-size: 13px; margin-bottom: 25px; }
 
-.timer {
-  margin: 15px 0;
-  font-weight: bold;
-}
+        /* BOX TIMER PUTIH (Sesuai Foto) */
+        .timer-display {
+            background: #fff;
+            padding: 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
 
-/* LOVE HUJAN */
-.love {
-  position: absolute;
-  color: #ff4d88;
-  animation: jatuh linear infinite;
-}
+        .quote-text { 
+            color: #d63384; 
+            font-size: 13px; 
+            margin-bottom: 25px; 
+            line-height: 1.5;
+        }
 
-@keyframes jatuh {
-  0% { transform: translateY(-10vh); opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0; }
-}
+        /* TOMBOL MUSIK PINK (Sesuai Foto) */
+        .btn-play {
+            background: linear-gradient(to right, #ff7ba0, #ff5e8e);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 35px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 94, 142, 0.4);
+        }
 
-/* PESAN */
-.pesan-box {
-  max-width: 350px;
-  margin: auto;
-}
-</style>
+        .happy-anniv { font-size: 11px; color: #aaa; margin-top: 20px; }
+
+        /* EFEK JATUH CAMPUR (LOVE & SAKURA) */
+        .falling {
+            position: fixed;
+            top: -10%;
+            z-index: 5;
+            animation: fall linear forwards;
+            pointer-events: none;
+        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
 </head>
-
 <body>
 
-<!-- tombol pesan kanan atas -->
-<button class="top-btn" onclick="showPesan()">💌 Pesan</button>
+    <div class="rainbow-bg"></div>
 
-<!-- HALAMAN UTAMA -->
-<div class="page" id="home">
-  <h1>XRexzob ❤️ Raisya</h1>
-  <p>Udah sejauh ini kita bareng:</p>
-  <div class="timer" id="timer"></div>
+    <div class="fitur-pesan" onclick="tampilQuotes()">Pesan Untukmu ✨</div>
 
-  <button class="music-btn" onclick="playMusic()">🎵 Play Musik</button>
-</div>
+    <div class="container">
+        <div class="flower-top">🌸</div>
+        <h2>XREXZOB & RAISYA</h2>
+        <p class="sub-title">Sudah sejauh ini kita melangkah:</p>
 
-<!-- HALAMAN PESAN -->
-<div class="page hidden" id="pesan">
-  <div class="pesan-box">
-    <h1>❤️</h1>
-    <p>
-      Dari awal kita kenal sampai sekarang...<br><br>
-      Banyak hal yang udah kita lewatin bareng.<br><br>
-      Kadang ketawa, kadang juga berantem,<br>
-      tapi kita masih tetap di sini.<br><br>
-      Aku cuma mau bilang...<br><br>
-      <b>aku sayang kamu ❤️</b>
-    </p>
+        <div class="timer-display" id="running-timer">Memuat Waktu...</div>
 
-    <button class="music-btn" onclick="backHome()">⬅️ Kembali</button>
-  </div>
-</div>
+        <p class="quote-text">"Gak perlu monitor layar kamu, aku cuma mau monitor kebahagiaan kamu."</p>
 
-<audio id="musik" src="musikX.mp3"></audio>
+        <button class="btn-play" onclick="gasMusik()">Dengerin Musiknya ✨</button>
+        
+        <p class="happy-anniv">Happy Anniversary ❤️</p>
+    </div>
 
-<script>
-// TIMER (GAK DIUBAH)
-const startDate = new Date("2024-01-01 00:00:00").getTime();
+    <audio id="audioX" loop>
+        <source src="musik x.mp3" type="audio/mpeg">
+    </audio>
 
-function updateTimer() {
-  const now = new Date().getTime();
-  const diff = now - startDate;
+    <script>
+        // --- 1. SET TANGGAL AWAL (SINKRON SAMA FOTO LO) ---
+        // Kita set ke tanggal 5 Februari 2026 jam 00:00:00
+        // Ini bakal ngepasin sama itungan 43 Hari di tgl 20 Maret jam 1 siang.
+        const dateStart = new Date("2026-02-05T00:00:00").getTime();
 
-  const hari = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const jam = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const menit = Math.floor((diff / (1000 * 60)) % 60);
-  const detik = Math.floor((diff / 1000) % 60);
+        function startTimer() {
+            const now = new Date().getTime();
+            const gap = now - dateStart;
 
-  document.getElementById("timer").innerHTML =
-    hari + " Hari " + jam + " Jam " + menit + " Menit " + detik + " Detik";
-}
-setInterval(updateTimer, 1000);
+            const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+            const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((gap % (1000 * 60)) / 1000);
 
-// MUSIK
-function playMusic() {
-  document.getElementById("musik").play();
-}
+            document.getElementById("running-timer").innerHTML = 
+                `${d} Hari ${h} Jam ${m} Menit ${s} Detik`;
+        }
+        setInterval(startTimer, 1000); // Update tiap detik
+        startTimer();
 
-// NAV
-function showPesan() {
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("pesan").classList.remove("hidden");
-}
+        // --- 2. FUNGSI MUSIK ---
+        function gasMusik() {
+            const audio = document.getElementById("audioX");
+            audio.play();
+            alert("Musik X diputar! Enjoy ✨");
+        }
 
-function backHome() {
-  document.getElementById("pesan").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
-}
+        // --- 3. FITUR PESAN KANAN ATAS ---
+        function tampilQuotes() {
+            const pesan = [
+                "I Love You More Than Anything! ❤️",
+                "Bahagia terus bareng aku ya! ✨",
+                "Makasih udah bertahan sejauh ini. 🌸",
+                "You're my favorite person! 😊"
+            ];
+            alert(pesan[Math.floor(Math.random() * pesan.length)]);
+        }
 
-// LOVE HUJAN
-function createLove() {
-  const love = document.createElement("div");
-  love.classList.add("love");
-  love.innerHTML = "❤️";
-  love.style.left = Math.random() * 100 + "vw";
-  love.style.fontSize = (Math.random() * 10 + 15) + "px";
-  love.style.animationDuration = (Math.random() * 3 + 2) + "s";
-  document.body.appendChild(love);
-
-  setTimeout(() => {
-    love.remove();
-  }, 5000);
-}
-setInterval(createLove, 300);
-</script>
-
+        // --- 4. EFEK JATUH CAMPUR (LOVE & SAKURA) ---
+        function spawnFallingEffect() {
+            const symbols = ["🌸", "❤️", "💖"];
+            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+            const item = document.createElement('div');
+            item.classList.add('falling');
+            item.innerHTML = symbol; 
+            item.style.left = Math.random() * 100 + "vw";
+            item.style.fontSize = Math.random() * 15 + 10 + "px";
+            item.style.animationDuration = Math.random() * 3 + 3 + "s";
+            item.style.color = (symbol !== "🌸") ? "#ff4d4d" : "#fff"; // Warna merah buat Love
+            item.style.opacity = Math.random(); // Opacity random
+            document.body.appendChild(item);
+            setTimeout(() => { item.remove(); }, 6000);
+        }
+        setInterval(spawnFallingEffect, 300); // Kecepatan spawn
+    </script>
 </body>
 </html>
