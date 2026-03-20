@@ -3,213 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anniversary - XreXzob & Raisya</title>
+    <title>Web Aesthetic X</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'sans-serif'; }
+        /* --- CSS DASAR --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* MANGGIL WALLPAPER DARI GITHUB LO */
-            background: url('IMG-Foto-Gue.jpg') no-repeat center center;
-            background-size: cover;
-            overflow: hidden;
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Biar gak ada scrollbar */
+            color: white;
             position: relative;
         }
 
-        /* PELANGI GERAK DI BELAKANG CARD (LEBIH JELAS) */
-        .rainbow-bg {
-            position: absolute;
+        /* --- BACKGROUND FOTO --- */
+        .background-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 50vh; /* Setengah layar atas */
-            background: linear-gradient(120deg, 
-                rgba(255,0,0,0.15), 
-                rgba(255,165,0,0.15), 
-                rgba(255,255,0,0.15), 
-                rgba(0,128,0,0.15), 
-                rgba(0,0,255,0.15), 
-                rgba(75,0,130,0.15), 
-                rgba(238,130,238,0.15));
-            background-size: 300% 300%;
-            animation: moveRainbow 6s linear infinite; /* Gerak lebih cepet */
-            z-index: 2; /* Di atas foto, di bawah card */
-            filter: blur(15px); /* Biar smooth */
+            height: 100%;
+            /* Ganti bg.jpg dengan nama file foto kamu */
+            background: url('bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -2; /* Paling belakang */
         }
 
-        @keyframes moveRainbow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 300% 50%; }
+        /* Efek Gelap biar tulisan kebaca */
+        .dark-filter {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Gelap 50% */
+            z-index: -1;
         }
 
-        /* FITUR PESAN KANAN ATAS */
-        .fitur-pesan {
+        /* --- FITUR KATA-KATA KANAN ATAS --- */
+        .quotes-btn {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 11px;
-            color: #fff;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(8px);
-            z-index: 100;
-            border: 1px solid rgba(255,255,255,0.4);
-        }
-
-        /* CARD UTAMA (Sesuai Foto) */
-        .container {
-            background: rgba(255, 255, 255, 0.85);
-            width: 85%;
-            max-width: 380px;
-            padding: 40px 20px;
-            border-radius: 40px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            z-index: 10;
-        }
-
-        .flower-top { font-size: 35px; margin-bottom: 10px; }
-
-        h2 { 
-            color: #d63384; 
-            font-size: 22px; 
-            font-weight: bold; 
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-        
-        .sub-title { color: #888; font-size: 13px; margin-bottom: 25px; }
-
-        /* BOX TIMER PUTIH (Sesuai Foto) */
-        .timer-display {
-            background: #fff;
-            padding: 15px;
+            padding: 8px 15px;
             border-radius: 20px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 25px;
-            font-size: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: 0.3s;
+            z-index: 100;
         }
 
-        .quote-text { 
-            color: #d63384; 
-            font-size: 13px; 
-            margin-bottom: 25px; 
-            line-height: 1.5;
+        .quotes-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
+        /* --- KONTEN TENGAH --- */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            z-index: 10;
+            position: relative;
         }
 
-        /* TOMBOL MUSIK PINK (Sesuai Foto) */
-        .btn-play {
-            background: linear-gradient(to right, #ff7ba0, #ff5e8e);
+        #hari { font-size: 1.3rem; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; opacity: 0.9; }
+        #clock { font-size: 4rem; font-weight: bold; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        #timer { font-size: 1rem; opacity: 0.7; margin-bottom: 30px; }
+
+        /* --- MUSIC PLAYER --- */
+        .music-player {
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        audio {
+            height: 35px;
+            outline: none;
+            opacity: 0.7;
+            /* Liat trik ini buat bikin audionya putih di beberapa browser */
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(175deg);
+        }
+
+        /* --- FITUR PESAN --- */
+        .message-form {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            width: 300px;
+        }
+
+        .message-form h3 { margin-bottom: 15px; font-size: 1.1rem; }
+
+        .message-form input, .message-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 5px;
+            color: white;
+        }
+
+        .message-form textarea { resize: none; height: 60px; }
+
+        .message-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff4757;
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 35px;
-            font-weight: bold;
-            width: 100%;
+            border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 94, 142, 0.4);
+            font-weight: bold;
+            transition: 0.3s;
         }
 
-        .happy-anniv { font-size: 11px; color: #aaa; margin-top: 20px; }
+        .message-form button:hover { background-color: #ff6b81; }
 
-        /* EFEK JATUH CAMPUR (LOVE & SAKURA) */
-        .falling {
+        /* --- ANIMASI HUJAN LOPE (LOVE) --- */
+        .heart {
             position: fixed;
-            top: -10%;
-            z-index: 5;
+            top: -1vh;
+            transform: translateY(0);
             animation: fall linear forwards;
-            pointer-events: none;
+            color: #ff6b81; /* Warna lope */
+            opacity: 0.7;
+            z-index: 1; /* Di atas filter gelap, di bawah konten */
         }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh);
+            }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="rainbow-bg"></div>
+    <div class="background-overlay"></div>
+    <div class="dark-filter"></div>
 
-    <div class="fitur-pesan" onclick="tampilQuotes()">Pesan Untukmu ✨</div>
+    <div class="quotes-btn" onclick="tampilKata()">Quotes ✨</div>
 
-    <div class="container">
-        <div class="flower-top">🌸</div>
-        <h2>XREXZOB & RAISYA</h2>
-        <p class="sub-title">Sudah sejauh ini kita melangkah:</p>
-
-        <div class="timer-display" id="running-timer">Memuat Waktu...</div>
-
-        <p class="quote-text">"Gak perlu monitor layar kamu, aku cuma mau monitor kebahagiaan kamu."</p>
-
-        <button class="btn-play" onclick="gasMusik()">Dengerin Musiknya ✨</button>
+    <div class="main-container">
         
-        <p class="happy-anniv">Happy Anniversary ❤️</p>
+        <div id="hari">MEMUAT HARI...</div>
+        <h1 id="clock">00:00:00</h1>
+        <div id="timer">Memuat timer...</div>
+
+        <div class="music-player">
+            <audio id="myAudio" controls autoplay loop>
+                <source src="musik_x.mp3" type="audio/mpeg">
+                Browser kamu gak support audio.
+            </audio>
+        </div>
+
+        <div class="message-form">
+            <h3>Kirim Pesan Ke Aku</h3>
+            <form action="https://formspree.io/f/your_endpoint" method="POST">
+                <input type="text" name="name" placeholder="Nama Kamu" required>
+                <textarea name="message" placeholder="Pesan kamu..." required></textarea>
+                <button type="submit">Kirim Pesan</button>
+            </form>
+            <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 5px;">*Tinggalin nama/pesan di sini.</p>
+        </div>
+
     </div>
 
-    <audio id="audioX" loop>
-        <source src="musik x.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
-        // --- 1. SET TANGGAL AWAL (SINKRON SAMA FOTO LO) ---
-        // Kita set ke tanggal 5 Februari 2026 jam 00:00:00
-        // Ini bakal ngepasin sama itungan 43 Hari di tgl 20 Maret jam 1 siang.
-        const dateStart = new Date("2026-02-05T00:00:00").getTime();
+        // --- 1. UPDATE WAKTU REAL-TIME ---
+        function updateTime() {
+            const now = new Date();
+            
+            // Format Hari (Tidak diubah, jalan terus)
+            const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            document.getElementById('hari').innerText = days[now.getDay()];
 
-        function startTimer() {
-            const now = new Date().getTime();
-            const gap = now - dateStart;
+            // Format Jam (Utama)
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
 
-            const d = Math.floor(gap / (1000 * 60 * 60 * 24));
-            const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((gap % (1000 * 60)) / 1000);
-
-            document.getElementById("running-timer").innerHTML = 
-                `${d} Hari ${h} Jam ${m} Menit ${s} Detik`;
-        }
-        setInterval(startTimer, 1000); // Update tiap detik
-        startTimer();
-
-        // --- 2. FUNGSI MUSIK ---
-        function gasMusik() {
-            const audio = document.getElementById("audioX");
-            audio.play();
-            alert("Musik X diputar! Enjoy ✨");
+            // Timer (Teks tambahan yang jalan terus)
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('id-ID', options);
+            document.getElementById('timer').innerText = dateString + " | " + now.toLocaleTimeString('id-ID');
         }
 
-        // --- 3. FITUR PESAN KANAN ATAS ---
-        function tampilQuotes() {
-            const pesan = [
-                "I Love You More Than Anything! ❤️",
-                "Bahagia terus bareng aku ya! ✨",
-                "Makasih udah bertahan sejauh ini. 🌸",
-                "You're my favorite person! 😊"
+        // --- 2. FITUR KATA-KATA (Quotes) ---
+        function tampilKata() {
+            const listKata = [
+                "Tetap semangat, hari ini milikmu! 🌟",
+                "Jangan lupa bernafas, dunia tidak sejahat itu. ✨",
+                "Terus jalan, meskipun pelan. 🐢",
+                "Kamu lebih kuat dari yang kamu kira. 💪",
+                "Musik X jalan terus, mimpi juga harus terus dikejar! 🔥",
+                "Jangan lupa senyum hari ini! 😊",
+                "Apa pun yang terjadi, hadapi dengan tenang. 🧘‍♂️"
             ];
-            alert(pesan[Math.floor(Math.random() * pesan.length)]);
+            const randomKata = listKata[Math.floor(Math.random() * listKata.length)];
+            alert(randomKata); // Pake alert sederhana aja
         }
 
-        // --- 4. EFEK JATUH CAMPUR (LOVE & SAKURA) ---
-        function spawnFallingEffect() {
-            const symbols = ["🌸", "❤️", "💖"];
-            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-            const item = document.createElement('div');
-            item.classList.add('falling');
-            item.innerHTML = symbol; 
-            item.style.left = Math.random() * 100 + "vw";
-            item.style.fontSize = Math.random() * 15 + 10 + "px";
-            item.style.animationDuration = Math.random() * 3 + 3 + "s";
-            item.style.color = (symbol !== "🌸") ? "#ff4d4d" : "#fff"; // Warna merah buat Love
-            item.style.opacity = Math.random(); // Opacity random
-            document.body.appendChild(item);
-            setTimeout(() => { item.remove(); }, 6000);
+        // --- 3. ANIMASI HUJAN LOPE ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️'; // Karakter lope
+            
+            // Posisi random horizontal
+            heart.style.left = Math.random() * 100 + "vw";
+            
+            // Ukuran random
+            const size = Math.random() * 1.5 + 0.5; // 0.5rem - 2rem
+            heart.style.fontSize = size + "rem";
+            
+            // Kecepatan jatuh random (3s - 8s)
+            const duration = Math.random() * 5 + 3;
+            heart.style.animationDuration = duration + "s";
+            
+            // Opacity random
+            heart.style.opacity = Math.random() * 0.5 + 0.2; // 0.2 - 0.7
+
+            document.body.appendChild(heart);
+
+            // Hapus elemen setelah jatuh biar gak ngebatin memori
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
         }
-        setInterval(spawnFallingEffect, 300); // Kecepatan spawn
+
+        // Jalankan Hujan Lope setiap 300ms
+        setInterval(createHeart, 300);
+
+        // --- JALANKAN SEMUA FUNGSI ---
+        setInterval(updateTime, 1000); // Update jam tiap detik
+        updateTime(); // Jalankan sekali di awal
+
+        // Trik Autoplay Musik (Beberapa browser butuh interaksi user dulu)
+        window.addEventListener('click', function() {
+            const audio = document.getElementById('myAudio');
+            if (audio.paused) {
+                audio.play();
+            }
+        }, { once: true }); // Cuma sekali klik
+
     </script>
 </body>
 </html>
