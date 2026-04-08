@@ -2,147 +2,109 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Untuk Kamu 💙</title>
 
 <style>
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#0f172a,#1e293b);
+  background: linear-gradient(180deg,#0f172a,#020617);
   color:white;
   text-align:center;
-  overflow:hidden;
 }
 
 .container{
-  padding:30px;
+  padding:20px;
 }
 
-/* animasi bintang */
-.stars{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:url('https://i.ibb.co/8cZ1YcH/stars.png');
-  animation:move 60s linear infinite;
-  opacity:0.3;
-}
-
-@keyframes move{
-  from{background-position:0 0;}
-  to{background-position:10000px 5000px;}
-}
+h1{font-size:28px;}
+h2{color:#93c5fd;font-size:16px;}
 
 img{
-  width:200px;
-  border-radius:20px;
-  margin-top:20px;
-  box-shadow:0 0 20px rgba(255,255,255,0.3);
-}
-
-h1{font-size:36px;}
-h2{color:#93c5fd;}
-
-.heart{
-  font-size:50px;
-  animation:beat 1s infinite;
-}
-
-@keyframes beat{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.2);}
-  100%{transform:scale(1);}
+  width:150px;
+  border-radius:15px;
+  margin-top:15px;
 }
 
 .box{
   background:#1e293b;
-  padding:20px;
-  border-radius:15px;
-  margin-top:20px;
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+  font-size:14px;
 }
 
 button{
-  margin-top:20px;
-  padding:12px 20px;
+  margin-top:15px;
+  padding:10px 15px;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
   background:#3b82f6;
   color:white;
-  cursor:pointer;
 }
 
 #days{
-  margin-top:15px;
-  font-size:18px;
+  margin-top:10px;
   color:#60a5fa;
+  font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="stars"></div>
-
 <div class="container">
 
-<div class="heart">💙</div>
-
-<h1>Untuk Kamu</h1>
+<h1>Untuk Kamu 💙</h1>
 <h2>05 Februari 2026</h2>
 
-<!-- FOTO -->
 <img src="IMG-Foto-Gue.jpg">
 
 <div id="days"></div>
 
 <div class="box">
-<p>
 Hari itu bukan cuma tanggal biasa...<br>
-Itu awal dari cerita kita.<br><br>
-
-Gue gak tau masa depan bakal gimana,<br>
-tapi gue tau satu hal...<br><br>
-
-<b>Gue seneng banget bisa sama lo 💙</b>
-</p>
+Itu awal dari cerita kita 💙
 </div>
 
 <button onclick="start()">Klik ini 💌</button>
 
-<p id="hidden" style="display:none;margin-top:20px;">
-Makasih udah hadir di hidup gue.<br>
-Semoga kita bisa terus bareng sejauh mungkin 💙<br><br>
-<b>I love you</b>
+<p id="hidden" style="display:none;">
+Makasih udah ada 💙<br>I love you
 </p>
 
-<!-- MUSIK -->
 <audio id="music" loop>
-  <source src="hindia.mp3" type="audio/mpeg">
+  <source src="hindia.mp3">
 </audio>
 
 </div>
 
 <script>
 
-// HITUNG HARI JADIAN
+// 🔥 HITUNG HARI REALTIME
 function updateDays(){
   const start = new Date("2026-02-05");
   const now = new Date();
   const diff = now - start;
-  const days = Math.floor(diff / (1000*60*60*24));
 
-  if(days >= 0){
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const minutes = Math.floor((diff / (1000*60)) % 60);
+
+  if(diff >= 0){
     document.getElementById("days").innerText =
-      "Kita sudah bersama selama " + days + " hari 💙";
+      `Kita sudah bersama ${days} hari ${hours} jam ${minutes} menit 💙`;
   } else {
     document.getElementById("days").innerText =
       "Menuju hari spesial kita 💙";
   }
 }
 
+// update tiap detik
+setInterval(updateDays,1000);
 updateDays();
 
-// BUTTON
 function start(){
   document.getElementById("hidden").style.display="block";
   document.getElementById("music").play();
