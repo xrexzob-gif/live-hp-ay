@@ -1,150 +1,154 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anniversary - XreXzob & Raisya</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'sans-serif'; }
+<meta charset="UTF-8">
+<title>Untuk Kamu 💙</title>
 
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* --- INI SUDAH GUE PERBAIKIN MANGGIL FOTO LO --- */
-            background: url('IMG-Foto-Gue.jpg') no-repeat center center;
-            background-size: cover;
-            overflow: hidden;
-            position: relative;
-        }
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  color:white;
+  text-align:center;
+  overflow:hidden;
+}
 
-        /* OVERLAY AWAL (BIAR MUSIK PASTI NYALA) */
-        #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); color: white;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; transition: 0.5s;
-        }
-        #overlay h2 { margin-bottom: 20px; font-size: 18px; letter-spacing: 2px; }
-        #overlay button {
-            padding: 15px 30px; border-radius: 30px; border: none;
-            background: #ff5e8e; color: white; font-weight: bold; cursor: pointer;
-        }
+.container{
+  padding:30px;
+}
 
-        /* PELANGI GERAK */
-        .rainbow-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 50vh;
-            background: linear-gradient(120deg, rgba(255,0,0,0.2), rgba(255,165,0,0.2), rgba(0,255,0,0.2), rgba(0,0,255,0.2), rgba(238,130,238,0.2));
-            background-size: 300% 300%; animation: moveRainbow 5s linear infinite;
-            z-index: 2; filter: blur(20px);
-        }
-        @keyframes moveRainbow { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+/* animasi bintang */
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url('https://i.ibb.co/8cZ1YcH/stars.png');
+  animation:move 60s linear infinite;
+  opacity:0.3;
+}
 
-        /* TOMBOL PESAN KANAN ATAS */
-        .fitur-pesan {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(255, 255, 255, 0.3); padding: 8px 18px; border-radius: 20px;
-            font-size: 12px; color: #fff; font-weight: bold; cursor: pointer;
-            backdrop-filter: blur(8px); z-index: 100; border: 1px solid rgba(255,255,255,0.4);
-        }
+@keyframes move{
+  from{background-position:0 0;}
+  to{background-position:10000px 5000px;}
+}
 
-        /* CARD UTAMA */
-        .container {
-            background: rgba(255, 255, 255, 0.88); width: 85%; max-width: 380px;
-            padding: 40px 20px; border-radius: 40px; text-align: center;
-            backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 10;
-        }
+img{
+  width:200px;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 0 20px rgba(255,255,255,0.3);
+}
 
-        .flower-top { font-size: 35px; margin-bottom: 15px; }
-        h2 { color: #d63384; font-size: 24px; font-weight: bold; margin-bottom: 25px; text-transform: uppercase; }
+h1{font-size:36px;}
+h2{color:#93c5fd;}
 
-        .timer-display {
-            background: #fff; padding: 15px; border-radius: 20px;
-            font-weight: bold; color: #333; margin-bottom: 25px; font-size: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee;
-        }
+.heart{
+  font-size:50px;
+  animation:beat 1s infinite;
+}
 
-        .quote-text { color: #d63384; font-size: 13px; margin-bottom: 25px; line-height: 1.6; font-style: italic; }
+@keyframes beat{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
 
-        .happy-anniv { font-size: 12px; color: #999; margin-top: 10px; }
+.box{
+  background:#1e293b;
+  padding:20px;
+  border-radius:15px;
+  margin-top:20px;
+}
 
-        /* EFEK JATUH */
-        .falling { position: fixed; top: -10%; z-index: 5; animation: fall linear forwards; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-    </style>
+button{
+  margin-top:20px;
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  background:#3b82f6;
+  color:white;
+  cursor:pointer;
+}
+
+#days{
+  margin-top:15px;
+  font-size:18px;
+  color:#60a5fa;
+}
+</style>
 </head>
+
 <body>
 
-    <div id="overlay">
-        <h2>Special for Raisya ❤️</h2>
-        <button onclick="bukaWeb()">Klik untuk Mulai ✨</button>
-    </div>
+<div class="stars"></div>
 
-    <div class="rainbow-bg"></div>
-    <div class="fitur-pesan" onclick="tampilQuotes()">💌 Pesan Sayang</div>
+<div class="container">
 
-    <div class="container">
-        <div class="flower-top">🌸</div>
-        <h2>XREXZOB & RAISYA</h2>
-        <div class="timer-display" id="running-timer">Memuat Kebahagiaan...</div>
-        <p class="quote-text">"Gak perlu monitor layar kamu, aku cuma mau monitor kebahagiaan kamu setiap detiknya."</p>
-        <p class="happy-anniv">Happy Anniversary ❤️</p>
-    </div>
+<div class="heart">💙</div>
 
-    <audio id="audioX" loop preload="auto">
-        <source src="musik x.mp3" type="audio/mpeg">
-    </audio>
+<h1>Untuk Kamu</h1>
+<h2>05 Februari 2026</h2>
 
-    <script>
-        // SINKRONISASI WAKTU (43 Hari yang lalu dari 20 Maret 2026)
-        const dateStart = new Date("2026-02-05T00:00:00").getTime();
+<!-- FOTO -->
+<img src="IMG-Foto-Gue.jpg">
 
-        function bukaWeb() {
-            document.getElementById("overlay").style.opacity = "0";
-            setTimeout(() => { document.getElementById("overlay").style.display = "none"; }, 500);
-            const audio = document.getElementById("audioX");
-            audio.play();
-        }
+<div id="days"></div>
 
-        function startTimer() {
-            const now = new Date().getTime();
-            const gap = now - dateStart;
-            const d = Math.floor(gap / (1000 * 60 * 60 * 24));
-            const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((gap % (1000 * 60)) / 1000);
-            document.getElementById("running-timer").innerHTML = `${d} Hari ${h} Jam ${m} Menit ${s} Detik`;
-        }
-        setInterval(startTimer, 1000);
-        startTimer();
+<div class="box">
+<p>
+Hari itu bukan cuma tanggal biasa...<br>
+Itu awal dari cerita kita.<br><br>
 
-        // PESAN PANJANG, DEEP, DAN ROMANTIS (TEKS NYAMBUNG)
-        function tampilQuotes() {
-            const pesan = [
-                "Aku bersyukur banget ada kamu di hidupku. 43 hari ini mungkin baru awal, tapi setiap detik yang aku lalui sama kamu itu berharga banget. Terima kasih ya sudah mau bertahan dan berjuang bareng aku sampai sejauh ini, aku sayang kamu selamanya! ❤️",
-                "Kamu itu alasan kenapa aku semangat setiap bangun pagi. Aku gak butuh dunia yang sempurna, aku cuma butuh kamu yang selalu ada di sampingku buat lewati semua suka dan duka bareng-bareng. Makasih ya sudah jadi rumah buat aku. ✨",
-                "Mungkin aku bukan cowok yang paling romantis atau bisa kasih segalanya, tapi satu hal yang harus kamu tau, cintaku ke kamu itu tulus dan gak akan pernah habis dimakan waktu. Sehat selalu ya sayang, duniaku ada di kamu! 🌸",
-                "Makasih ya sudah sabar banget ngadepin sifat aku yang kadang masih egois. Aku janji bakal terus belajar buat jadi lebih baik lagi buat kamu. Kamu itu kado terindah yang pernah Tuhan kasih buat aku, I Love You More Than Anything! 💖",
-                "Gak kerasa kita sudah sejauh ini, semoga hubungan kita makin kuat dan kita gak akan pernah bosan untuk terus saling menyayangi. Aku pengen terus bareng kamu sampai nanti, sampai selamanya. Bahagia terus ya bareng aku! 😊"
-            ];
-            alert(pesan[Math.floor(Math.random() * pesan.length)]);
-        }
+Gue gak tau masa depan bakal gimana,<br>
+tapi gue tau satu hal...<br><br>
 
-        function spawnFallingEffect() {
-            const symbols = ["🌸", "❤️", "💕"];
-            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-            const item = document.createElement('div');
-            item.classList.add('falling');
-            item.innerHTML = symbol; 
-            item.style.left = Math.random() * 100 + "vw";
-            item.style.fontSize = Math.random() * 18 + 12 + "px";
-            item.style.animationDuration = Math.random() * 3 + 3 + "s";
-            item.style.color = (symbol === "🌸") ? "#fff" : "#ff4d4d";
-            document.body.appendChild(item);
-            setTimeout(() => { item.remove(); }, 6000);
-        }
-        setInterval(spawnFallingEffect, 300);
-    </script>
+<b>Gue seneng banget bisa sama lo 💙</b>
+</p>
+</div>
+
+<button onclick="start()">Klik ini 💌</button>
+
+<p id="hidden" style="display:none;margin-top:20px;">
+Makasih udah hadir di hidup gue.<br>
+Semoga kita bisa terus bareng sejauh mungkin 💙<br><br>
+<b>I love you</b>
+</p>
+
+<!-- MUSIK -->
+<audio id="music" loop>
+  <source src="hindia.mp3" type="audio/mpeg">
+</audio>
+
+</div>
+
+<script>
+
+// HITUNG HARI JADIAN
+function updateDays(){
+  const start = new Date("2026-02-05");
+  const now = new Date();
+  const diff = now - start;
+  const days = Math.floor(diff / (1000*60*60*24));
+
+  if(days >= 0){
+    document.getElementById("days").innerText =
+      "Kita sudah bersama selama " + days + " hari 💙";
+  } else {
+    document.getElementById("days").innerText =
+      "Menuju hari spesial kita 💙";
+  }
+}
+
+updateDays();
+
+// BUTTON
+function start(){
+  document.getElementById("hidden").style.display="block";
+  document.getElementById("music").play();
+}
+
+</script>
+
 </body>
 </html>
