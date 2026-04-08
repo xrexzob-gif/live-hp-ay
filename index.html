@@ -9,54 +9,137 @@
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background: linear-gradient(180deg,#0f172a,#020617);
   color:white;
   text-align:center;
+  overflow:hidden;
+  background:#020617;
+}
+
+/* 💙 BLOB LUCU GERAK */
+.blob{
+  position:fixed;
+  width:300px;
+  height:300px;
+  background:#3b82f6;
+  border-radius:50%;
+  filter:blur(100px);
+  opacity:0.4;
+  animation:move 10s infinite alternate ease-in-out;
+}
+
+.blob2{
+  background:#60a5fa;
+  top:50%;
+  left:60%;
+  animation-duration:12s;
+}
+
+.blob1{
+  top:10%;
+  left:10%;
+}
+
+@keyframes move{
+  0%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(50px,-50px) scale(1.2);}
+  100%{transform:translate(-50px,50px) scale(1);}
+}
+
+/* center */
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  z-index:2;
 }
 
 .container{
+  width:100%;
+  max-width:380px;
   padding:20px;
 }
 
-h1{font-size:28px;}
-h2{color:#93c5fd;font-size:16px;}
+/* card */
+.card{
+  background:rgba(255,255,255,0.05);
+  border-radius:20px;
+  padding:20px;
+  backdrop-filter:blur(10px);
+}
 
+/* foto */
 img{
-  width:150px;
-  border-radius:15px;
+  width:140px;
+  border-radius:20px;
   margin-top:15px;
 }
 
-.box{
-  background:#1e293b;
-  padding:15px;
-  border-radius:12px;
-  margin-top:15px;
-  font-size:14px;
+/* text */
+h1{font-size:26px;margin:10px;}
+h2{color:#60a5fa;font-size:14px;}
+
+.heart{
+  font-size:35px;
+  animation:beat 1s infinite;
 }
 
-button{
-  margin-top:15px;
-  padding:10px 15px;
-  border:none;
-  border-radius:8px;
-  background:#3b82f6;
-  color:white;
+@keyframes beat{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
 }
 
 #days{
   margin-top:10px;
-  color:#60a5fa;
-  font-size:14px;
+  font-size:13px;
+  color:#93c5fd;
 }
+
+.box{
+  margin-top:15px;
+  padding:15px;
+  border-radius:15px;
+  background:#1e293b;
+  font-size:13px;
+}
+
+/* button */
+button{
+  margin-top:15px;
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  background:#3b82f6;
+  color:white;
+}
+
+/* hidden */
+#hidden{
+  margin-top:15px;
+  opacity:0;
+  transition:1s;
+}
+.show{opacity:1;}
+
 </style>
 </head>
 
 <body>
 
+<!-- 💙 BACKGROUND GERAK -->
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<div class="wrapper">
 <div class="container">
 
-<h1>Untuk Kamu 💙</h1>
+<div class="card">
+
+<div class="heart">💙</div>
+
+<h1>Untuk Kamu</h1>
 <h2>05 Februari 2026</h2>
 
 <img src="IMG-Foto-Gue.jpg">
@@ -70,9 +153,10 @@ Itu awal dari cerita kita 💙
 
 <button onclick="start()">Klik ini 💌</button>
 
-<p id="hidden" style="display:none;">
-Makasih udah ada 💙<br>I love you
-</p>
+<div id="hidden">
+Makasih udah ada 💙<br>
+I love you
+</div>
 
 <audio id="music" loop>
   <source src="hindia.mp3">
@@ -80,33 +164,35 @@ Makasih udah ada 💙<br>I love you
 
 </div>
 
+</div>
+</div>
+
 <script>
 
-// 🔥 HITUNG HARI REALTIME
+// realtime hari
 function updateDays(){
   const start = new Date("2026-02-05");
   const now = new Date();
   const diff = now - start;
 
-  const days = Math.floor(diff / (1000*60*60*24));
-  const hours = Math.floor((diff / (1000*60*60)) % 24);
-  const minutes = Math.floor((diff / (1000*60)) % 60);
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
 
   if(diff >= 0){
     document.getElementById("days").innerText =
-      `Kita sudah bersama ${days} hari ${hours} jam ${minutes} menit 💙`;
+      `${d} hari ${h} jam ${m} menit bareng 💙`;
   } else {
     document.getElementById("days").innerText =
-      "Menuju hari spesial kita 💙";
+      "Menuju hari spesial 💙";
   }
 }
 
-// update tiap detik
 setInterval(updateDays,1000);
 updateDays();
 
 function start(){
-  document.getElementById("hidden").style.display="block";
+  document.getElementById("hidden").classList.add("show");
   document.getElementById("music").play();
 }
 
