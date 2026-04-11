@@ -1,80 +1,237 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory 05-02-2026</title>
+    <title>Our Memory Book</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Courier New', Courier, monospace; background-color: #1a1a1a; color: white; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        .notebook { width: 90%; height: 85vh; background: #2d2d2d; border-radius: 10px; position: relative; padding: 20px; box-sizing: border-box; border: 2px solid #444; }
-        
-        /* Timer Jadian */
-        .timer { background: #3d3d3d; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 20px; border: 1px solid #e28e8e; color: #e28e8e; font-size: 14px; }
+        :root {
+            /* Earth Tone Palette */
+            --bg-color: #f4f1ea;
+            --page-color: #fdfcfb;
+            --text-main: #4a443f;
+            --tab-01: #9caf88; /* Sage */
+            --tab-02: #d4a5a5; /* Dusty Pink */
+            --tab-03: #e3c4a8; /* Sand */
+            --tab-04: #bc8f8f; /* Rosy Brown */
+            --tab-05: #9baeba; /* Muted Blue */
+            --tab-06: #c68677; /* Terracotta */
+            --tab-08: #8b835d; /* Olive */
+            --tab-09: #a69f98; /* Warm Grey */
+        }
 
-        /* Area Foto */
-        .photo-frame { width: 100%; height: 60%; background: #222; border-radius: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        .photo-frame img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Audio Player Minimalis */
-        audio { width: 100%; margin-top: 15px; height: 30px; filter: invert(1); }
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-        /* TAB KAYA TIKTOK (Samping Kanan) */
-        .tabs { position: absolute; right: -35px; top: 20px; display: flex; flex-direction: column; gap: 8px; }
-        .tab { width: 60px; height: 40px; color: white; text-decoration: none; font-weight: bold; font-size: 12px; display: flex; justify-content: center; align-items: center; border-radius: 0 8px 8px 0; box-shadow: 2px 2px 10px rgba(0,0,0,0.5); cursor: pointer; border: none; }
-        
-        /* Warna-warni Tab */
-        .t1 { background: #8E9775; } .t2 { background: #E28E8E; } .t3 { background: #6D8299; }
-        .t4 { background: #D4A373; } .t5 { background: #A98467; } .t6 { background: #BC8F8F; }
-        .t8 { background: #52796F; } .t9 { background: #354F52; }
+        /* The Main Notebook Page */
+        .notebook-page {
+            background-color: var(--page-color);
+            width: 100%;
+            max-width: 500px;
+            min-height: 700px;
+            position: relative;
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.05), 
+                        -5px 0 15px rgba(0,0,0,0.02);
+            border-radius: 4px 0 0 4px;
+            padding: 40px;
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Tabs Container */
+        .tabs-container {
+            position: absolute;
+            top: 40px;
+            right: -50px; /* Pulls tabs outside the page */
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            width: 50px;
+            z-index: -1; /* Layered behind the main page edge for a realistic look */
+        }
+
+        .tab {
+            text-decoration: none;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 12px 8px;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transition: all 0.3s ease;
+            box-shadow: 3px 2px 5px rgba(0,0,0,0.1);
+            width: 40px;
+        }
+
+        .tab:hover {
+            width: 65px; /* Extends further right on hover */
+            padding-right: 15px;
+        }
+
+        /* Staggered "Ladder" Effect: Each tab sits slightly further right than the last */
+        .tab-1 { background-color: var(--tab-01); transform: translateX(0px); }
+        .tab-2 { background-color: var(--tab-02); transform: translateX(4px); }
+        .tab-3 { background-color: var(--tab-03); transform: translateX(8px); }
+        .tab-4 { background-color: var(--tab-04); transform: translateX(12px); }
+        .tab-5 { background-color: var(--tab-05); transform: translateX(16px); }
+        .tab-6 { background-color: var(--tab-06); transform: translateX(20px); }
+        .tab-8 { background-color: var(--tab-08); transform: translateX(24px); }
+        .tab-9 { background-color: var(--tab-09); transform: translateX(28px); }
+
+        /* Anniversary Timer Section */
+        .timer-box {
+            border: 1.5px solid #e0ddd5;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .timer-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        #timer {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #7a746e;
+        }
+
+        /* Playlist Section */
+        .playlist-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .song-list {
+            list-style: none;
+        }
+
+        .song-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed #efede8;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .song-item:hover {
+            color: var(--tab-04);
+        }
+
+        .song-number {
+            font-weight: 600;
+            margin-right: 15px;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .notebook-page {
+                width: 85%;
+                margin-right: 30px;
+                padding: 25px;
+            }
+            .tabs-container {
+                right: -40px;
+            }
+            .tab {
+                width: 35px;
+                font-size: 9px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="notebook">
-        <div class="timer">
-            ❤️ <span id="days">0</span> Hari Jadian ❤️<br>
-            <small id="clock">00:00:00</small>
+    <div class="notebook-page">
+        <!-- Vertical Tabs -->
+        <div class="tabs-container">
+            <a href="#" class="tab tab-1">01 EVALUASI</a>
+            <a href="#" class="tab tab-2">02 SECUKUPNYA</a>
+            <a href="#" class="tab tab-3">03 RUMAH</a>
+            <a href="#" class="tab tab-4">04 BESOK</a>
+            <a href="#" class="tab tab-5">05 MEMBASUH</a>
+            <a href="#" class="tab tab-6">06 APA PUN</a>
+            <a href="#" class="tab tab-8">08 CINCIN</a>
+            <a href="#" class="tab tab-9">09 JANJI</a>
         </div>
 
-        <div class="photo-frame">
-            <img id="mainPhoto" src="1.jpg" alt="Memory">
+        <!-- Timer Section -->
+        <div class="timer-box">
+            <h2>Our Special Anniversary</h2>
+            <div id="timer">Loading time...</div>
         </div>
 
-        <p style="text-align: center; font-size: 12px; margin-top: 10px;">🎵 Now Playing: Hindia.mp3</p>
-        <audio controls autoplay loop>
-            <source src="hindia.mp3" type="audio/mpeg">
-        </audio>
-
-        <div class="tabs">
-            <button class="tab t1" onclick="changeImg('1.jpg')">01</button>
-            <button class="tab t2" onclick="changeImg('2.jpg')">02</button>
-            <button class="tab t3" onclick="changeImg('3.jpg')">03</button>
-            <button class="tab t4" onclick="changeImg('4.jpg')">04</button>
-            <button class="tab t5" onclick="changeImg('5.jpg')">05</button>
-            <button class="tab t6" onclick="changeImg('6.jpg')">06</button>
-            <button class="tab t8" onclick="changeImg('8.jpg')">08</button>
-            <button class="tab t9" onclick="changeImg('9.jpg')">09</button>
+        <!-- Playlist Section -->
+        <div class="playlist-section">
+            <h3>Playlist Hindia Kita</h3>
+            <ul class="song-list">
+                <li class="song-item"><span class="song-number">01</span> Evaluasi</li>
+                <li class="song-item"><span class="song-number">02</span> Secukupnya</li>
+                <li class="song-item"><span class="song-number">03</span> Rumah ke Rumah</li>
+                <li class="song-item"><span class="song-number">04</span> Besok Mungkin Kita Sampai</li>
+                <li class="song-item"><span class="song-number">05</span> Membasuh</li>
+                <li class="song-item"><span class="song-number">06</span> Apapun yang Terjadi</li>
+                <li class="song-item"><span class="song-number">08</span> Cincin</li>
+                <li class="song-item"><span class="song-number">09</span> Janji Palsu</li>
+            </ul>
         </div>
     </div>
 
     <script>
-        // Ganti Foto Saat Tab Diklik
-        function changeImg(imgName) {
-            document.getElementById('mainPhoto').src = imgName;
+        function updateAnniversaryTimer() {
+            // Target Date: February 5, 2026, 00:00:00
+            const startDate = new Date("February 5, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            
+            // Calculate difference
+            // Note: Since this is 2026, the 'elapsed' time will be negative until that date.
+            // This logic handles both countdown and count-up automatically.
+            const diff = now - startDate;
+
+            const absDiff = Math.abs(diff);
+
+            const days = Math.floor(absDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((absDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((absDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((absDiff % (1000 * 60)) / 1000);
+
+            const prefix = diff < 0 ? "In " : "";
+            const suffix = diff < 0 ? " Left" : " Elapsed";
+
+            document.getElementById("timer").innerHTML = 
+                `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
         }
 
-        // Hitung Waktu Jadian (05-02-2026)
-        const start = new Date("Feb 5, 2026 00:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = now - start;
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-            document.getElementById("days").innerText = d;
-            document.getElementById("clock").innerText = h + " Jam " + m + " Menit " + s + " Detik";
-        }, 1000);
+        // Update timer every second
+        setInterval(updateAnniversaryTimer, 1000);
+        updateAnniversaryTimer();
     </script>
 </body>
 </html>
