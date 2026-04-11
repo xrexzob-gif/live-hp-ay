@@ -5,114 +5,197 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Love Story</title>
     <style>
-        :root {
-            --pink-soft: #ffafbd;
-            --pink-dark: #ffc3a0;
-        }
-
-        body {
+        body, html {
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, var(--pink-soft), var(--pink-dark));
-            color: #444;
+            overflow: hidden; /* Supaya bintang tidak bikin scrollbar */
+            background-color: #000; /* Hitam pekat */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- 1. Overlay Pintu Masuk (Kotak Pesan) --- */
+        #entry-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100; /* Paling depan */
+            transition: opacity 1s ease-out;
+        }
+
+        .heart-icon {
+            font-size: 80px;
+            color: #d63384;
+            margin-bottom: 20px;
+            animation: heartBeat 1.5s infinite;
+        }
+
+        #start-btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            background-color: #d63384;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+            transition: transform 0.2s;
+        }
+
+        #start-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        /* --- 2. Konten Utama (Disembunyikan di awal) --- */
+        #main-content {
+            opacity: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 10; /* Di atas bintang */
+            transition: opacity 1s ease-in;
+            overflow-y: auto; /* Membolehkan scroll konten di dalem */
             text-align: center;
         }
 
-        /* Container Musik */
-        .music-box {
-            margin-top: 20px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
+        /* --- 3. Background Bintang Jalan --- */
+        #stars-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
         }
 
-        /* Gallery Foto */
-        .slideshow {
-            width: 80%;
-            max-width: 400px;
-            height: 400px;
-            margin: 30px 0;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        .slideshow img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .star {
             position: absolute;
-            left: 0;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: moveStar linear infinite;
         }
 
-        .slideshow img.active {
-            opacity: 1;
+        @keyframes moveStar {
+            from { transform: translateY(-10vh); }
+            to { transform: translateY(110vh); }
         }
 
-        /* Counter */
-        .counter-container {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 50px;
-        }
-
-        .timer {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .time-box {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .time-box span:first-child {
-            font-size: 2rem;
-            color: #d63384;
-        }
-
-        h1 { margin-top: 40px; font-size: 1.5rem; }
+        /* --- Styling Elemen Konten (Sama seperti sebelumnya) --- */
+        h1 { margin-top: 60px; font-size: 1.6rem; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .slideshow { width: 80%; max-width: 350px; height: 350px; margin: 30px 0; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(214, 51, 132, 0.3); position: relative; }
+        .slideshow img { width: 100%; height: 100%; object-fit: cover; position: absolute; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
+        .slideshow img.active { opacity: 1; }
+        .counter-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); padding: 20px; border-radius: 15px; margin-bottom: 80px; width: 80%; max-width: 400px;}
+        .timer { display: flex; gap: 15px; justify-content: center; font-weight: bold; }
+        .time-box { display: flex; flex-direction: column; }
+        .time-box span:first-child { font-size: 2rem; color: #ff8dc7; }
+        .time-box span:last-child { font-size: 0.8rem; color: #ccc; }
     </style>
 </head>
 <body>
 
-    <h1>Sudah Selama Ini Kita Bersama ❤️</h1>
-
-    <div class="slideshow" id="gallery">
-        </div>
-
-    <div class="counter-container">
-        <div class="timer" id="timer">
-            <div class="time-box"><span id="days">0</span><span>Hari</span></div>
-            <div class="time-box"><span id="hours">0</span><span>Jam</span></div>
-            <div class="time-box"><span id="minutes">0</span><span>Menit</span></div>
-            <div class="time-box"><span id="seconds">0</span><span>Detik</span></div>
-        </div>
-        <p style="margin-top: 15px; color: #888;">Sejak 05 Februari 2026</p>
+    <div id="entry-overlay">
+        <div class="heart-icon">❤️</div>
+        <button id="start-btn">Buka Pesan Untukmu</button>
     </div>
 
-    <div class="music-box">
-        <audio controls loop>
+    <div id="stars-container"></div>
+
+    <div id="main-content">
+        <h1>Sudah Selama Ini Kita Bersama ❤️</h1>
+
+        <div class="slideshow" id="gallery">
+            </div>
+
+        <div class="counter-container">
+            <div class="timer" id="timer">
+                <div class="time-box"><span id="days">0</span><span>Hari</span></div>
+                <div class="time-box"><span id="hours">0</span><span>Jam</span></div>
+                <div class="time-box"><span id="minutes">0</span><span>Menit</span></div>
+                <div class="time-box"><span id="seconds">0</span><span>Detik</span></div>
+            </div>
+            <p style="margin-top: 15px; color: #ccc; font-size: 0.9rem;">Sejak 05 Februari 2026</p>
+        </div>
+
+        <audio id="myAudio" loop>
             <source src="hindia.mp3" type="audio/mpeg">
-            Browser kamu tidak mendukung audio.
         </audio>
     </div>
 
     <script>
-        // 1. Logic Panggil Foto (1-6, 8, 9) sesuai screenshot
+        // --- Logic Pintu Masuk & Musik ---
+        const startBtn = document.getElementById('start-btn');
+        const overlay = document.getElementById('entry-overlay');
+        const mainContent = document.getElementById('main-content');
+        const audio = document.getElementById('myAudio');
+
+        startBtn.addEventListener('click', () => {
+            // Hilangkan overlay
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                // Munculkan konten utama
+                mainContent.style.opacity = '1';
+                document.body.style.overflow = 'auto'; // Aktifkan scroll konten
+            }, 1000);
+
+            // Putar Musik
+            audio.play().catch(error => {
+                console.log("Autoplay diblokir browser, butuh interaksi user.");
+                // Biasanya tombol sudah cukup, tapi browser modern ketat.
+                // Jika masih gagal, ini memastikan user tau musiknya ada.
+                alert("Klik di mana saja untuk memutar musik ya!");
+                document.body.addEventListener('click', () => audio.play(), { once: true });
+            });
+        });
+
+
+        // --- Logic Efek Bintang Gerak ---
+        const starsContainer = document.getElementById('stars-container');
+        const numberOfStars = 100;
+
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Randomize ukuran, posisi, dan kecepatan
+            const size = Math.random() * 3 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.left = Math.random() * 100 + 'vw';
+            
+            // Random delay agar tidak mulai barengan
+            star.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Random durasi (kecepatan) antara 5-15 detik
+            const duration = Math.random() * 10 + 5 + 's';
+            star.style.animationDuration = duration;
+
+            starsContainer.appendChild(star);
+        }
+
+
+        // --- Logic Panggil Foto (Sama seperti sebelumnya) ---
         const photos = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '8.jpg', '9.jpg'];
         const gallery = document.getElementById('gallery');
 
@@ -130,16 +213,15 @@
             images[currentIdx].classList.remove('active');
             currentIdx = (currentIdx + 1) % images.length;
             images[currentIdx].classList.add('active');
-        }, 3000); // Ganti foto tiap 3 detik
+        }, 3000);
 
-        // 2. Logic Counter Waktu Jadian
+
+        // --- Logic Counter Waktu (Sama seperti sebelumnya) ---
         const anniversaryDate = new Date("February 5, 2026 00:00:00").getTime();
 
         function updateTimer() {
             const now = new Date().getTime();
             const diff = now - anniversaryDate;
-
-            // Jika tanggal jadian belum lewat, diff akan negatif
             const positiveDiff = Math.max(0, diff);
 
             const d = Math.floor(positiveDiff / (1000 * 60 * 60 * 24));
