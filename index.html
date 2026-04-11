@@ -1,242 +1,237 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Love Story</title>
+    <title>Saturn Photo Gallery</title>
     <style>
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* Supaya bintang tidak bikin scrollbar */
-            background-color: #000; /* Hitam pekat */
-            color: #fff;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0a0a23 0%, #000 70%);
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            perspective: 1000px;
         }
 
-        /* --- 1. Overlay Pintu Masuk (Kotak Pesan) --- */
-        #entry-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100; /* Paling depan */
-            transition: opacity 1s ease-out;
+        .saturn-container {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            transform-style: preserve-3d;
+            animation: rotate 60s linear infinite;
         }
 
-        .heart-icon {
-            font-size: 80px;
-            color: #d63384;
-            margin-bottom: 20px;
-            animation: heartBeat 1.5s infinite;
+        .saturn-planet {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at 30% 30%, #f4d03f, #e67e22, #d68910, #b7950b);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 
+                inset -20px -20px 50px rgba(0,0,0,0.5),
+                0 0 100px rgba(244, 208, 63, 0.3);
+            z-index: 10;
         }
 
-        #start-btn {
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            background-color: #d63384;
-            color: white;
-            border: none;
+        .saturn-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(70deg);
+            width: 600px;
+            height: 600px;
+            border: 40px solid transparent;
+            border-image: linear-gradient(90deg, transparent 30%, rgba(200,150,100,0.6) 50%, transparent 70%) 1;
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(150,100,50,0.3);
+            z-index: 5;
+        }
+
+        .photo-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(75deg);
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+        }
+
+        .photo {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 3px solid rgba(255,255,255,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo:hover {
+            transform: scale(1.1) translateZ(20px);
+            box-shadow: 0 20px 50px rgba(255,200,100,0.6);
+            z-index: 20;
+        }
+
+        /* Position photos around the ring */
+        .photo:nth-child(1) { top: 10%; left: 10%; transform: translate(-50%, -50%) rotate(0deg) translateY(-250px); }
+        .photo:nth-child(2) { top: 20%; left: 30%; transform: translate(-50%, -50%) rotate(45deg) translateY(-250px); }
+        .photo:nth-child(3) { top: 40%; left: 60%; transform: translate(-50%, -50%) rotate(90deg) translateY(-250px); }
+        .photo:nth-child(4) { top: 70%; left: 85%; transform: translate(-50%, -50%) rotate(135deg) translateY(-250px); }
+        .photo:nth-child(5) { top: 85%; left: 70%; transform: translate(-50%, -50%) rotate(180deg) translateY(-250px); }
+        .photo:nth-child(6) { top: 75%; left: 40%; transform: translate(-50%, -50%) rotate(225deg) translateY(-250px); }
+        .photo:nth-child(7) { top: 45%; left: 15%; transform: translate(-50%, -50%) rotate(270deg) translateY(-250px); }
+        .photo:nth-child(8) { top: 25%; left: 5%;  transform: translate(-50%, -50%) rotate(315deg) translateY(-250px); }
+
+        .audio-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #f4d03f;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .play-btn, .pause-btn {
+            background: rgba(244, 208, 63, 0.2);
+            border: 2px solid #f4d03f;
+            color: #f4d03f;
+            padding: 12px 24px;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
-            transition: transform 0.2s;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
-        #start-btn:hover {
+        .play-btn:hover, .pause-btn:hover {
+            background: rgba(244, 208, 63, 0.4);
             transform: scale(1.05);
         }
 
-        @keyframes heartBeat {
-            0% { transform: scale(1); }
-            14% { transform: scale(1.1); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.1); }
-            70% { transform: scale(1); }
-        }
-
-        /* --- 2. Konten Utama (Disembunyikan di awal) --- */
-        #main-content {
-            opacity: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            z-index: 10; /* Di atas bintang */
-            transition: opacity 1s ease-in;
-            overflow-y: auto; /* Membolehkan scroll konten di dalem */
-            text-align: center;
-        }
-
-        /* --- 3. Background Bintang Jalan --- */
-        #stars-container {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-        }
-
-        .star {
+        .title {
             position: absolute;
-            background-color: #fff;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: moveStar linear infinite;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #f4d03f;
+            font-size: 2.5em;
+            text-shadow: 0 0 20px rgba(244, 208, 63, 0.8);
+            z-index: 100;
+            font-weight: bold;
         }
 
-        @keyframes moveStar {
-            from { transform: translateY(-10vh); }
-            to { transform: translateY(110vh); }
+        @keyframes rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
         }
 
-        /* --- Styling Elemen Konten (Sama seperti sebelumnya) --- */
-        h1 { margin-top: 60px; font-size: 1.6rem; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-        .slideshow { width: 80%; max-width: 350px; height: 350px; margin: 30px 0; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(214, 51, 132, 0.3); position: relative; }
-        .slideshow img { width: 100%; height: 100%; object-fit: cover; position: absolute; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
-        .slideshow img.active { opacity: 1; }
-        .counter-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); padding: 20px; border-radius: 15px; margin-bottom: 80px; width: 80%; max-width: 400px;}
-        .timer { display: flex; gap: 15px; justify-content: center; font-weight: bold; }
-        .time-box { display: flex; flex-direction: column; }
-        .time-box span:first-child { font-size: 2rem; color: #ff8dc7; }
-        .time-box span:last-child { font-size: 0.8rem; color: #ccc; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .saturn-container:hover {
+            animation-play-state: paused;
+        }
+
+        .saturn-planet {
+            animation: float 6s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
-
-    <div id="entry-overlay">
-        <div class="heart-icon">❤️</div>
-        <button id="start-btn">Buka Pesan Untukmu</button>
+    <div class="title">SATURN GALLERY</div>
+    
+    <div class="saturn-container">
+        <div class="saturn-planet"></div>
+        <div class="saturn-rings"></div>
+        <div class="photo-ring">
+            <img src="1.jpg" class="photo" alt="Photo 1" onclick="openModal(this.src, 'Photo 1')">
+            <img src="2.jpg" class="photo" alt="Photo 2" onclick="openModal(this.src, 'Photo 2')">
+            <img src="3.jpg" class="photo" alt="Photo 3" onclick="openModal(this.src, 'Photo 3')">
+            <img src="4.jpg" class="photo" alt="Photo 4" onclick="openModal(this.src, 'Photo 4')">
+            <img src="5.jpg" class="photo" alt="Photo 5" onclick="openModal(this.src, 'Photo 5')">
+            <img src="6.jpg" class="photo" alt="Photo 6" onclick="openModal(this.src, 'Photo 6')">
+            <img src="8.jpg" class="photo" alt="Photo 8" onclick="openModal(this.src, 'Photo 8')">
+            <img src="9.jpg" class="photo" alt="Photo 9" onclick="openModal(this.src, 'Photo 9')">
+        </div>
     </div>
 
-    <div id="stars-container"></div>
-
-    <div id="main-content">
-        <h1>Sudah Selama Ini Kita Bersama ❤️</h1>
-
-        <div class="slideshow" id="gallery">
-            </div>
-
-        <div class="counter-container">
-            <div class="timer" id="timer">
-                <div class="time-box"><span id="days">0</span><span>Hari</span></div>
-                <div class="time-box"><span id="hours">0</span><span>Jam</span></div>
-                <div class="time-box"><span id="minutes">0</span><span>Menit</span></div>
-                <div class="time-box"><span id="seconds">0</span><span>Detik</span></div>
-            </div>
-            <p style="margin-top: 15px; color: #ccc; font-size: 0.9rem;">Sejak 05 Februari 2026</p>
-        </div>
-
-        <audio id="myAudio" loop>
+    <div class="audio-controls">
+        <button class="play-btn" onclick="playMusic()">▶ Play</button>
+        <button class="pause-btn" onclick="pauseMusic()">⏸ Pause</button>
+        <audio id="bgMusic" loop>
             <source src="hindia.mp3" type="audio/mpeg">
         </audio>
     </div>
 
+    <!-- Modal for full-screen photos -->
+    <div id="photoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; justify-content:center; align-items:center;">
+        <img id="modalImg" style="max-width:90%; max-height:90%; border-radius:10px; box-shadow:0 0 50px rgba(255,255,255,0.5);">
+        <button onclick="closeModal()" style="position:absolute; top:20px; right:20px; background:#f4d03f; color:#000; border:none; padding:10px 20px; border-radius:25px; cursor:pointer; font-size:18px;">✕</button>
+    </div>
+
     <script>
-        // --- Logic Pintu Masuk & Musik ---
-        const startBtn = document.getElementById('start-btn');
-        const overlay = document.getElementById('entry-overlay');
-        const mainContent = document.getElementById('main-content');
-        const audio = document.getElementById('myAudio');
+        const audio = document.getElementById('bgMusic');
+        let isPlaying = false;
 
-        startBtn.addEventListener('click', () => {
-            // Hilangkan overlay
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                // Munculkan konten utama
-                mainContent.style.opacity = '1';
-                document.body.style.overflow = 'auto'; // Aktifkan scroll konten
-            }, 1000);
-
-            // Putar Musik
-            audio.play().catch(error => {
-                console.log("Autoplay diblokir browser, butuh interaksi user.");
-                // Biasanya tombol sudah cukup, tapi browser modern ketat.
-                // Jika masih gagal, ini memastikan user tau musiknya ada.
-                alert("Klik di mana saja untuk memutar musik ya!");
-                document.body.addEventListener('click', () => audio.play(), { once: true });
-            });
-        });
-
-
-        // --- Logic Efek Bintang Gerak ---
-        const starsContainer = document.getElementById('stars-container');
-        const numberOfStars = 100;
-
-        for (let i = 0; i < numberOfStars; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            
-            // Randomize ukuran, posisi, dan kecepatan
-            const size = Math.random() * 3 + 'px';
-            star.style.width = size;
-            star.style.height = size;
-            star.style.left = Math.random() * 100 + 'vw';
-            
-            // Random delay agar tidak mulai barengan
-            star.style.animationDelay = Math.random() * 5 + 's';
-            
-            // Random durasi (kecepatan) antara 5-15 detik
-            const duration = Math.random() * 10 + 5 + 's';
-            star.style.animationDuration = duration;
-
-            starsContainer.appendChild(star);
+        function playMusic() {
+            audio.play();
+            isPlaying = true;
         }
 
-
-        // --- Logic Panggil Foto (Sama seperti sebelumnya) ---
-        const photos = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '8.jpg', '9.jpg'];
-        const gallery = document.getElementById('gallery');
-
-        photos.forEach((src, index) => {
-            const img = document.createElement('img');
-            img.src = src;
-            if(index === 0) img.classList.add('active');
-            gallery.appendChild(img);
-        });
-
-        // Slideshow Animation
-        let currentIdx = 0;
-        const images = document.querySelectorAll('.slideshow img');
-        setInterval(() => {
-            images[currentIdx].classList.remove('active');
-            currentIdx = (currentIdx + 1) % images.length;
-            images[currentIdx].classList.add('active');
-        }, 3000);
-
-
-        // --- Logic Counter Waktu (Sama seperti sebelumnya) ---
-        const anniversaryDate = new Date("February 5, 2026 00:00:00").getTime();
-
-        function updateTimer() {
-            const now = new Date().getTime();
-            const diff = now - anniversaryDate;
-            const positiveDiff = Math.max(0, diff);
-
-            const d = Math.floor(positiveDiff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((positiveDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((positiveDiff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((positiveDiff % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = d;
-            document.getElementById("hours").innerText = h;
-            document.getElementById("minutes").innerText = m;
-            document.getElementById("seconds").innerText = s;
+        function pauseMusic() {
+            audio.pause();
+            isPlaying = false;
         }
 
-        setInterval(updateTimer, 1000);
-        updateTimer();
+        function openModal(src, alt) {
+            const modal = document.getElementById('photoModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = src;
+            modalImg.alt = alt;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('photoModal').style.display = 'none';
+        }
+
+        // Auto-play music when page loads (with user interaction fallback)
+        document.addEventListener('click', function() {
+            if (!isPlaying) {
+                playMusic();
+            }
+        }, { once: true });
+
+        // Close modal on escape key or click outside
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        document.getElementById('photoModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Continuous gentle rotation
+        document.querySelector('.saturn-container').style.animationDuration = '80s';
     </script>
 </body>
 </html>
