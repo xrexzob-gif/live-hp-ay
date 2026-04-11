@@ -6,122 +6,142 @@
     <title>Our Love Journey ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --love: #ff4b2b; --pink: #fff5f7; }
-        body, html { margin: 0; padding: 0; font-family: 'Quicksand', sans-serif; background-color: var(--pink); overflow-x: hidden; }
+        :root { --primary: #ff4b2b; --pink-bg: #fff5f7; }
+        body, html { margin: 0; padding: 0; font-family: 'Quicksand', sans-serif; background-color: var(--pink-bg); overflow-x: hidden; color: #4a4a4a; }
 
-        /* Intro Page */
-        #intro {
+        /* Halaman Depan */
+        #intro-page {
             height: 100vh; width: 100%; display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-            color: white; position: fixed; top: 0; z-index: 9999; transition: 1s ease-in-out;
+            color: white; position: fixed; top: 0; left: 0; z-index: 9999;
+            text-align: center; transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Ukuran Gift Goyang */
+        .gift-sticker {
+            width: 130px; 
+            margin-bottom: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
         }
 
         .btn-start {
-            padding: 15px 40px; font-size: 1.2rem; background: white; color: #ff758c;
+            padding: 18px 45px; font-size: 1.3rem; background: white; color: #ff758c;
             border: none; border-radius: 50px; cursor: pointer; font-weight: 700;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2); margin-top: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.3s;
         }
 
-        /* Main Content */
-        #main-web { display: none; opacity: 0; transition: 2s ease; padding-bottom: 100px; text-align: center; }
-        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--love); margin-top: 50px; }
+        .btn-start:hover { transform: scale(1.1); }
+
+        /* Konten Utama */
+        #main-content { display: none; opacity: 0; transition: 2s ease; text-align: center; }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.8rem; color: var(--primary); margin: 0; }
 
         /* Timer */
-        .timer { display: flex; justify-content: center; gap: 10px; margin: 30px 0; flex-wrap: wrap; }
-        .box { background: white; padding: 15px; border-radius: 15px; min-width: 70px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .box span { display: block; font-size: 2rem; font-weight: 700; color: var(--love); }
-        .box label { font-size: 0.7rem; color: #888; }
+        .timer-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 40px 0; }
+        .time-box { background: white; padding: 15px 20px; border-radius: 20px; min-width: 80px; box-shadow: 0 8px 20px rgba(255, 75, 43, 0.1); }
+        .time-box span { display: block; font-size: 2.2rem; font-weight: 700; color: var(--primary); }
+        .time-box label { font-size: 0.8rem; color: #888; text-transform: uppercase; font-weight: bold; }
 
         /* Gallery */
-        .gallery { position: relative; max-width: 500px; margin: 50px auto; height: 1600px; }
-        .polaroid {
-            position: absolute; background: white; padding: 10px 10px 30px 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 220px; transition: 0.4s;
-        }
-        .polaroid img { width: 100%; height: 220px; object-fit: cover; background: #eee; }
+        .photo-area { position: relative; max-width: 900px; margin: 80px auto; height: 1600px; }
+        .polaroid { position: absolute; background: white; padding: 12px 12px 35px 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); width: 230px; transition: 0.5s; }
+        .polaroid img { width: 100%; height: 230px; object-fit: cover; }
 
-        /* Positions */
-        .p1 { top: 0; left: 5%; transform: rotate(-5deg); }
-        .p2 { top: 60px; right: 5%; transform: rotate(5deg); }
-        .p3 { top: 350px; left: 10%; transform: rotate(7deg); }
-        .p4 { top: 410px; right: 5%; transform: rotate(-8deg); }
-        .p5 { top: 700px; left: 5%; transform: rotate(-5deg); }
-        .p6 { top: 760px; right: 10%; transform: rotate(10deg); }
-        .p8 { top: 1050px; left: 10%; transform: rotate(-3deg); }
-        .p9 { top: 1100px; right: 5%; transform: rotate(6deg); }
+        /* Posisi Foto (1.jpg - 9.jpg) */
+        .f1 { top: 0; left: 10%; transform: rotate(-6deg); }
+        .f2 { top: 60px; right: 8%; transform: rotate(5deg); }
+        .f3 { top: 400px; left: 15%; transform: rotate(8deg); }
+        .f4 { top: 450px; right: 12%; transform: rotate(-4deg); }
+        .f5 { top: 800px; left: 8%; transform: rotate(-9deg); }
+        .f6 { top: 850px; right: 15%; transform: rotate(6deg); }
+        .f8 { top: 1200px; left: 12%; transform: rotate(4deg); }
+        .f9 { top: 1150px; right: 10%; transform: rotate(-7deg); }
 
-        .heart { position: fixed; color: var(--love); animation: fly 4s linear infinite; z-index: 998; }
-        @keyframes fly { 0% { transform: translateY(100vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
-        .quote { font-style: italic; font-size: 1.1rem; color: #555; padding: 20px; line-height: 1.6; }
+        .polaroid:hover { transform: scale(1.1) rotate(0deg) !important; z-index: 100; }
+        .quote { max-width: 650px; margin: 60px auto; font-size: 1.4rem; line-height: 1.8; font-style: italic; color: #555; padding: 0 25px; }
+        .heart { position: fixed; color: var(--primary); animation: fly 4s linear infinite; }
+        @keyframes fly { 0% { transform: translateY(100vh) scale(0); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+        footer { padding: 100px 0; color: var(--primary); font-weight: 700; font-size: 1.3rem; }
     </style>
 </head>
 <body>
 
-    <audio id="lagu" loop>
-        <source src="hindia.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="lagu" loop><source src="hindia.mp3" type="audio/mpeg"></audio>
 
-    <div id="intro">
-        <h1>Halo Cantik... ❤️</h1>
-        <button class="btn-start" onclick="nyalakan()">Perjalanan Kita Dimulai</button>
+    <div id="intro-page">
+        <img src="1.gif" class="gift-sticker" alt="Sticker Lucu">
+        <h1 style="color: white; margin-bottom: 10px;">Halo Sayang... ❤️</h1>
+        <button class="btn-start" onclick="bukaWeb()"> PENCET SAYANG💋 </button>
     </div>
 
-    <div id="main-web">
-        <h1>Our Story</h1>
-        <div class="timer">
-            <div class="box"><span id="m">0</span><label>Bulan</label></div>
-            <div class="box"><span id="d">0</span><label>Hari</label></div>
-            <div class="box"><span id="h">0</span><label>Jam</label></div>
-            <div class="box"><span id="min">0</span><label>Menit</label></div>
+    <div id="main-content">
+        <header>
+            <h1>Our Memories</h1>
+            <p>Sejak 05 Februari 2026</p>
+        </header>
+
+        <div class="timer-container">
+            <div class="time-box"><span id="bln">0</span><label>Bulan</label></div>
+            <div class="time-box"><span id="hari">0</span><label>Hari</label></div>
+            <div class="time-box"><span id="jam">0</span><label>Jam</label></div>
+            <div class="time-box"><span id="mnt">0</span><label>Menit</label></div>
+            <div class="time-box"><span id="dtk">0</span><label>Detik</label></div>
         </div>
 
-        <div class="quote">"Terima kasih sudah bertahan sejauh ini bersamaku. Kamu adalah bagian terbaik dalam hidupku."</div>
+        <div class="quote">"Mungkin aku bukan orang yang selalu pandai merangkai kata secara langsung, jadi aku buatkan 'rumah' ini untukmu. Raisya, aku ingin kita punya satu tempat rahasia yang tidak terpengaruh oleh jarak atau waktu. Tempat di mana semua memori manis kita terjaga dari lupa. Aku ingin kamu tahu, bahwa setiap pixel di website ini adalah bukti kalau aku sangat menghargai setiap kehadiranmu. Biarlah ini jadi pengingat buat kita berdua, kalau di luar sana mungkin ada banyak hal yang membuat kita lelah, tapi di sini, kita akan selalu punya alasan untuk kembali jatuh cinta."</div>
 
-        <div class="gallery">
-            <div class="polaroid p1"><img src="./1.jpg"></div>
-            <div class="polaroid p2"><img src="./2.jpg"></div>
-            <div class="polaroid p3"><img src="./3.jpg"></div>
-            <div class="polaroid p4"><img src="./4.jpg"></div>
-            <div class="polaroid p5"><img src="./5.jpg"></div>
-            <div class="polaroid p6"><img src="./6.jpg"></div>
-            <div class="polaroid p8"><img src="./8.jpg"></div>
-            <div class="polaroid p9"><img src="./9.jpg"></div>
+        <div class="photo-area">
+            <div class="polaroid f1"><img src="1.jpg"></div>
+            <div class="polaroid f2"><img src="2.jpg"></div>
+            <div class="polaroid f3"><img src="3.jpg"></div>
+            <div class="polaroid f4"><img src="4.jpg"></div>
+            <div class="polaroid f5"><img src="5.jpg"></div>
+            <div class="polaroid f6"><img src="6.jpg"></div>
+            <div class="polaroid f8"><img src="8.jpg"></div>
+            <div class="polaroid f9"><img src="9.jpg"></div>
         </div>
 
-        <footer>Mencintaimu Selamanya ❤️</footer>
+        <footer>semngat yah sayang ini pesen dari aku moga jadi anak yg sukses ❤️</footer>
     </div>
 
     <script>
-        function nyalakan() {
-            var audio = document.getElementById("lagu");
-            audio.play().catch(function(error) {
-                console.log("Browser block audio, trying again...");
-            });
+        function bukaWeb() {
+            // Muter musik pas klik tombol
+            const audio = document.getElementById('lagu');
+            audio.play();
 
-            document.getElementById("intro").style.transform = "translateY(-100%)";
-            document.getElementById("main-web").style.display = "block";
-            setTimeout(() => { document.getElementById("main-web").style.opacity = "1"; }, 100);
+            // Geser halaman depan ke atas
+            document.getElementById('intro-page').style.transform = 'translateY(-100%)';
+            
+            // Munculin konten utama
+            const main = document.getElementById('main-content');
+            main.style.display = 'block';
+            setTimeout(() => { main.style.opacity = '1'; }, 100);
 
+            // Nyalain timer & hati
             setInterval(updateWaktu, 1000);
-            setInterval(createHeart, 500);
+            setInterval(buatHati, 500);
         }
 
-        const tgl = new Date("February 5, 2026 00:00:00").getTime();
+        const tglJadian = new Date("February 5, 2026 00:00:00").getTime();
         function updateWaktu() {
-            const now = new Date().getTime();
-            const diff = now - tgl;
-            const msD = 24 * 60 * 60 * 1000;
-            document.getElementById('m').innerText = Math.floor(diff / (30.44 * msD));
-            document.getElementById('d').innerText = Math.floor((diff % (30.44 * msD)) / msD);
-            document.getElementById('h').innerText = Math.floor((diff % msD) / (1000 * 60 * 60));
-            document.getElementById('min').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const sekarang = new Date().getTime();
+            const selisih = sekarang - tglJadian;
+            const msInDay = 24 * 60 * 60 * 1000;
+            const msInMonth = 30.44 * msInDay;
+            document.getElementById('bln').innerText = Math.floor(selisih / msInMonth);
+            document.getElementById('hari').innerText = Math.floor((selisih % msInMonth) / msInDay);
+            document.getElementById('jam').innerText = Math.floor((selisih % msInDay) / (1000 * 60 * 60));
+            document.getElementById('mnt').innerText = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('dtk').innerText = Math.floor((selisih % (1000 * 60)) / 1000);
         }
 
-        function createHeart() {
+        function buatHati() {
             const h = document.createElement("div");
             h.classList.add("heart"); h.innerHTML = "❤️";
             h.style.left = Math.random() * 100 + "vw";
+            h.style.fontSize = (Math.random() * 20 + 10) + "px";
             h.style.animationDuration = (Math.random() * 2 + 2) + "s";
             document.body.appendChild(h);
             setTimeout(() => h.remove(), 4000);
