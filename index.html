@@ -1,201 +1,80 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Untuk Kamu 💙</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory 05-02-2026</title>
+    <style>
+        body { font-family: 'Courier New', Courier, monospace; background-color: #1a1a1a; color: white; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        .notebook { width: 90%; height: 85vh; background: #2d2d2d; border-radius: 10px; position: relative; padding: 20px; box-sizing: border-box; border: 2px solid #444; }
+        
+        /* Timer Jadian */
+        .timer { background: #3d3d3d; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 20px; border: 1px solid #e28e8e; color: #e28e8e; font-size: 14px; }
 
-<style>
-body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  color:white;
-  text-align:center;
-  background:#020617;
-  overflow:hidden;
-}
+        /* Area Foto */
+        .photo-frame { width: 100%; height: 60%; background: #222; border-radius: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .photo-frame img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-/* 🤖 ROBOT */
-.robot{
-  position:fixed;
-  font-size:30px;
-  animation:float 6s infinite ease-in-out;
-  opacity:0.7;
-}
+        /* Audio Player Minimalis */
+        audio { width: 100%; margin-top: 15px; height: 30px; filter: invert(1); }
 
-@keyframes float{
-  0%{transform:translateY(0) rotate(0deg);}
-  50%{transform:translateY(-20px) rotate(10deg);}
-  100%{transform:translateY(0) rotate(0deg);}
-}
-
-/* posisi */
-.r1{top:10%;left:10%;}
-.r2{top:20%;left:80%;}
-.r3{top:60%;left:20%;}
-.r4{top:70%;left:70%;}
-.r5{top:40%;left:50%;}
-.r6{top:80%;left:10%;}
-.r7{top:15%;left:40%;}
-.r8{top:50%;left:85%;}
-
-/* layout */
-.wrapper{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.container{
-  width:100%;
-  max-width:380px;
-  padding:20px;
-}
-
-/* card */
-.card{
-  background:rgba(255,255,255,0.05);
-  border-radius:20px;
-  padding:20px;
-  backdrop-filter:blur(10px);
-}
-
-/* foto */
-img{
-  width:140px;
-  border-radius:20px;
-  margin-top:15px;
-}
-
-/* text */
-h1{font-size:26px;}
-h2{color:#60a5fa;font-size:14px;}
-
-.heart{
-  font-size:35px;
-  animation:beat 1s infinite;
-}
-
-@keyframes beat{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.2);}
-  100%{transform:scale(1);}
-}
-
-#days{
-  margin-top:10px;
-  font-size:13px;
-  color:#93c5fd;
-}
-
-.box{
-  margin-top:15px;
-  padding:15px;
-  border-radius:15px;
-  background:#1e293b;
-}
-
-/* button */
-button{
-  margin-top:15px;
-  padding:10px 15px;
-  border:none;
-  border-radius:10px;
-  background:#3b82f6;
-  color:white;
-}
-
-/* hidden */
-#hidden{
-  margin-top:15px;
-  opacity:0;
-  transition:1s;
-}
-.show{opacity:1;}
-</style>
+        /* TAB KAYA TIKTOK (Samping Kanan) */
+        .tabs { position: absolute; right: -35px; top: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .tab { width: 60px; height: 40px; color: white; text-decoration: none; font-weight: bold; font-size: 12px; display: flex; justify-content: center; align-items: center; border-radius: 0 8px 8px 0; box-shadow: 2px 2px 10px rgba(0,0,0,0.5); cursor: pointer; border: none; }
+        
+        /* Warna-warni Tab */
+        .t1 { background: #8E9775; } .t2 { background: #E28E8E; } .t3 { background: #6D8299; }
+        .t4 { background: #D4A373; } .t5 { background: #A98467; } .t6 { background: #BC8F8F; }
+        .t8 { background: #52796F; } .t9 { background: #354F52; }
+    </style>
 </head>
-
 <body>
 
-<!-- 🤖 ROBOT LUCU -->
-<div class="robot r1">🤖</div>
-<div class="robot r2">🤖</div>
-<div class="robot r3">🤖</div>
-<div class="robot r4">🤖</div>
-<div class="robot r5">🤖</div>
-<div class="robot r6">🤖</div>
-<div class="robot r7">🤖</div>
-<div class="robot r8">🤖</div>
+    <div class="notebook">
+        <div class="timer">
+            ❤️ <span id="days">0</span> Hari Jadian ❤️<br>
+            <small id="clock">00:00:00</small>
+        </div>
 
-<div class="wrapper">
-<div class="container">
+        <div class="photo-frame">
+            <img id="mainPhoto" src="1.jpg" alt="Memory">
+        </div>
 
-<div class="card">
+        <p style="text-align: center; font-size: 12px; margin-top: 10px;">🎵 Now Playing: Hindia.mp3</p>
+        <audio controls autoplay loop>
+            <source src="hindia.mp3" type="audio/mpeg">
+        </audio>
 
-<div class="heart">💙</div>
+        <div class="tabs">
+            <button class="tab t1" onclick="changeImg('1.jpg')">01</button>
+            <button class="tab t2" onclick="changeImg('2.jpg')">02</button>
+            <button class="tab t3" onclick="changeImg('3.jpg')">03</button>
+            <button class="tab t4" onclick="changeImg('4.jpg')">04</button>
+            <button class="tab t5" onclick="changeImg('5.jpg')">05</button>
+            <button class="tab t6" onclick="changeImg('6.jpg')">06</button>
+            <button class="tab t8" onclick="changeImg('8.jpg')">08</button>
+            <button class="tab t9" onclick="changeImg('9.jpg')">09</button>
+        </div>
+    </div>
 
-<h1>Untuk Kamu</h1>
-<h2>05 Februari 2026</h2>
+    <script>
+        // Ganti Foto Saat Tab Diklik
+        function changeImg(imgName) {
+            document.getElementById('mainPhoto').src = imgName;
+        }
 
-<img src="IMG-Foto-Gue.jpg">
-
-<div id="days"></div>
-
-<div class="box">
-Hari itu bukan cuma tanggal biasa...<br>
-Itu awal dari cerita kita 💙
-</div>
-
-<button onclick="start()">Klik ini 💌</button>
-
-<div id="hidden">
-Makasih udah ada 💙<br>
-I love you
-</div>
-
-<audio id="music" loop>
-  <source src="hindia.mp3">
-</audio>
-
-</div>
-
-</div>
-</div>
-
-<script>
-
-// 🔥 FIX TOTAL (MENIT + DETIK JALAN)
-function updateDays(){
-  const start = new Date("2026-02-05T00:00:00");
-  const now = new Date().getTime();
-  const diff = now - start.getTime();
-
-  if(diff >= 0){
-    const total = Math.floor(diff / 1000);
-
-    const d = Math.floor(total / (3600*24));
-    const h = Math.floor((total % (3600*24)) / 3600);
-    const m = Math.floor((total % 3600) / 60);
-    const s = total % 60;
-
-    document.getElementById("days").innerText =
-      `${d} hari ${h} jam ${m} menit ${s} detik bareng 💙`;
-  } else {
-    document.getElementById("days").innerText =
-      "Menuju hari spesial 💙";
-  }
-}
-
-setInterval(updateDays, 1000);
-updateDays();
-
-function start(){
-  document.getElementById("hidden").classList.add("show");
-  document.getElementById("music").play();
-}
-
-</script>
-
+        // Hitung Waktu Jadian (05-02-2026)
+        const start = new Date("Feb 5, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = now - start;
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById("days").innerText = d;
+            document.getElementById("clock").innerText = h + " Jam " + m + " Menit " + s + " Detik";
+        }, 1000);
+    </script>
 </body>
 </html>
