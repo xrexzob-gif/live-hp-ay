@@ -3,351 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Eternal Orbit - 05-02-2026 ♡</title>
+    <title>Our Eternal Love - 05-02-2026</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            background: linear-gradient(45deg, #0c0c1a 0%, #1a0033 30%, #000 70%);
-            background-attachment: fixed;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
             height: 100vh;
-            overflow: hidden;
-            font-family: 'Dancing Script', cursive;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            perspective: 1200px;
+            text-align: center;
             position: relative;
         }
-
-        body::before {
-            content: '';
-            position: fixed;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hearts {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                radial-gradient(2px 2px at 40px 70px, #fff, transparent),
-                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                radial-gradient(1px 1px at 130px 80px, #ddd, transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: twinkle 20s linear infinite;
-            opacity: 0.4;
+            pointer-events: none;
             z-index: 1;
         }
-
-        .saturn-container {
-            position: relative;
-            width: 900px;
-            height: 900px;
-            transform-style: preserve-3d;
-            animation: eternalOrbit 90s linear infinite;
-            z-index: 10;
-        }
-
-        .heart-planet {
-            width: 320px;
-            height: 320px;
-            background: 
-                radial-gradient(ellipse at 40% 40%, #ff6b9d 0%, #ff1493 30%, #c71585 60%, #8b008b 100%),
-                radial-gradient(ellipse at 60% 60%, #ffd700 0%, #ff8c00 50%, #ff4500 100%);
-            border-radius: 50% 50% 45% 55% / 60% 60% 40% 40%;
+        .heart {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(5deg);
-            box-shadow: 
-                inset -30px -30px 60px rgba(0,0,0,0.4),
-                0 0 120px rgba(255, 107, 157, 0.6),
-                0 0 60px rgba(255, 215, 0, 0.4),
-                0 0 200px rgba(255, 20, 147, 0.3);
-            animation: heartbeat 4s ease-in-out infinite;
-            position: relative;
-            overflow: hidden;
+            color: rgba(255,255,255,0.8);
+            font-size: 20px;
+            animation: float 6s infinite linear;
         }
-
-        .heart-planet::before {
-            content: '💖';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.6);
-            font-size: 100px;
-            animation: pulse 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px #fff);
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
-
-        .love-rings {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotateX(68deg);
-            width: 680px;
-            height: 680px;
-            border: 35px solid;
-            border-image: linear-gradient(90deg, transparent 20%, #ff69b4 40%, #ffd700 50%, #ff1493 60%, transparent 80%) 1;
-            border-radius: 50%;
-            box-shadow: 
-                0 0 80px rgba(255, 105, 180, 0.5),
-                inset 0 0 80px rgba(255, 215, 0, 0.3);
-            z-index: 5;
-        }
-
-        .photo-orbit {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotateX(72deg);
-            width: 780px;
-            height: 780px;
-            border-radius: 50%;
-        }
-
-        .memory {
-            position: absolute;
-            width: 130px;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 
-                0 15px 40px rgba(0,0,0,0.6),
-                0 0 40px rgba(255, 105, 180, 0.8),
-                inset 0 0 20px rgba(255,255,255,0.3);
-            border: 4px solid rgba(255,255,255,0.6);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .memory::before {
-            content: '💕';
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            font-size: 24px;
+        .container {
             z-index: 2;
-            animation: floatHeart 3s ease-in-out infinite;
+            max-width: 900px;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: pulse 3s infinite;
         }
-
-        .memory:hover {
-            transform: scale(1.15) translateZ(30px) rotate(5deg);
-            box-shadow: 
-                0 25px 60px rgba(0,0,0,0.7),
-                0 0 60px rgba(255, 20, 147, 1),
-                0 0 100px rgba(255, 215, 0, 0.8);
-            z-index: 25;
-        }
-
-        /* Romantic photo positioning */
-        .memory:nth-child(1) { top: 8%; left: 12%; transform: translate(-50%, -50%) rotate(0deg) translateY(-280px); }
-        .memory:nth-child(2) { top: 18%; left: 32%; transform: translate(-50%, -50%) rotate(45deg) translateY(-280px); }
-        .memory:nth-child(3) { top: 38%; left: 62%; transform: translate(-50%, -50%) rotate(90deg) translateY(-280px); }
-        .memory:nth-child(4) { top: 68%; left: 88%; transform: translate(-50%, -50%) rotate(135deg) translateY(-280px); }
-        .memory:nth-child(5) { top: 82%; left: 72%; transform: translate(-50%, -50%) rotate(180deg) translateY(-280px); }
-        .memory:nth-child(6) { top: 72%; left: 42%; transform: translate(-50%, -50%) rotate(225deg) translateY(-280px); }
-        .memory:nth-child(7) { top: 42%; left: 18%; transform: translate(-50%, -50%) rotate(270deg) translateY(-280px); }
-        .memory:nth-child(8) { top: 22%; left: 8%;  transform: translate(-50%, -50%) rotate(315deg) translateY(-280px); }
-
-        .love-vows {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ff69b4;
-            font-size: 2.8em;
-            text-align: center;
-            text-shadow: 
-                0 0 20px #ff1493,
-                0 0 40px #ffd700,
-                0 0 60px #ff69b4;
-            z-index: 100;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .anniversary {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ffd700;
-            font-size: 1.8em;
-            text-align: center;
-            text-shadow: 0 0 20px #ff1493;
-            z-index: 100;
-            font-weight: 400;
-        }
-
-        .music-heart {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ff69b4;
-            text-align: center;
-            z-index: 100;
-            font-size: 1.4em;
-        }
-
-        .play-btn, .pause-btn {
-            background: linear-gradient(45deg, rgba(255,105,180,0.3), rgba(255,215,0,0.3));
-            border: 3px solid;
-            border-image: linear-gradient(45deg, #ff69b4, #ffd700) 1;
-            color: #fff;
-            padding: 15px 30px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 18px;
-            font-family: 'Dancing Script', cursive;
-            margin: 0 15px;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(15px);
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(255,255,255,0.8);
-        }
-
-        .play-btn:hover, .pause-btn:hover {
-            background: linear-gradient(45deg, rgba(255,105,180,0.6), rgba(255,215,0,0.6));
-            transform: scale(1.1) translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255,105,180,0.6);
-        }
-
-        @keyframes eternalOrbit {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: translate(-50%, -50%) rotate(5deg) scale(1); }
-            14% { transform: translate(-50%, -50%) rotate(5deg) scale(1.05); }
-            28% { transform: translate(-50%, -50%) rotate(5deg) scale(1.1); }
-            42% { transform: translate(-50%, -50%) rotate(5deg) scale(1.05); }
-            70% { transform: translate(-50%, -50%) rotate(5deg) scale(1.1); }
-        }
-
         @keyframes pulse {
-            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.6); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(0.8); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-
-        @keyframes twinkle {
-            from { transform: translateX(0px) translateY(0px) rotate(0deg); }
-            to { transform: translateX(100px) translateY(100px) rotate(360deg); }
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: glow 2s ease-in-out infinite alternate;
         }
-
-        @keyframes floatHeart {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(180deg); }
+        @keyframes glow {
+            from { text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px #ff69b4; }
+            to { text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 30px #ff1493; }
         }
-
-        .saturn-container:hover {
-            animation-play-state: paused;
+        .date {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .photo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .photo:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 35px rgba(255,105,180,0.6);
+        }
+        .music-player {
+            margin-top: 20px;
+        }
+        audio {
+            width: 100%;
+            max-width: 400px;
+            outline: none;
+        }
+        .love-note {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-top: 20px;
+            animation: fadeIn 4s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            .photo-gallery { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <div class="love-vows">
-        Forever orbiting<br>
-        <span style="font-size: 1.2em; color: #ffd700;">in your love's gravity 💖</span>
-    </div>
+    <div class="hearts" id="hearts"></div>
     
-    <div class="saturn-container">
-        <div class="heart-planet"></div>
-        <div class="love-rings"></div>
-        <div class="photo-orbit">
-            <img src="1.jpg" class="memory" alt="Our first memory 💕" onclick="openEternalMemory(this.src, 'Our first memory 💕')">
-            <img src="2.jpg" class="memory" alt="Sweet moments 💕" onclick="openEternalMemory(this.src, 'Sweet moments 💕')">
-            <img src="3.jpg" class="memory" alt="Forever together 💕" onclick="openEternalMemory(this.src, 'Forever together 💕')">
-            <img src="4.jpg" class="memory" alt="Love eternal 💕" onclick="openEternalMemory(this.src, 'Love eternal 💕')">
-            <img src="5.jpg" class="memory" alt="Heart to heart 💕" onclick="openEternalMemory(this.src, 'Heart to heart 💕')">
-            <img src=".jpg" class="memory" alt="Special moment 💕" onclick="openEternalMemory(this.src, 'Special moment 💕')">
-            <img src="6.jpg" class="memory" alt="Always yours 💕" onclick="openEternalMemory(this.src, 'Always yours 💕')">
-            <img src="8.jpg" class="memory" alt="Soulmates 💕" onclick="openEternalMemory(this.src, 'Soulmates 💕')">
-            <img src="9.jpg" class="memory" alt="Eternal love 💕" onclick="openEternalMemory(this.src, 'Eternal love 💕')">
+    <div class="container">
+        <h1>💕 My Forever Love 💕</h1>
+        <div class="date">Our Anniversary: 05-02-2026</div>
+        
+        <div class="photo-gallery">
+            <img src="1.jpg" alt="Our first moment" class="photo" onclick="this.style.transform='scale(1.1)'">
+            <img src="2.jpg" alt="Your smile" class="photo" onclick="this.style.transform='scale(1.1)'">
+            <img src=".jpg" alt="Secret memory" class="photo" onclick="this.style.transform='scale(1.1)'">
+            <img src="3.jpg" alt="Our embrace" class="photo" onclick="this.style.transform='scale(1.1)'">
+            <img src="4.jpg" alt="Eternal gaze" class="photo" onclick="this.style.transform='scale(1.1)'">
+            <img src="5.jpg" alt="Sweet kisses" class="photo" onclick="this.style.transform='scale(1.1)'">
+            <img src="6.jpg" alt="Our dreams" class="photo" onclick="this.style.transform='scale(1.1)'">
+            <img src="8.jpg" alt="Passionate nights" class="photo" onclick="this.style.transform='scale(1.1)'">
+            <img src="9.jpg" alt="Forever together" class="photo" onclick="this.style.transform='scale(1.1)'">
+        </div>
+        
+        <div class="music-player">
+            <audio controls autoplay loop>
+                <source src="hindia.mp3" type="audio/mpeg">
+                Your browser doesn't support audio.
+            </audio>
+        </div>
+        
+        <div class="love-note">
+            My dearest love, every heartbeat screams your name. 
+            From the moment our souls touched, I've been lost in your eyes, 
+            drowning in the ocean of your love. 05-02-2026 marks not just a date, 
+            but the eternal promise of our undying passion. 
+            You are my everything, my breath, my universe. 💖
         </div>
     </div>
 
-    <div class="music-heart">
-        Our love song plays eternally 💞<br>
-        <button class="play-btn" onclick="playOurSong()">💖 Play Our Song</button>
-        <button class="pause-btn" onclick="pauseOurSong()">💔 Pause</button>
-        <audio id="loveSong" loop preload="auto">
-            <source src="hindia.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
-    <div class="anniversary">
-        Celebrating our love<br>
-        <span style="font-size: 1.4em; color: #ff1493; font-weight: 700;">05-02-2026 ♡ Forever</span>
-    </div>
-
-    <!-- Eternal Love Modal -->
-    <div id="eternalModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:linear-gradient(45deg, rgba(255,20,147,0.95), rgba(255,105,180,0.9)); z-index:1000; justify-content:center; align-items:center; backdrop-filter: blur(20px);">
-        <img id="eternalImg" style="max-width:85%; max-height:85%; border-radius:25px; box-shadow:0 0 80px rgba(255,255,255,0.8), inset 0 0 40px rgba(255,255,255,0.3); border: 8px solid rgba(255,255,255,0.6);">
-        <div id="loveCaption" style="position:absolute; bottom:50px; left:50%; transform:translateX(-50%); color:#fff; font-size:2.5em; text-align:center; text-shadow:0 0 20px #000; font-family:'Great Vibes', cursive; max-width:80%;"></div>
-        <button onclick="closeEternalMemory()" style="position:absolute; top:30px; right:30px; background:linear-gradient(45deg,#ffd700,#ff1493); color:#fff; border:none; padding:15px 25px; border-radius:50px; cursor:pointer; font-size:20px; font-family:'Dancing Script', cursive; box-shadow:0 10px 30px rgba(0,0,0,0.5);">✨ Back to our orbit</button>
-    </div>
-
     <script>
-        const loveSong = document.getElementById('loveSong');
-        let orbitingTogether = false;
-
-        function playOurSong() {
-            loveSong.play().catch(e => console.log('Love needs a gentle touch first 💕'));
-            orbitingTogether = true;
+        // Floating hearts animation
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.getElementById('hearts').appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
         }
+        setInterval(createHeart, 300);
 
-        function pauseOurSong() {
-            loveSong.pause();
-            orbitingTogether = false;
-        }
-
-        function openEternalMemory(src, caption) {
-            const modal = document.getElementById('eternalModal');
-            const img = document.getElementById('eternalImg');
-            const loveText = document.getElementById('loveCaption');
-            img.src = src;
-            loveText.textContent = caption;
-            modal.style.display = 'flex';
-            loveSong.volume = 0.7;
-        }
-
-        function closeEternalMemory() {
-            document.getElementById('eternalModal').style.display = 'none';
-        }
-
-        // Our love starts playing on first touch
-        document.addEventListener('click', function() {
-            if (!orbitingTogether) {
-                playOurSong();
-            }
-        }, { once: true });
-
-        // Close with escape or outside click
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') closeEternalMemory();
-        });
-
-        document.getElementById('eternalModal').addEventListener('click', function(e) {
-            if (e.target === this) closeEternalMemory();
-        });
-
-        // Gentle hover pause for romantic moments
-        document.querySelector('.saturn-container').addEventListener('mouseenter', () => {
-            document.querySelector('.saturn-container').style.animationPlayState = 'paused';
-        });
-        document.querySelector('.saturn-container').addEventListener('mouseleave', () => {
-            document.querySelector('.saturn-container').style.animationPlayState = 'running';
+        // Photo reset on mouse leave
+        document.querySelectorAll('.photo').forEach(photo => {
+            photo.addEventListener('mouseleave', () => {
+                photo.style.transform = 'scale(1)';
+            });
         });
     </script>
 </body>
