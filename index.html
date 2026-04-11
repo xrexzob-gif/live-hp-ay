@@ -9,7 +9,6 @@
         :root { --primary: #ff4b2b; --pink-bg: #fff5f7; }
         body, html { margin: 0; padding: 0; font-family: 'Quicksand', sans-serif; background-color: var(--pink-bg); overflow-x: hidden; color: #4a4a4a; }
 
-        /* Halaman Depan */
         #intro-page {
             height: 100vh; width: 100%; display: flex; flex-direction: column;
             justify-content: center; align-items: center;
@@ -18,37 +17,22 @@
             text-align: center; transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Ukuran Gift Goyang */
-        .gift-sticker {
-            width: 130px; 
-            margin-bottom: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
-        }
-
-        .btn-start {
-            padding: 18px 45px; font-size: 1.3rem; background: white; color: #ff758c;
-            border: none; border-radius: 50px; cursor: pointer; font-weight: 700;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.3s;
-        }
-
+        .gift-sticker { width: 130px; margin-bottom: 20px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); }
+        .btn-start { padding: 18px 45px; font-size: 1.3rem; background: white; color: #ff758c; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.3s; }
         .btn-start:hover { transform: scale(1.1); }
 
-        /* Konten Utama */
         #main-content { display: none; opacity: 0; transition: 2s ease; text-align: center; }
         h1 { font-family: 'Dancing Script', cursive; font-size: 3.8rem; color: var(--primary); margin: 0; }
 
-        /* Timer */
         .timer-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 40px 0; }
         .time-box { background: white; padding: 15px 20px; border-radius: 20px; min-width: 80px; box-shadow: 0 8px 20px rgba(255, 75, 43, 0.1); }
         .time-box span { display: block; font-size: 2.2rem; font-weight: 700; color: var(--primary); }
         .time-box label { font-size: 0.8rem; color: #888; text-transform: uppercase; font-weight: bold; }
 
-        /* Gallery */
         .photo-area { position: relative; max-width: 900px; margin: 80px auto; height: 1600px; }
         .polaroid { position: absolute; background: white; padding: 12px 12px 35px 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); width: 230px; transition: 0.5s; }
         .polaroid img { width: 100%; height: 230px; object-fit: cover; }
 
-        /* Posisi Foto (1.jpg - 9.jpg) */
         .f1 { top: 0; left: 10%; transform: rotate(-6deg); }
         .f2 { top: 60px; right: 8%; transform: rotate(5deg); }
         .f3 { top: 400px; left: 15%; transform: rotate(8deg); }
@@ -107,34 +91,34 @@
 
     <script>
         function bukaWeb() {
-            // Muter musik pas klik tombol
             const audio = document.getElementById('lagu');
             audio.play();
-
-            // Geser halaman depan ke atas
             document.getElementById('intro-page').style.transform = 'translateY(-100%)';
-            
-            // Munculin konten utama
             const main = document.getElementById('main-content');
             main.style.display = 'block';
             setTimeout(() => { main.style.opacity = '1'; }, 100);
-
-            // Nyalain timer & hati
             setInterval(updateWaktu, 1000);
             setInterval(buatHati, 500);
+            updateWaktu(); // Panggil sekali biar gak nunggu 1 detik
         }
 
         const tglJadian = new Date("February 5, 2026 00:00:00").getTime();
+        
         function updateWaktu() {
-            const sekarang = new Date().getTime();
-            const selisih = sekarang - tglJadian;
+            const sekarang = new Date();
+            const selisih = sekarang.getTime() - tglJadian;
+            
             const msInDay = 24 * 60 * 60 * 1000;
             const msInMonth = 30.44 * msInDay;
+
             document.getElementById('bln').innerText = Math.floor(selisih / msInMonth);
-            document.getElementById('hari').innerText = Math.floor((selisih % msInMonth) / msInDay);
-            document.getElementById('jam').innerText = Math.floor((selisih % msInDay) / (1000 * 60 * 60));
-            document.getElementById('mnt').innerText = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById('dtk').innerText = Math.floor((selisih % (1000 * 60)) / 1000);
+            // Penambahan +1 hari agar sesuai kalender
+            document.getElementById('hari').innerText = Math.floor((selisih % msInMonth) / msInDay) + 1;
+            
+            // Mengambil jam, menit, detik langsung dari waktu sistem (HP)
+            document.getElementById('jam').innerText = sekarang.getHours().toString().padStart(2, '0');
+            document.getElementById('mnt').innerText = sekarang.getMinutes().toString().padStart(2, '0');
+            document.getElementById('dtk').innerText = sekarang.getSeconds().toString().padStart(2, '0');
         }
 
         function buatHati() {
