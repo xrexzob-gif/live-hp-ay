@@ -21,7 +21,7 @@
         }
         .btn-start { padding: 15px 35px; font-size: 1.1rem; background: var(--primary); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: 0 5px 20px rgba(255, 75, 43, 0.4); }
 
-        /* Konten Utama - Anti Scroll */
+        /* Konten Utama */
         #main-content { 
             display: none; opacity: 0; transition: 1.5s; text-align: center; 
             height: 100vh; display: flex; flex-direction: column; justify-content: space-around; padding: 10px; box-sizing: border-box;
@@ -30,20 +30,31 @@
         h1 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 0; }
         .sub-title { font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
 
-        /* Timer Lebih Kecil & Sejajar */
+        /* Timer */
         .timer-container { display: flex; justify-content: center; gap: 5px; margin: 5px 0; }
         .time-box { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 10px; min-width: 55px; border: 1px solid rgba(255,255,255,0.1); }
         .time-box span { display: block; font-size: 1.2rem; font-weight: 700; color: var(--primary); }
         .time-box label { font-size: 0.6rem; color: #888; text-transform: uppercase; }
 
-        /* Quote Jadi Judul Kecil */
-        .quote-title { max-width: 90%; margin: 0 auto; font-size: 0.85rem; line-height: 1.4; color: #ddd; font-style: italic; }
-        .quote-title span { color: var(--primary); font-weight: bold; }
+        /* Quote Box */
+        .quote-title { 
+            max-width: 90%; 
+            margin: 0 auto; 
+            font-size: 0.9rem; 
+            line-height: 1.6; 
+            color: #eee; 
+            font-style: italic;
+            background: rgba(255, 75, 43, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px dashed var(--primary);
+        }
+        .quote-title span { color: var(--primary); font-weight: bold; font-style: normal; }
 
-        /* Sticker 2.gif di atas foto */
+        /* Sticker */
         .new-sticker { width: 80px; margin: 5px auto; display: block; }
 
-        /* Carousel Lebih Compact */
+        /* Carousel */
         .carousel-container {
             position: relative; width: 100%; height: 250px; perspective: 1000px; margin-top: 10px;
         }
@@ -73,7 +84,15 @@
         .heart { position: fixed; color: var(--primary); animation: fly 4s linear infinite; z-index: 10; pointer-events: none;}
         @keyframes fly { 0% { transform: translateY(100vh) scale(0); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
         
-        footer { font-size: 0.75rem; color: #666; padding-bottom: 10px; }
+        footer { 
+            font-size: 0.8rem; 
+            color: #bbb; 
+            padding: 10px; 
+            max-width: 85%; 
+            margin: 0 auto; 
+            line-height: 1.4;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -103,7 +122,7 @@
         </div>
 
         <div class="quote-title">
-            "<span>Raisya</span>, ini rumah rahasia kita. Tempat memori manis terjaga dari lupa. Alasan untuk selalu jatuh cinta."
+            "<span>Raisya</span>, aku tahu dunia mungkin pernah terasa sangat berat dan melelahkan bagimu. Tapi mulai detik ini, kamu tidak perlu lagi menanggung semuanya sendirian. Biarkan aku menjadi alasanmu untuk kembali percaya bahwa bahagia itu nyata. Kamu berhak disayangi, dan aku di sini untuk memastikan kamu selalu merasa aman."
         </div>
 
         <div>
@@ -122,7 +141,9 @@
             </div>
         </div>
 
-        <footer>semngat sayang, moga sukses ❤️</footer>
+        <footer>
+            Terus melangkah ya sayang, jangan pernah ragu sama kemampuanmu. Aku bakal selalu ada di garis paling depan buat dukung semua mimpimu sampai sukses nanti. Masa depanmu cerah, dan aku bangga memilikimu. ❤️
+        </footer>
     </div>
 
     <script>
