@@ -19,7 +19,25 @@
             background: rgba(0,0,0,0.95); position: fixed; top: 0; left: 0; z-index: 9999;
             text-align: center; transition: 0.8s;
         }
-        .btn-start { padding: 15px 35px; font-size: 1.1rem; background: var(--primary); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: 0 5px 20px rgba(255, 75, 43, 0.4); }
+        
+        #instruksi {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .btn-cadangan { 
+            background: none; border: 1px solid rgba(255,255,255,0.2); 
+            color: #555; padding: 10px 20px; border-radius: 50px; 
+            font-size: 0.7rem; cursor: pointer; margin-top: 50px;
+        }
 
         /* Konten Utama */
         #main-content { 
@@ -30,46 +48,24 @@
         h1 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 0; }
         .sub-title { font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
 
-        /* Timer */
         .timer-container { display: flex; justify-content: center; gap: 5px; margin: 5px 0; }
         .time-box { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 10px; min-width: 55px; border: 1px solid rgba(255,255,255,0.1); }
         .time-box span { display: block; font-size: 1.2rem; font-weight: 700; color: var(--primary); }
         .time-box label { font-size: 0.6rem; color: #888; text-transform: uppercase; }
 
-        /* Quote Box */
         .quote-title { 
-            max-width: 90%; 
-            margin: 0 auto; 
-            font-size: 0.9rem; 
-            line-height: 1.6; 
-            color: #eee; 
-            font-style: italic;
-            background: rgba(255, 75, 43, 0.1);
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px dashed var(--primary);
+            max-width: 90%; margin: 0 auto; font-size: 0.9rem; line-height: 1.6; color: #eee; font-style: italic;
+            background: rgba(255, 75, 43, 0.1); padding: 15px; border-radius: 15px; border: 1px dashed var(--primary);
         }
         .quote-title span { color: var(--primary); font-weight: bold; font-style: normal; }
 
-        /* Sticker */
         .new-sticker { width: 80px; margin: 5px auto; display: block; }
 
-        /* Carousel */
-        .carousel-container {
-            position: relative; width: 100%; height: 250px; perspective: 1000px; margin-top: 10px;
-        }
-        .carousel-wrap {
-            position: absolute; width: 100%; height: 100%; transform-style: preserve-3d;
-            animation: rotateCarousel 20s linear infinite;
-        }
-        .polaroid {
-            position: absolute; width: 120px; height: 160px; left: 50%; top: 50%;
-            margin-left: -60px; margin-top: -80px; background: white; padding: 5px 5px 15px 5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 3px;
-        }
+        .carousel-container { position: relative; width: 100%; height: 250px; perspective: 1000px; margin-top: 10px; }
+        .carousel-wrap { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; animation: rotateCarousel 20s linear infinite; }
+        .polaroid { position: absolute; width: 120px; height: 160px; left: 50%; top: 50%; margin-left: -60px; margin-top: -80px; background: white; padding: 5px 5px 15px 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 3px; }
         .polaroid img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Posisi 3D */
         .f1 { transform: rotateY(0deg) translateZ(180px); }
         .f2 { transform: rotateY(45deg) translateZ(180px); }
         .f3 { transform: rotateY(90deg) translateZ(180px); }
@@ -80,38 +76,28 @@
         .f9 { transform: rotateY(315deg) translateZ(180px); }
 
         @keyframes rotateCarousel { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
-
         .heart { position: fixed; color: var(--primary); animation: fly 4s linear infinite; z-index: 10; pointer-events: none;}
         @keyframes fly { 0% { transform: translateY(100vh) scale(0); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
         
-        footer { 
-            font-size: 0.8rem; 
-            color: #bbb; 
-            padding: 10px; 
-            max-width: 85%; 
-            margin: 0 auto; 
-            line-height: 1.4;
-            font-weight: 500;
-        }
+        footer { font-size: 0.8rem; color: #bbb; padding: 10px; max-width: 85%; margin: 0 auto; line-height: 1.4; font-weight: 500; }
     </style>
 </head>
 <body>
 
     <audio id="lagu" loop><source src="Bersamamu.mp3" type="audio/mpeg"></audio>
-
     <canvas id="star-canvas"></canvas>
 
-    <div id="intro-page">
+    <div id="intro-page" onclick="mulaiSensor()">
         <img src="1.gif" style="width:100px; margin-bottom:15px;">
-        <h1 style="color: white; margin-bottom: 20px; font-size: 2rem;">Halo Sayang... ❤️</h1>
-        <button class="btn-start" onclick="bukaWeb()"> PENCET SAYANG💋 </button>
+        <h1 style="color: white; margin-bottom: 10px; font-size: 2rem;">Halo Sayang... ❤️</h1>
+        <p id="instruksi">Tap layar ini, lalu GOYANG HP-mu! 📱</p>
+        <button class="btn-cadangan" onclick="bukaWeb()">Gak bisa goyang? Klik di sini</button>
     </div>
 
-    <div id="main-content" style="display: none;">
+    <div id="main-content">
         <div>
             <h1>Our Memories</h1>
             <p class="sub-title">Sejak 05 Februari 2026</p>
-            
             <div class="timer-container">
                 <div class="time-box"><span id="bln">0</span><label>Bln</label></div>
                 <div class="time-box"><span id="hari">0</span><label>Hari</label></div>
@@ -122,7 +108,7 @@
         </div>
 
         <div class="quote-title">
-            "<span>sayang</span></span>, aku tahu dunia mungkin pernah terasa sangat berat dan melelahkan bagimu. Tapi mulai detik ini, kamu tidak perlu lagi menanggung semuanya sendirian. Biarkan aku menjadi alasanmu untuk kembali percaya bahwa bahagia itu nyata. Kamu berhak disayangi, dan aku di sini untuk memastikan kamu selalu merasa aman."
+            "<span>sayang</span>, aku tahu dunia mungkin pernah terasa sangat berat dan melelahkan bagimu. Tapi mulai detik ini, kamu tidak perlu lagi menanggung semuanya sendirian. Biarkan aku menjadi alasanmu untuk kembali percaya bahwa bahagia itu nyata."
         </div>
 
         <div>
@@ -142,7 +128,7 @@
         </div>
 
         <footer>
-            Terus melangkah ya sayang, jangan pernah ragu sama kemampuanmu. Aku bakal selalu ada di garis paling depan buat dukung semua mimpimu sampai sukses nanti. Masa depanmu cerah, dan aku bangga memilikimu. ❤️
+            Terus melangkah ya sayang. Masa depanmu cerah, dan aku bangga memilikimu. ❤️
         </footer>
     </div>
 
@@ -150,6 +136,8 @@
         const canvas = document.getElementById('star-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
+        let sudahBuka = false;
+        let sensorAktif = false;
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -181,8 +169,31 @@
         }
         animate();
 
+        function mulaiSensor() {
+            if (sensorAktif) return;
+            sensorAktif = true;
+            
+            // Pancing audio
+            const lagu = document.getElementById('lagu');
+            lagu.play().then(() => { lagu.pause(); }).catch(e => console.log("Ready"));
+
+            document.getElementById('instruksi').innerText = "SEKARANG KOCOK HP-NYA! ✨";
+            document.getElementById('instruksi').style.color = "#fff";
+
+            if (window.DeviceMotionEvent) {
+                window.addEventListener('devicemotion', function(event) {
+                    let acc = event.acceleration;
+                    if (!acc || sudahBuka) return;
+                    let speed = Math.abs(acc.x) + Math.abs(acc.y) + Math.abs(acc.z);
+                    if (speed > 13) bukaWeb();
+                });
+            }
+        }
+
         function bukaWeb() {
-            document.getElementById('lagu').play().catch(e => console.log("Musik off"));
+            if (sudahBuka) return;
+            sudahBuka = true;
+            document.getElementById('lagu').play();
             document.getElementById('intro-page').style.transform = 'translateY(-100%)';
             const main = document.getElementById('main-content');
             main.style.display = 'flex';
