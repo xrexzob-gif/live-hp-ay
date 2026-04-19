@@ -26,6 +26,7 @@
             margin-top: 20px;
             padding: 0 30px;
             line-height: 1.5;
+            font-size: 1.1rem;
         }
 
         /* Animasi Wave Suara */
@@ -37,7 +38,7 @@
             height: 40px;
             margin-top: 20px;
         }
-        .bar { width: 4px; height: 15px; background: var(--primary); border-radius: 10px; animation: wave 0.5s infinite alternate; }
+        .bar { width: 5px; height: 15px; background: var(--primary); border-radius: 10px; animation: wave 0.5s infinite alternate; }
         @keyframes wave { from { height: 10px; } to { height: 40px; } }
 
         /* Konten Utama */
@@ -67,7 +68,6 @@
         .polaroid { position: absolute; width: 110px; height: 140px; left: 50%; top: 50%; margin-left: -55px; margin-top: -70px; background: white; padding: 5px 5px 15px 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 3px; }
         .polaroid img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Posisi Carousel */
         .f1 { transform: rotateY(0deg) translateZ(160px); }
         .f2 { transform: rotateY(45deg) translateZ(160px); }
         .f3 { transform: rotateY(90deg) translateZ(160px); }
@@ -92,17 +92,15 @@
     <div id="intro-page" onclick="mulaiDengar()">
         <img src="1.gif" style="width:100px;">
         <h1 style="color: white; font-size: 1.8rem; margin-top: 10px;">Halo Sayang... ❤️</h1>
-        <p id="status-tunggu">Ketuk layar ini, lalu katakan<br>"Aku sayang kamu" 🎙️</p>
+        <p id="status-tunggu">Ketuk layar ini sekali,<br>lalu katakan "Aku sayang kamu" 🎙️</p>
         
         <div id="wave-visual" class="wave-container">
+            <div class="bar"></div>
             <div class="bar" style="animation-delay: 0.1s;"></div>
-            <div class="bar" style="animation-delay: 0.3s;"></div>
             <div class="bar" style="animation-delay: 0.2s;"></div>
+            <div class="bar" style="animation-delay: 0.3s;"></div>
             <div class="bar" style="animation-delay: 0.4s;"></div>
-            <div class="bar" style="animation-delay: 0.1s;"></div>
         </div>
-
-        <p style="position: absolute; bottom: 30px; color: #444; font-size: 0.7rem;">Gak bisa suara? Klik 2x layar dengan cepat</p>
     </div>
 
     <div id="main-content">
@@ -144,7 +142,6 @@
     </div>
 
     <script>
-        // --- STAR BACKGROUND ---
         const canvas = document.getElementById('star-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -159,7 +156,6 @@
         function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); stars.forEach(s => { s.update(); s.draw(); }); requestAnimationFrame(animate); }
         animate();
 
-        // --- SPEECH RECOGNITION LOGIC ---
         let sudahBuka = false;
         let sedangDengar = false;
 
@@ -169,7 +165,8 @@
             window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             
             if (!window.SpeechRecognition) {
-                bukaWeb(); // Fallback jika browser gak support
+                // Jika browser jadul tidak dukung speech, terpaksa langsung buka agar tidak stuck
+                bukaWeb();
                 return;
             }
 
@@ -178,17 +175,18 @@
 
             recognition.onstart = () => {
                 sedangDengar = true;
-                document.getElementById('status-tunggu').innerHTML = "<span style='color:white'>Mendengarkan...</span><br>Ayo ngomong sekarang!";
+                document.getElementById('status-tunggu').innerHTML = "<span style='color:white'>Mendengarkan...</span><br>Ngomong sekarang sayang!";
                 document.getElementById('wave-visual').style.display = 'flex';
             };
 
             recognition.onresult = (e) => {
                 const hasil = e.results[0][0].transcript.toLowerCase();
+                // Deteksi kata kunci
                 if (hasil.includes("sayang") || hasil.includes("cinta") || hasil.includes("love") || hasil.includes("kamu")) {
                     document.getElementById('status-tunggu').innerHTML = "Aku juga sayang kamu! ❤️";
                     setTimeout(bukaWeb, 1000);
                 } else {
-                    document.getElementById('status-tunggu').innerHTML = "Tadi kamu bilang: '"+hasil+"'<br>Coba bilang lagi yang bener sayang.. 🥺";
+                    document.getElementById('status-tunggu').innerHTML = "Kamu bilang: '"+hasil+"'<br>Coba lagi, bilang 'Aku sayang kamu'";
                     sedangDengar = false;
                 }
             };
@@ -202,13 +200,10 @@
             recognition.start();
         }
 
-        // Shortcut klik 2x buat buka jika mic bermasalah
-        window.addEventListener('dblclick', bukaWeb);
-
         function bukaWeb() {
             if (sudahBuka) return;
             sudahBuka = true;
-            document.getElementById('lagu').play();
+            document.getElementById('lagu').play().catch(() => {});
             document.getElementById('intro-page').style.transform = 'translateY(-100%)';
             const main = document.getElementById('main-content');
             main.style.display = 'flex';
@@ -218,7 +213,6 @@
             updateWaktu();
         }
 
-        // --- TIMER & ANIMATION ---
         const tglJadian = new Date("February 5, 2026 00:00:00").getTime();
         function updateWaktu() {
             const sekarang = new Date();
