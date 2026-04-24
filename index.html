@@ -17,34 +17,41 @@
             height: 100vh; width: 100%; display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             background: rgba(0,0,0,0.98); position: fixed; top: 0; left: 0; z-index: 9999;
-            text-align: center; transition: 1s ease-in-out; cursor: pointer;
+            text-align: center; transition: 1s ease-in-out;
         }
         
         #status-tunggu {
-            color: var(--primary);
-            font-weight: bold;
-            margin-top: 20px;
-            padding: 0 30px;
-            line-height: 1.5;
-            font-size: 1.1rem;
+            color: var(--primary); font-weight: bold; margin: 15px 0;
+            padding: 0 30px; line-height: 1.5; font-size: 1rem;
         }
 
-        /* Animasi Wave Suara */
-        .wave-container {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            height: 40px;
-            margin-top: 20px;
+        /* Keypad PIN */
+        .pin-area { margin-top: 20px; display: flex; flex-direction: column; align-items: center; }
+        .pin-display { 
+            letter-spacing: 10px; font-size: 1.5rem; margin-bottom: 15px; color: var(--primary); 
+            height: 30px; font-weight: bold;
         }
-        .bar { width: 5px; height: 15px; background: var(--primary); border-radius: 10px; animation: wave 0.5s infinite alternate; }
-        @keyframes wave { from { height: 10px; } to { height: 40px; } }
+        .keypad { 
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; 
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px;
+        }
+        .key { 
+            width: 50px; height: 50px; background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; cursor: pointer; transition: 0.2s;
+        }
+        .key:active { background: var(--primary); transform: scale(0.9); }
+
+        /* Wave Suara */
+        .wave-container { display: none; justify-content: center; align-items: center; gap: 5px; height: 30px; margin-top: 10px; }
+        .bar { width: 4px; height: 10px; background: var(--primary); border-radius: 10px; animation: wave 0.5s infinite alternate; }
+        @keyframes wave { from { height: 5px; } to { height: 25px; } }
 
         /* Konten Utama */
         #main-content { 
             display: none; opacity: 0; transition: 1.5s; text-align: center; 
-            height: 100vh; display: flex; flex-direction: column; justify-content: space-around; padding: 10px; box-sizing: border-box;
+            height: 100vh; flex-direction: column; justify-content: space-around; padding: 10px; box-sizing: border-box;
         }
 
         h1 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 0; }
@@ -61,11 +68,13 @@
         }
         .quote-title span { color: var(--primary); font-weight: bold; font-style: normal; }
 
-        .new-sticker { width: 80px; margin: 5px auto; display: block; }
-
+        /* Carousel */
         .carousel-container { position: relative; width: 100%; height: 230px; perspective: 1000px; margin-top: 10px; }
         .carousel-wrap { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; animation: rotateCarousel 20s linear infinite; }
-        .polaroid { position: absolute; width: 110px; height: 140px; left: 50%; top: 50%; margin-left: -55px; margin-top: -70px; background: white; padding: 5px 5px 15px 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 3px; }
+        .polaroid { 
+            position: absolute; width: 110px; height: 140px; left: 50%; top: 50%; margin-left: -55px; margin-top: -70px; 
+            background: white; padding: 5px 5px 15px 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 3px;
+        }
         .polaroid img { width: 100%; height: 100%; object-fit: cover; }
 
         .f1 { transform: rotateY(0deg) translateZ(160px); }
@@ -78,10 +87,19 @@
         .f8 { transform: rotateY(315deg) translateZ(160px); }
 
         @keyframes rotateCarousel { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+
+        /* Pop Up Kata-kata */
+        #love-note {
+            position: fixed; bottom: 15%; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: white; padding: 10px 20px; border-radius: 20px;
+            font-size: 0.85rem; font-weight: bold; display: none; z-index: 1000;
+            box-shadow: 0 5px 15px rgba(255, 75, 43, 0.3);
+        }
+
         .heart { position: fixed; color: var(--primary); animation: fly 4s linear infinite; z-index: 10; pointer-events: none;}
         @keyframes fly { 0% { transform: translateY(100vh) scale(0); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
         
-        footer { font-size: 0.75rem; color: #bbb; padding: 10px; max-width: 85%; margin: 0 auto; line-height: 1.4; }
+        footer { font-size: 0.75rem; color: #bbb; padding: 10px; max-width: 85%; margin: 0 auto; }
     </style>
 </head>
 <body>
@@ -89,19 +107,29 @@
     <audio id="lagu" loop><source src="Bersamamu.mp3" type="audio/mpeg"></audio>
     <canvas id="star-canvas"></canvas>
 
-    <div id="intro-page" onclick="mulaiDengar()">
-        <img src="1.gif" style="width:100px;">
-        <h1 style="color: white; font-size: 1.8rem; margin-top: 10px;">Halo Sayang... ❤️</h1>
-        <p id="status-tunggu">Ketuk layar ini sekali,<br>lalu katakan "Aku sayang kamu" 🎙️</p>
+    <div id="intro-page">
+        <img src="1.gif" style="width:80px;" onclick="mulaiDengar()">
+        <h1 style="color: white; font-size: 1.5rem;">Halo Sayang... ❤️</h1>
+        <p id="status-tunggu">Masukin PIN (0808) <br>atau Klik GIF & Bilang "Sayang"</p>
         
         <div id="wave-visual" class="wave-container">
-            <div class="bar"></div>
-            <div class="bar" style="animation-delay: 0.1s;"></div>
-            <div class="bar" style="animation-delay: 0.2s;"></div>
-            <div class="bar" style="animation-delay: 0.3s;"></div>
-            <div class="bar" style="animation-delay: 0.4s;"></div>
+            <div class="bar"></div><div class="bar" style="animation-delay: 0.1s;"></div>
+            <div class="bar" style="animation-delay: 0.2s;"></div><div class="bar" style="animation-delay: 0.3s;"></div>
+        </div>
+
+        <div class="pin-area">
+            <div class="pin-display" id="pin-dots">____</div>
+            <div class="keypad">
+                <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
+                <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
+                <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
+                <div class="key" style="background:transparent; border:none"></div><div class="key" onclick="press(0)">0</div>
+                <div class="key" onclick="resetPin()" style="font-size:0.7rem">CLR</div>
+            </div>
         </div>
     </div>
+
+    <div id="love-note"></div>
 
     <div id="main-content">
         <div>
@@ -121,27 +149,64 @@
         </div>
 
         <div>
-            <img src="2.gif" class="new-sticker">
             <div class="carousel-container">
                 <div class="carousel-wrap">
-                    <div class="polaroid f1"><img src="1.jpg"></div>
-                    <div class="polaroid f2"><img src="2.jpg"></div>
-                    <div class="polaroid f3"><img src="3.jpg"></div>
-                    <div class="polaroid f4"><img src="4.jpg"></div>
-                    <div class="polaroid f5"><img src="5.jpg"></div>
-                    <div class="polaroid f6"><img src="6.jpg"></div>
-                    <div class="polaroid f7"><img src="8.jpg"></div>
-                    <div class="polaroid f8"><img src="9.jpg"></div>
+                    <div class="polaroid f1" onclick="showNote('Cantik banget sih! 🥰')"><img src="1.jpg"></div>
+                    <div class="polaroid f2" onclick="showNote('Kenangan kita ❤️')"><img src="2.jpg"></div>
+                    <div class="polaroid f3" onclick="showNote('Lagi apa sayang?')"><img src="3.jpg"></div>
+                    <div class="polaroid f4" onclick="showNote('Gemes banget!')"><img src="4.jpg"></div>
+                    <div class="polaroid f5" onclick="showNote('I Love You!')"><img src="5.jpg"></div>
+                    <div class="polaroid f6" onclick="showNote('Ciee senyum-senyum')"><img src="6.jpg"></div>
+                    <div class="polaroid f7" onclick="showNote('Bareng terus ya!')"><img src="8.jpg"></div>
+                    <div class="polaroid f8" onclick="showNote('Peluk dari jauh 🤗')"><img src="9.jpg"></div>
                 </div>
             </div>
         </div>
 
         <footer>
-            Terus melangkah ya sayang. Aku bakal selalu ada buat dukung semua mimpimu sampai sukses. ❤️
+            Klik fotonya buat liat pesan rahasia! ❤️
         </footer>
     </div>
 
     <script>
+        // Logika PIN
+        let currentPin = "";
+        const targetPin = "0808";
+
+        function press(num) {
+            if (currentPin.length < 4) {
+                currentPin += num;
+                updatePinDisplay();
+                if (currentPin === targetPin) {
+                    setTimeout(bukaWeb, 300);
+                } else if (currentPin.length === 4) {
+                    setTimeout(resetPin, 500);
+                }
+            }
+        }
+
+        function updatePinDisplay() {
+            let dots = "";
+            for(let i=0; i<4; i++) {
+                dots += currentPin[i] ? "*" : "_";
+            }
+            document.getElementById('pin-dots').innerText = dots;
+        }
+
+        function resetPin() {
+            currentPin = "";
+            updatePinDisplay();
+        }
+
+        // Fungsi Tampilkan Pesan
+        function showNote(msg) {
+            const note = document.getElementById('love-note');
+            note.innerText = msg;
+            note.style.display = 'block';
+            setTimeout(() => { note.style.display = 'none'; }, 2500);
+        }
+
+        // Canvas Bintang
         const canvas = document.getElementById('star-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -161,42 +226,24 @@
 
         function mulaiDengar() {
             if (sudahBuka || sedangDengar) return;
-
             window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-            if (!window.SpeechRecognition) {
-                // Jika browser jadul tidak dukung speech, terpaksa langsung buka agar tidak stuck
-                bukaWeb();
-                return;
-            }
-
+            if (!window.SpeechRecognition) { bukaWeb(); return; }
             const recognition = new SpeechRecognition();
             recognition.lang = 'id-ID';
-
             recognition.onstart = () => {
                 sedangDengar = true;
-                document.getElementById('status-tunggu').innerHTML = "<span style='color:white'>Mendengarkan...</span><br>Ngomong sekarang sayang!";
+                document.getElementById('status-tunggu').innerHTML = "Mendengarkan...<br>Bilang 'Sayang'!";
                 document.getElementById('wave-visual').style.display = 'flex';
             };
-
             recognition.onresult = (e) => {
                 const hasil = e.results[0][0].transcript.toLowerCase();
-                // Deteksi kata kunci
-                if (hasil.includes("sayang") || hasil.includes("cinta") || hasil.includes("love") || hasil.includes("kamu")) {
-                    document.getElementById('status-tunggu').innerHTML = "Aku juga sayang kamu! ❤️";
-                    setTimeout(bukaWeb, 1000);
+                if (hasil.includes("sayang") || hasil.includes("kamu")) {
+                    bukaWeb();
                 } else {
-                    document.getElementById('status-tunggu').innerHTML = "Kamu bilang: '"+hasil+"'<br>Coba lagi, bilang 'Aku sayang kamu'";
+                    document.getElementById('status-tunggu').innerHTML = "Salah kata!<br>Coba lagi.";
                     sedangDengar = false;
                 }
             };
-
-            recognition.onerror = () => { sedangDengar = false; };
-            recognition.onend = () => { 
-                document.getElementById('wave-visual').style.display = 'none';
-                sedangDengar = false; 
-            };
-
             recognition.start();
         }
 
