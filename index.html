@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xrexzob Heart Gallery | Together Forever</title>
+    <title>Xrexzob & Raisa | Forever</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;600;800&family=Reenie+Beanie&display=swap');
 
@@ -11,174 +11,166 @@
         
         body { 
             background: #000; 
-            overflow: hidden; 
+            overflow-x: hidden; 
             color: #fff;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center;
         }
 
-        /* INTRO SPEECH OVERLAY */
-        #intro-overlay {
+        /* LAYAR PIN IPHONE STYLE */
+        #pin-overlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            text-align: center;
-            cursor: pointer;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('IMG-Foto-Gue.jpg'); /* */
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; transition: 1s;
         }
-        #intro-overlay img { width: 150px; margin-bottom: 20px; }
-        #status-text { font-weight: 800; color: #fff; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,182,193,0.8); }
 
-        .wave-container { display: none; justify-content: center; align-items: center; gap: 5px; height: 30px; margin-top: 20px; }
-        .bar { width: 4px; height: 10px; background: #ffb6c1; border-radius: 10px; animation: wave 0.5s infinite alternate; }
-        @keyframes wave { from { height: 10px; } to { height: 30px; } }
+        .pin-dot-container { display: flex; gap: 15px; margin-bottom: 30px; }
+        .pin-dot { width: 15px; height: 15px; border: 2px solid #fff; border-radius: 50%; }
+        .pin-dot.fill { background: #fff; }
 
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .key {
+            width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.15);
+            display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* KONTEN UTAMA */
+        #main-content { display: none; padding-bottom: 100px; text-align: center; }
         .stars-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); }
+        
+        header h1 { margin-top: 40px; font-size: 2.5rem; text-shadow: 0 0 20px #ffb6c1; }
 
-        header { margin-top: 20px; margin-bottom: 20px; z-index: 5; text-align: center; position: absolute; top: 20px; }
-        header h1 { font-size: 2.2rem; font-weight: 600; color: #fff; text-shadow: 0 0 10px rgba(255, 182, 193, 0.6); }
-
-        /* CONTAINER LOVE 3D MUTER */
+        /* LOVE CAROUSEL */
         .heart-stage {
-            width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            perspective: 1000px;
+            height: 400px; display: flex; justify-content: center; align-items: center;
+            perspective: 1000px; margin: 40px 0;
         }
         .heart-carousel {
-            position: relative;
-            width: 100px; height: 100px;
-            transform-style: preserve-3d;
-            animation: rotateLove 15s linear infinite;
+            position: relative; width: 100px; height: 100px;
+            transform-style: preserve-3d; animation: rotateLove 25s linear infinite;
         }
-        @keyframes rotateLove {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
+        @keyframes rotateLove { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 
-        .photo-frame {
-            position: absolute;
-            width: 100px; height: 130px;
-            background: #fff; padding: 5px;
-            box-shadow: 0 5px 15px rgba(255,182,193,0.4);
-            border-radius: 4px;
-            transform-origin: center;
-        }
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
+        .photo-frame { position: absolute; width: 100px; height: 130px; background: #fff; padding: 5px; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* TOMBOL AMPLOP CHAT */
-        #chat-button {
-            position: fixed; bottom: 25px; right: 25px;
-            background: #ffb6c1; width: 60px; height: 60px; border-radius: 50%;
-            display: none; justify-content: center; align-items: center;
-            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
-            cursor: pointer; z-index: 10000;
-        }
-        #chat-button img { width: 30px; height: 30px; }
+        /* KATA-KATA ROMANTIS */
+        .words-section { padding: 40px 20px; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+        .words-section h2 { font-family: 'Reenie Beanie', cursive; font-size: 3rem; color: #ffb6c1; margin-bottom: 20px; }
+        .love-letter { font-size: 1.1rem; opacity: 0.9; font-style: italic; background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; border-left: 4px solid #ffb6c1; }
+
+        .timer-box { font-size: 1.3rem; margin: 30px 0; font-weight: 800; color: #ffb6c1; letter-spacing: 1px; }
+        
+        footer { margin-top: 50px; font-size: 0.8rem; opacity: 0.5; letter-spacing: 4px; }
     </style>
 </head>
 <body>
 
-<div id="intro-overlay" onclick="mulaiDengar()">
-    <img src="3.gif" alt="Intro">
-    <h2 id="status-text">Sebut PIN buat masuk! 🎤</h2>
-    <div id="wave-visual" class="wave-container">
-        <div class="bar"></div><div class="bar" style="animation-delay: 0.1s;"></div>
-        <div class="bar" style="animation-delay: 0.2s;"></div><div class="bar" style="animation-delay: 0.3s;"></div>
+<div id="pin-overlay">
+    <h2 style="margin-bottom: 20px;">XREXZOB PRIVATE</h2>
+    <div class="pin-dot-container" id="dots">
+        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <div class="keypad" onclick="inputPin(event)">
+        <div class="key">1</div><div class="key">2</div><div class="key">3</div>
+        <div class="key">4</div><div class="key">5</div><div class="key">6</div>
+        <div class="key">7</div><div class="key">8</div><div class="key">9</div>
+        <div class="key" style="visibility:hidden"></div><div class="key">0</div><div class="key" style="font-size: 0.8rem">DEL</div>
     </div>
 </div>
 
-<div class="stars-bg"></div>
-<header><h1>XREXZOB💅💞</h1></header>
-
-<div class="heart-stage">
-    <div class="heart-carousel" id="carousel">
-        <div class="photo-frame"><img src="foto 1.jpg"></div>
-        <div class="photo-frame"><img src="foto 2.jpg"></div>
-        <div class="photo-frame"><img src="foto 3.jpg"></div>
-        <div class="photo-frame"><img src="foto 4.jpg"></div>
-        <div class="photo-frame"><img src="foto 5.jpg"></div>
-        <div class="photo-frame"><img src="foto 6.jpg"></div>
-        <div class="photo-frame"><img src="foto 7.jpg"></div>
-        <div class="photo-frame"><img src="foto 8.jpg"></div>
-        <div class="photo-frame"><img src="foto 9.jpg"></div>
-        <div class="photo-frame"><img src="foto 10.jpg"></div>
-        <div class="photo-frame"><img src="foto 11.jpg"></div>
+<div id="main-content">
+    <div class="stars-bg"></div>
+    <header><h1>For My Raisa 💞</h1></header> <div class="heart-stage">
+        <div class="heart-carousel" id="carousel">
+            <div class="photo-frame"><img src="1.jpg"></div>
+            <div class="photo-frame"><img src="2.jpg"></div>
+            <div class="photo-frame"><img src="3.jpg"></div>
+            <div class="photo-frame"><img src="4.jpg"></div>
+            <div class="photo-frame"><img src="1.gif"></div>
+            <div class="photo-frame"><img src="2.gif"></div>
+            <div class="photo-frame"><img src="5.jpg"></div>
+            <div class="photo-frame"><img src="6.jpg"></div>
+            <div class="photo-frame"><img src="8.jpg"></div>
+            <div class="photo-frame"><img src="9.jpg"></div>
+            <div class="photo-frame"><img src="IMG-Foto-Gue.jpg"></div>
+        </div>
     </div>
-</div>
 
-<div id="chat-button" onclick="Tawk_API.toggle()">
-    <img src="https://cdn-icons-png.flaticon.com/512/646/646094.png" alt="Chat">
-</div>
+    <div class="words-section">
+        <h2>Dear, My Love</h2>
+        <div class="love-letter">
+            "Sejak 5 Februari 2026, duniaku nggak lagi sama. Makasih udah jadi alasan aku buat terus semangat setiap hari. Kamu itu indah, lebih dari sekadar bintang di langit. Tetap sama aku ya, Raisa?" </div>
+        
+        <div class="timer-box" id="timer">Counting our love...</div>
+        
+        <p style="margin-top: 20px; opacity: 0.7;">
+            Setiap detik yang berlalu adalah bukti kalau aku makin sayang sama kamu. Jangan pernah pergi ya?
+        </p>
+    </div>
 
-<audio id="bgMusic" loop><source src="hindia.mp3" type="audio/mpeg"></audio>
+    <footer>CREATED BY XREXZOB</footer> </div>
 
-<script>
-    const carousel = document.getElementById('carousel');
-    const frames = carousel.querySelectorAll('.photo-frame');
-    const intro = document.getElementById('intro-overlay');
-    const statusText = document.getElementById('status-text');
-    const music = document.getElementById('bgMusic');
-    
-    // Susun foto jadi bentuk Love
-    frames.forEach((frame, i) => {
-        const angle = (i / frames.length) * 2 * Math.PI;
-        const x = 16 * Math.pow(Math.sin(angle), 3) * 12;
-        const y = -(13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle)) * 12;
-        frame.style.transform = `translate3d(${x}px, ${y}px, ${i * 2}px)`;
-    });
+<audio id="bgMusic" loop><source src="Bersamamu.mp3" type="audio/mpeg"></audio> <script>
+    let currentPin = "";
+    const correctPin = "050226"; //
+    const dots = document.querySelectorAll('.pin-dot');
 
-    function mulaiDengar() {
-        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!window.SpeechRecognition) { startApp(); return; }
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'id-ID';
-        recognition.onstart = () => { 
-            statusText.innerText = "Dengerin PIN..."; 
-            document.getElementById('wave-visual').style.display = "flex";
-        };
-        recognition.onresult = (e) => {
-            const hasil = e.results[0][0].transcript.replace(/\s+/g, '');
-            // PIN BARU: 050226
-            if (hasil.includes("050226") || hasil.includes("kosonglima")) {
-                startApp();
-            } else {
-                statusText.innerText = "PIN Salah! Coba lagi.";
-            }
-        };
-        recognition.start();
+    function inputPin(e) {
+        const val = e.target.innerText;
+        if (val === "DEL") currentPin = currentPin.slice(0, -1);
+        else if (currentPin.length < 6 && !isNaN(val)) currentPin += val;
+
+        dots.forEach((dot, i) => {
+            if (i < currentPin.length) dot.classList.add('fill');
+            else dot.classList.remove('fill');
+        });
+
+        if (currentPin === correctPin) {
+            document.getElementById('pin-overlay').style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById('pin-overlay').style.display = "none";
+                document.getElementById('main-content').style.display = "block";
+                document.getElementById('bgMusic').play();
+                startTimer();
+                setupLove();
+            }, 800);
+        } else if (currentPin.length === 6) {
+            currentPin = "";
+            dots.forEach(dot => dot.classList.remove('fill'));
+        }
     }
 
-    function startApp() {
-        music.play();
-        intro.style.opacity = "0";
-        setTimeout(() => { 
-            intro.style.display = "none"; 
-            document.getElementById('chat-button').style.display = 'flex';
-        }, 800);
-    }
-</script>
+    function startTimer() {
+        const startDate = new Date("February 5, 2026 00:00:00").getTime(); //
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+            const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-Tawk_API.onLoad = function(){ Tawk_API.hideWidget(); };
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/662a2656a0d6737bd448206d/1hsal7f3g';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+            document.getElementById('timer').innerHTML = 
+                `${months} Bulan | ${days} Hari | ${hours} Jam | ${minutes}m | ${seconds}s`;
+        }, 1000);
+    }
+
+    function setupLove() {
+        const frames = document.querySelectorAll('.photo-frame');
+        frames.forEach((frame, i) => {
+            const angle = (i / frames.length) * 2 * Math.PI;
+            const x = 16 * Math.pow(Math.sin(angle), 3) * 14; 
+            const y = -(13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle)) * 14;
+            const z = Math.sin(angle) * 80;
+            frame.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateY(${angle * 30}deg)`;
+        });
+    }
 </script>
 
 </body>
