@@ -3,42 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>XREXZOB & RAISA</title>
+    <title>I LOVE U </title></title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Quicksand:wght@700&family=Reenie+Beanie&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             background: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; 
-            overflow: hidden; height: 100vh; width: 100%;
+            overflow-x: hidden; min-height: 100vh; width: 100%;
         }
 
-        /* EFEK LOPE PAS KLIK PIN */
-        .heart-particle {
-            position: fixed; pointer-events: none; font-size: 20px; z-index: 10000;
-            animation: heartFly 0.8s ease-out forwards;
-        }
-        @keyframes heartFly {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-            100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5) rotate(var(--r)); opacity: 0; }
-        }
-
-        /* LAYAR PIN */
+        /* LAYAR PIN (Tetap Sama) */
         #pin-overlay {
             position: fixed; inset: 0; background: #0a0a0a;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 9999; transition: 0.8s ease-out;
         }
-        .pin-gif { 
-            width: 80px; height: 80px; border-radius: 50%; 
-            margin-bottom: 20px; object-fit: cover; 
-            border: 2px solid rgba(255,182,193,0.3);
-        }
-        .pin-label { font-size: 0.7rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 25px; }
+        .pin-gif { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px; object-fit: cover; border: 2px solid rgba(255,182,193,0.3); }
         .pin-dots { display: flex; gap: 12px; margin-bottom: 40px; }
         .dot { width: 10px; height: 10px; border: 1.5px solid #333; border-radius: 50%; transition: 0.3s; }
         .dot.active { background: #ffb6c1; border-color: #ffb6c1; box-shadow: 0 0 10px #ffb6c1; transform: scale(1.2); }
-        
         .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 210px; }
         .key {
             width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.03);
@@ -46,69 +30,63 @@
             border: 1px solid rgba(255,255,255,0.08); transition: 0.2s;
         }
 
-        /* KONTEN UTAMA */
-        #main-content { display: none; opacity: 0; transition: 2s; height: 100%; position: relative; width: 100%; z-index: 2; }
+        /* MAIN CONTENT */
+        #main-content { display: none; opacity: 0; transition: 2s; position: relative; z-index: 2; }
         #starCanvas { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #001220 0%, #000 100%); }
 
-        /* TIMER RAINBOW */
-        .timer-header { text-align: center; padding-top: 40px; height: 18vh; }
-        #timer { font-family: 'Quicksand', sans-serif; font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.6; }
-        .timer-unit { 
-            font-weight: 800; font-size: 1.4rem;
+        /* TIMER (Huruf Rainbow, Angka Putih) */
+        .timer-header { text-align: center; padding: 40px 20px 20px; }
+        #timer { font-family: 'Quicksand', sans-serif; font-size: 1rem; line-height: 1.8; color: #fff; }
+        .timer-label {
             background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000);
             background-size: 400% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: rainbowShift 5s linear infinite; display: inline-block;
+            animation: rainbowShift 5s linear infinite; font-weight: 800;
         }
+        .timer-unit { color: #ffb6c1; font-weight: 800; font-size: 1.4rem; }
         @keyframes rainbowShift { 0% { background-position: 0% center; } 100% { background-position: 400% center; } }
 
-        /* GALLERY SATURNUS STYLE */
-        .gallery-container { 
-            position: relative; height: 35vh; width: 100%; 
+        /* CAROUSEL IKLAN KE SAMPING */
+        .photo-carousel {
+            display: flex; overflow-x: auto; gap: 20px; padding: 20px;
+            scroll-snap-type: x mandatory; scrollbar-width: none;
+        }
+        .photo-carousel::-webkit-scrollbar { display: none; }
+
+        /* FLIP CARD STYLE */
+        .card {
+            min-width: 160px; height: 220px; perspective: 1000px;
+            scroll-snap-align: center;
+        }
+        .card-inner {
+            position: relative; width: 100%; height: 100%;
+            transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer;
+        }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
+
+        .card-front, .card-back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 12px; overflow: hidden;
+            border: 2px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        .card-front img { width: 100%; height: 100%; object-fit: cover; }
+        .card-back {
+            background: #ffb6c1; color: #000; transform: rotateY(180deg);
             display: flex; justify-content: center; align-items: center;
-            perspective: 1000px;
+            padding: 15px; text-align: center; font-size: 0.8rem; font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        .center-frame {
-            width: 90px; height: 90px; border-radius: 50%; border: 2.5px solid #fff;
-            box-shadow: 0 0 30px rgba(255,255,255,0.4); overflow: hidden; z-index: 10;
+
+        /* GIF PINDAH KE BAWAH */
+        .bottom-section { text-align: center; padding: 30px 20px; }
+        .center-gif { 
+            width: 120px; height: 120px; border-radius: 20px; 
+            border: 2px solid #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            object-fit: cover; margin-bottom: 20px;
         }
-        .center-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .title-love { font-family: 'Reenie Beanie', cursive; font-size: 3rem; color: #ffb6c1; }
+        .text-love { font-size: 0.85rem; color: #ddd; line-height: 1.6; font-style: italic; max-width: 300px; margin: 0 auto; }
 
-        .orbit-system {
-            position: absolute; width: 320px; height: 320px;
-            transform: rotateX(70deg) rotateY(10deg);
-            display: flex; justify-content: center; align-items: center;
-            animation: rotateFull 15s linear infinite;
-            transform-style: preserve-3d;
-        }
-        .photo-item {
-            position: absolute; width: 55px; height: 75px;
-            background: #fff; padding: 2px; border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            animation: counterRotateSaturn 15s linear infinite;
-        }
-        .photo-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
-
-        .p1 { transform: rotate(0deg) translate(150px); }
-        .p2 { transform: rotate(45deg) translate(150px); }
-        .p3 { transform: rotate(90deg) translate(150px); }
-        .p4 { transform: rotate(135deg) translate(150px); }
-        .p5 { transform: rotate(180deg) translate(150px); }
-        .p6 { transform: rotate(225deg) translate(150px); }
-        .p7 { transform: rotate(270deg) translate(150px); }
-        .p8 { transform: rotate(315deg) translate(150px); }
-
-        @keyframes rotateFull { from { transform: rotateX(70deg) rotateY(10deg) rotateZ(0deg); } to { transform: rotateX(70deg) rotateY(10deg) rotateZ(360deg); } }
-        @keyframes counterRotateSaturn { from { transform: rotateZ(0deg) rotateX(-70deg); } to { transform: rotateZ(-360deg) rotateX(-70deg); } }
-
-        /* PESAN BOX */
-        .message-box { 
-            text-align: center; padding: 0 25px; margin-top: 15px; 
-            max-height: 25vh; overflow-y: auto;
-        }
-        .title-love { font-family: 'Reenie Beanie', cursive; font-size: 2.8rem; color: #ffb6c1; margin-bottom: 5px; }
-        .text-love { font-size: 0.8rem; color: #eee; line-height: 1.5; font-style: italic; }
-
-        footer { position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 0.5rem; letter-spacing: 4px; opacity: 0.3; }
+        footer { padding: 20px 0; text-align: center; font-size: 0.55rem; letter-spacing: 5px; opacity: 0.3; }
     </style>
 </head>
 <body>
@@ -116,10 +94,7 @@
 <div id="pin-overlay">
     <img src="1.gif" class="pin-gif">
     <p class="pin-label">INPUT ACCESS CODE</p>
-    <div class="pin-dots">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    </div>
+    <div class="pin-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="keypad" onclick="handleInput(event)">
         <div class="key">1</div><div class="key">2</div><div class="key">3</div>
         <div class="key">4</div><div class="key">5</div><div class="key">6</div>
@@ -130,55 +105,82 @@
 
 <div id="main-content">
     <canvas id="starCanvas"></canvas>
-    <div class="timer-header"><div id="timer">Memuat Galaksi Cinta...</div></div>
-    <div class="gallery-container">
-        <div class="center-frame"><img src="2.gif"></div>
-        <div class="orbit-system">
-            <div class="photo-item p1"><img src="1.jpg"></div>
-            <div class="photo-item p2"><img src="2.jpg"></div>
-            <div class="photo-item p3"><img src="3.jpg"></div>
-            <div class="photo-item p4"><img src="4.jpg"></div>
-            <div class="photo-item p5"><img src="5.jpg"></div>
-            <div class="photo-item p6"><img src="6.jpg"></div>
-            <div class="photo-item p7"><img src="8.jpg"></div>
-            <div class="photo-item p8"><img src="9.jpg"></div>
+    
+    <div class="timer-header">
+        <div id="timer">Menghitung...</div>
+    </div>
+
+    <div class="photo-carousel">
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front"><img src="1.jpg"></div>
+                <div class="card-back">"Kamu adalah bagian terbaik dari hariku."</div>
+            </div>
+        </div>
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front"><img src="2.jpg"></div>
+                <div class="card-back">"Terima kasih sudah bertahan sejauh ini."</div>
+            </div>
+        </div>
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front"><img src="3.jpg"></div>
+                <div class="card-back">"Aku bersyukur memilikimu di sisiku."</div>
+            </div>
+        </div>
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front"><img src="4.jpg"></div>
+                <div class="card-back">"Cuma kamu yang bikin aku ngerasa rumah."</div>
+            </div>
+        </div>
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front"><img src="5.jpg"></div>
+                <div class="card-back">"Stay with me, through every high and low."</div>
+            </div>
+        </div>
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front"><img src="6.jpg"></div>
+                <div class="card-back">"Gak perlu sempurna, yang penting kita."</div>
+            </div>
+        </div>
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front"><img src="8.jpg"></div>
+                <div class="card-back">"Jangan pernah bosan berjuang sama aku."</div>
+            </div>
+        </div>
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front"><img src="9.jpg"></div>
+                <div class="card-back">"I love you, forever and always."</div>
+            </div>
         </div>
     </div>
-    <div class="message-box">
+
+    <div class="bottom-section">
+        <img src="2.gif" class="center-gif">
         <h2 class="title-love">Untuk Raisa</h2>
         <p class="text-love">
-            "Aku menerima segala kurang dan lebihnya kamu, segala tawa dan air mata yang pernah kita bagi. Aku akan terus menjagamu di setiap langkahku. Terima kasih sudah mengizinkanku menjadi bagian dari duniamu yang indah.<br><br>
-            Kamu bukan sekadar pilihan, tapi ketetapan yang ingin aku jaga selamanya. Maaf kalau aku masih banyak kurangnya, tapi sayangnya aku ke kamu itu tulus tanpa batas. Tetaplah di sampingku, ya? Sampai semua mimpi-mimpi kita satu per satu jadi nyata."
+            "Aku menerima segala kurang dan lebihnya kamu, segala tawa dan air mata yang pernah kita bagi. Aku akan terus menjagamu di setiap langkahku."
         </p>
     </div>
+
     <footer>XREXZOB 2026</footer>
 </div>
 
 <audio id="msc" loop><source src="Bersamamu.mp3" type="audio/mpeg"></audio>
 
 <script>
-    let code = "";
-    const pin = "050226"; 
+    let code = ""; const pin = "050226"; 
     const dots = document.querySelectorAll('.dot');
     const music = document.getElementById('msc');
     
-    function createHeart(x, y) {
-        const heart = document.createElement('div');
-        heart.innerHTML = '❤️';
-        heart.className = 'heart-particle';
-        heart.style.left = x + 'px';
-        heart.style.top = y + 'px';
-        heart.style.setProperty('--x', (Math.random() * 100 - 50) + 'px');
-        heart.style.setProperty('--y', (Math.random() * -100 - 20) + 'px');
-        heart.style.setProperty('--r', (Math.random() * 40 - 20) + 'deg');
-        document.body.appendChild(heart);
-        setTimeout(() => { heart.remove(); }, 800);
-    }
-
     function handleInput(e) {
-        const v = e.target.innerText;
-        if(!v) return;
-        createHeart(e.clientX, e.clientY);
+        const v = e.target.innerText; if(!v) return;
         if(v === "DEL") code = code.slice(0, -1);
         else if(code.length < 6) code += v;
         dots.forEach((d, i) => i < code.length ? d.classList.add('active') : d.classList.remove('active'));
@@ -198,45 +200,35 @@
     function startTimer() {
         const start = new Date("February 5, 2026 00:00:00").getTime();
         setInterval(() => {
-            const now = new Date().getTime();
-            const diff = now - start;
+            const now = new Date().getTime(); const diff = now - start;
             const mo = Math.floor(diff / 2629746000);
             const d = Math.floor((diff % 2629746000) / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
             const s = Math.floor((diff % 60000) / 1000);
             document.getElementById('timer').innerHTML = 
-                `<span class="timer-unit">${mo}</span> Bulan <span class="timer-unit">${d}</span> Hari<br>` +
-                `<span class="timer-unit">${h}</span> Jam <span class="timer-unit">${m}</span> Menit <span class="timer-unit">${s}</span> Detik`;
+                `<span class="timer-unit">${mo}</span> <span class="timer-label">Bulan</span> <span class="timer-unit">${d}</span> <span class="timer-label">Hari</span><br>` +
+                `<span class="timer-unit">${h}</span> <span class="timer-label">Jam</span> <span class="timer-unit">${m}</span> <span class="timer-label">Menit</span> <span class="timer-unit">${s}</span> <span class="timer-label">Detik</span>`;
         }, 1000);
     }
 
     function initStars() {
         const canvas = document.getElementById('starCanvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const stars = [];
-        const shootingStars = [];
-        for(let i = 0; i < 80; i++) {
-            stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5, v: Math.random()*0.3 });
-        }
-        function createShootingStar() {
-            shootingStars.push({ x: Math.random() * canvas.width, y: 0, len: Math.random() * 80 + 30, speed: Math.random() * 10 + 5, opacity: 1 });
-        }
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const stars = []; const shootingStars = [];
+        for(let i=0; i<80; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5, v: Math.random()*0.3});
+        function createShootingStar() { shootingStars.push({x: Math.random()*canvas.width, y: 0, len: Math.random()*80+30, speed: Math.random()*10+5, opacity: 1}); }
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
             ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-            stars.forEach(st => {
-                ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, Math.PI*2); ctx.fill();
-                st.y += st.v; if(st.y > canvas.height) st.y = 0;
-            });
+            stars.forEach(st => { ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, Math.PI*2); ctx.fill(); st.y += st.v; if(st.y > canvas.height) st.y = 0; });
             ctx.lineWidth = 2;
             shootingStars.forEach((ss, i) => {
                 ctx.strokeStyle = `rgba(255, 255, 255, ${ss.opacity})`;
                 ctx.beginPath(); ctx.moveTo(ss.x, ss.y); ctx.lineTo(ss.x - ss.len, ss.y + ss.len); ctx.stroke();
                 ss.x -= ss.speed; ss.y += ss.speed; ss.opacity -= 0.01;
-                if (ss.opacity <= 0 || ss.y > canvas.height) { shootingStars.splice(i, 1); }
+                if (ss.opacity <= 0 || ss.y > canvas.height) shootingStars.splice(i, 1);
             });
             if (Math.random() < 0.03) createShootingStar();
             requestAnimationFrame(draw);
