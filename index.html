@@ -7,96 +7,81 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Quicksand:wght@700&family=Reenie+Beanie&display=swap');
 
-        /* CSS RESET */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             background: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; 
             overflow: hidden; height: 100vh; width: 100%;
         }
 
-        /* LAYAR PIN MINIMALIS */
+        /* PIN OVERLAY */
         #pin-overlay {
-            position: fixed; inset: 0; background: #0a0a0a;
+            position: fixed; inset: 0; background: #050505;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 9999; transition: 1s cubic-bezier(0.7, 0, 0.3, 1);
         }
-        .pin-gif { width: 65px; height: 65px; border-radius: 50%; margin-bottom: 20px; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.1); }
-        .pin-label { font-size: 0.7rem; letter-spacing: 4px; opacity: 0.5; margin-bottom: 30px; text-transform: uppercase; }
+        .pin-gif { width: 70px; height: 70px; border-radius: 50%; margin-bottom: 20px; object-fit: cover; border: 2px solid rgba(255,255,255,0.2); }
+        .pin-label { font-size: 0.65rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 25px; }
         .pin-dots { display: flex; gap: 12px; margin-bottom: 40px; }
-        .dot { width: 10px; height: 10px; border: 1.5px solid #333; border-radius: 50%; transition: 0.3s; }
-        .dot.active { background: #fff; border-color: #fff; box-shadow: 0 0 15px #fff; transform: scale(1.1); }
+        .dot { width: 10px; height: 10px; border: 1.5px solid #444; border-radius: 50%; transition: 0.3s; }
+        .dot.active { background: #ffb6c1; border-color: #ffb6c1; box-shadow: 0 0 10px #ffb6c1; transform: scale(1.2); }
         
-        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 220px; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 210px; }
         .key {
-            width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.02);
-            display: flex; justify-content: center; align-items: center; font-size: 1.3rem; cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.05); transition: 0.2s;
+            width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.03);
+            display: flex; justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.08); transition: 0.15s;
         }
-        .key:active { background: rgba(255,255,255,0.15); transform: scale(0.9); }
+        .key:active { background: rgba(255,255,255,0.2); transform: scale(0.9); }
 
-        /* KONTEN UTAMA */
-        #main-content { display: none; opacity: 0; transition: 2s; height: 100%; position: relative; width: 100%; }
+        /* MAIN CONTENT */
+        #main-content { display: none; opacity: 0; transition: 2s; height: 100%; position: relative; width: 100%; z-index: 2; }
         
-        /* BACKGROUND ANIMASI AURORA */
-        .bg-animate {
-            position: fixed; inset: 0; z-index: -1;
-            background: linear-gradient(125deg, #000, #050505, #001a33, #1a0033, #000);
-            background-size: 400% 400%; animation: moveBG 15s ease infinite;
-        }
-        @keyframes moveBG { 0% {background-position: 0% 50%} 50% {background-position: 100% 50%} 100% {background-position: 0% 50%} }
+        /* BACKGROUND BINTANG JATUH (Canvas) */
+        #starCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #001220 0%, #000000 100%); }
 
-        /* TIMER PELANGI DI PALING ATAS */
-        .timer-header { text-align: center; padding-top: 40px; width: 100%; position: relative; z-index: 10; }
+        /* TIMER STYLING */
+        .timer-header { text-align: center; padding-top: 50px; width: 100%; z-index: 10; }
         #timer {
-            font-family: 'Quicksand', sans-serif; font-size: 1.4rem; font-weight: 800;
-            background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff);
-            background-size: 200% auto;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: rainbowSlide 4s linear infinite;
+            font-family: 'Quicksand', sans-serif; font-size: 1.1rem; font-weight: 700;
+            color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            line-height: 1.6;
         }
-        @keyframes rainbowSlide { to { background-position: 200% center; } }
+        .timer-unit { color: #ffb6c1; font-weight: 800; font-size: 1.3rem; margin: 0 3px; }
 
-        /* GALLERY 9 FOTO MELAYANG */
-        .gallery-container { position: relative; height: 50vh; width: 100%; display: flex; justify-content: center; align-items: center; }
+        /* GALLERY 9 FOTO */
+        .gallery-container { position: relative; height: 45vh; width: 100%; margin-top: 20px; }
         .center-frame {
-            width: 130px; height: 130px; border-radius: 15px; border: 2px solid rgba(255,255,255,0.3);
-            box-shadow: 0 0 30px rgba(255,255,255,0.2); overflow: hidden; z-index: 5;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 140px; height: 140px; border-radius: 20px; border: 3px solid #fff;
+            box-shadow: 0 0 40px rgba(255,255,255,0.3); overflow: hidden; z-index: 10;
         }
         .center-frame img { width: 100%; height: 100%; object-fit: cover; }
 
         .floating-pic {
-            position: absolute; width: 70px; height: 95px; border-radius: 5px;
-            background: #fff; padding: 2px; box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-            animation: floatAnim 12s ease-in-out infinite;
+            position: absolute; width: 75px; height: 100px; border-radius: 8px;
+            background: #fff; padding: 3px; box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            animation: floatAnim 10s ease-in-out infinite; overflow: hidden;
         }
-        .floating-pic img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; }
+        .floating-pic img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
 
         @keyframes floatAnim {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(10px, -20px) rotate(4deg); }
-            50% { transform: translate(-10px, 15px) rotate(-4deg); }
-            75% { transform: translate(15px, 10px) rotate(2deg); }
+            0%, 100% { transform: translateY(0) rotate(var(--r)); }
+            50% { transform: translateY(-20px) rotate(calc(var(--r) * -1)); }
         }
 
-        /* KATA-KATA PANJANG */
-        .message-box { 
-            text-align: center; padding: 0 35px; margin-top: 15px; 
-            max-height: 25vh; overflow-y: auto;
-        }
-        .title-love { font-family: 'Reenie Beanie', cursive; font-size: 3rem; color: #ffb6c1; margin-bottom: 10px; }
-        .text-love { 
-            font-size: 0.9rem; color: #eee; font-style: italic; 
-            line-height: 1.7; text-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
+        /* TEXT BOX */
+        .message-box { text-align: center; padding: 0 30px; margin-top: 10px; }
+        .title-love { font-family: 'Reenie Beanie', cursive; font-size: 2.8rem; color: #ffb6c1; margin-bottom: 5px; }
+        .text-love { font-size: 0.85rem; color: #ddd; line-height: 1.6; font-style: italic; }
 
-        footer { position: absolute; bottom: 15px; width: 100%; text-align: center; font-size: 0.6rem; letter-spacing: 6px; opacity: 0.3; }
+        footer { position: absolute; bottom: 15px; width: 100%; text-align: center; font-size: 0.6rem; letter-spacing: 5px; opacity: 0.4; }
     </style>
 </head>
 <body>
 
 <div id="pin-overlay">
     <img src="1.gif" class="pin-gif">
-    <p class="pin-label">INPUT ACCESS CODE</p>
+    <p class="pin-label">MASUKKAN KODE AKSES</p>
     <div class="pin-dots">
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
@@ -105,35 +90,35 @@
         <div class="key">1</div><div class="key">2</div><div class="key">3</div>
         <div class="key">4</div><div class="key">5</div><div class="key">6</div>
         <div class="key">7</div><div class="key">8</div><div class="key">9</div>
-        <div style="visibility:hidden"></div><div class="key">0</div><div class="key" style="font-size:0.5rem">DEL</div>
+        <div style="visibility:hidden"></div><div class="key">0</div><div class="key" style="font-size:0.6rem">DEL</div>
     </div>
 </div>
 
 <div id="main-content">
-    <div class="bg-animate"></div>
+    <canvas id="starCanvas"></canvas>
     
     <div class="timer-header">
-        <div id="timer">Menghitung Waktu...</div>
+        <div id="timer">Memulai Kenangan...</div>
     </div>
 
     <div class="gallery-container">
         <div class="center-frame"><img src="2.gif"></div>
         
-        <div class="floating-pic" style="top:5%; left:8%; animation-delay: 0s;"><img src="1.jpg"></div>
-        <div class="floating-pic" style="top:55%; left:5%; animation-delay: 1s;"><img src="2.jpg"></div>
-        <div class="floating-pic" style="top:8%; right:10%; animation-delay: 2s;"><img src="3.jpg"></div>
-        <div class="floating-pic" style="top:60%; right:7%; animation-delay: 3.5s;"><img src="4.jpg"></div>
-        <div class="floating-pic" style="top:32%; left:12%; animation-delay: 0.5s;"><img src="5.jpg"></div>
-        <div class="floating-pic" style="top:35%; right:15%; animation-delay: 2.5s;"><img src="6.jpg"></div>
-        <div class="floating-pic" style="bottom:12%; left:40%; animation-delay: 4s;"><img src="8.jpg"></div>
-        <div class="floating-pic" style="top:2%; left:45%; animation-delay: 1.5s;"><img src="9.jpg"></div>
-        <div class="floating-pic" style="bottom:22%; right:38%; animation-delay: 5s;"><img src="1.gif"></div>
+        <div class="floating-pic" style="top:5%; left:10%; --r: -5deg; animation-delay: 0s;"><img src="1.jpg"></div>
+        <div class="floating-pic" style="top:5%; right:10%; --r: 8deg; animation-delay: 1s;"><img src="2.jpg"></div>
+        <div class="floating-pic" style="top:35%; left:5%; --r: -10deg; animation-delay: 2s;"><img src="3.jpg"></div>
+        <div class="floating-pic" style="top:35%; right:5%; --r: 12deg; animation-delay: 0.5s;"><img src="4.jpg"></div>
+        <div class="floating-pic" style="bottom:5%; left:15%; --r: 5deg; animation-delay: 3s;"><img src="5.jpg"></div>
+        <div class="floating-pic" style="bottom:5%; right:15%; --r: -7deg; animation-delay: 1.5s;"><img src="6.jpg"></div>
+        <div class="floating-pic" style="top:-5%; left:40%; --r: 2deg; animation-delay: 4s;"><img src="8.jpg"></div>
+        <div class="floating-pic" style="bottom:-5%; left:40%; --r: -3deg; animation-delay: 2.5s;"><img src="9.jpg"></div>
+        <div class="floating-pic" style="top:20%; left:25%; --r: 15deg; animation-delay: 5s;"><img src="1.jpg"></div>
     </div>
 
     <div class="message-box">
         <h2 class="title-love">Untuk Sayangku Raisa</h2>
         <p class="text-love">
-            "Aku ingin kamu tahu bahwa kehadiranku di sini bukan sekadar lewat, tapi untuk menetap. Aku menerima segala kurang dan lebihnya kamu, segala tawa dan air mata yang mungkin akan kita lewati nanti. Aku akan terus menunggu, terus bertahan, dan terus menjagamu di setiap langkahku. Terima kasih sudah mengizinkanku menjadi bagian dari duniamu. Tetaplah di sampingku, karena bersamamu, aku merasa utuh."
+            "Aku menerima segala kurang dan lebihnya kamu, segala tawa dan air mata. Aku akan terus menjagamu di setiap langkahku. Terima kasih sudah mengizinkanku menjadi bagian dari duniamu."
         </p>
     </div>
 
@@ -157,33 +142,95 @@
         dots.forEach((d, i) => i < code.length ? d.classList.add('active') : d.classList.remove('active'));
 
         if(code === pin) {
-            document.getElementById('pin-overlay').style.transform = "scale(0.9)";
             document.getElementById('pin-overlay').style.opacity = "0";
             setTimeout(() => {
                 document.getElementById('pin-overlay').style.display = "none";
                 document.getElementById('main-content').style.display = "block";
-                setTimeout(() => document.getElementById('main-content').style.opacity = "1", 50);
-                music.play();
-                startTimer();
-            }, 800);
-        } else if(code.length === 6) { code = ""; dots.forEach(d => d.classList.remove('active')); }
+                setTimeout(() => {
+                    document.getElementById('main-content').style.opacity = "1";
+                    initStars();
+                    startTimer();
+                    music.play();
+                }, 50);
+            }, 1000);
+        } else if(code.length === 6) { 
+            code = ""; 
+            dots.forEach(d => { d.style.background = "red"; setTimeout(() => { d.style.background = ""; d.classList.remove('active'); }, 300); });
+        }
     }
 
     function startTimer() {
-        // Tanggal Jadian 5 Februari 2026
         const start = new Date("February 5, 2026 00:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const diff = now - start;
+            
             const mo = Math.floor(diff / 2629746000);
             const d = Math.floor((diff % 2629746000) / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
             const s = Math.floor((diff % 60000) / 1000);
             
-            // Bulan & Hari Gak Disingkat
-            document.getElementById('timer').innerText = mo + " Bulan " + d + " Hari " + h + ":" + m + ":" + s;
+            document.getElementById('timer').innerHTML = 
+                `<span class="timer-unit">${mo}</span> Bulan <span class="timer-unit">${d}</span> Hari<br>` +
+                `<span class="timer-unit">${h}</span> Jam <span class="timer-unit">${m}</span> Menit <span class="timer-unit">${s}</span> Detik`;
         }, 1000);
+    }
+
+    // BACKGROUND STARFALL EFFECT
+    function initStars() {
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const stars = [];
+        for(let i = 0; i < 100; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2,
+                speed: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        const falls = [];
+        function createFall() {
+            falls.push({
+                x: Math.random() * canvas.width,
+                y: -10,
+                len: Math.random() * 50 + 20,
+                speed: Math.random() * 10 + 5
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#fff";
+            stars.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+                ctx.fill();
+                s.y += s.speed;
+                if(s.y > canvas.height) s.y = 0;
+            });
+
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+            ctx.lineWidth = 1;
+            falls.forEach((f, i) => {
+                ctx.beginPath();
+                ctx.moveTo(f.x, f.y);
+                ctx.lineTo(f.x - f.len/2, f.y + f.len);
+                ctx.stroke();
+                f.x -= f.speed/2;
+                f.y += f.speed;
+                if(f.y > canvas.height) falls.splice(i, 1);
+            });
+
+            if(Math.random() < 0.05) createFall();
+            requestAnimationFrame(draw);
+        }
+        draw();
     }
 </script>
 </body>
