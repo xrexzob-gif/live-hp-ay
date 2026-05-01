@@ -11,11 +11,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; min-height: 100vh; width: 100%; }
 
-        /* HEART EFFECT */
         .heart-particle { position: fixed; pointer-events: none; font-size: 20px; z-index: 10000; animation: heartFly 0.8s ease-out forwards; }
         @keyframes heartFly { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5) rotate(var(--r)); opacity: 0; } }
 
-        /* QR OVERLAY (Pengganti Keypad) */
         #pin-overlay { position: fixed; inset: 0; background: #0a0a0a; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: 0.8s; }
         .pin-gif { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 30px; object-fit: cover; border: 2px solid #ffb6c1; box-shadow: 0 0 20px rgba(255,182,193,0.3); }
         
@@ -40,13 +38,11 @@
             margin-top: 15px;
             box-shadow: 0 4px 15px rgba(255,182,193,0.4);
         }
-        #qr-status { margin-top: 15px; font-size: 0.8rem; color: #ffb6c1; font-weight: bold; }
+        #qr-status { margin-top: 15px; font-size: 0.8rem; color: #ffb6c1; font-weight: bold; min-height: 20px; }
 
-        /* CONTENT */
         #main-content { display: none; opacity: 0; transition: 2s; position: relative; z-index: 2; }
         #starCanvas { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #001220 0%, #000 100%); }
 
-        /* TIMER STYLE */
         .timer-header { text-align: center; padding: 40px 20px 10px; }
         #timer { font-family: 'Quicksand', sans-serif; font-size: 1rem; color: #fff; line-height: 1.8; }
         .timer-label {
@@ -57,13 +53,11 @@
         .timer-unit { color: #fff; font-weight: 800; font-size: 1.4rem; margin: 0 4px; }
         @keyframes rainbowShift { 0% { background-position: 0% center; } 100% { background-position: 400% center; } }
 
-        /* CAROUSEL */
         .photo-container { width: 100%; overflow: hidden; padding: 20px 0; position: relative; }
         .photo-track { display: flex; width: max-content; animation: scrollTrack 25s linear infinite; }
         .photo-track.paused { animation-play-state: paused !important; }
         @keyframes scrollTrack { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* FLIP CARD */
         .card { min-width: 160px; height: 220px; perspective: 1000px; margin: 0 10px; }
         .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer; }
         .card.flipped .card-inner { transform: rotateY(180deg); }
@@ -71,9 +65,8 @@
         .card-front img { width: 100%; height: 100%; object-fit: cover; }
         .card-back { background: #ffb6c1; color: #000; transform: rotateY(180deg); display: flex; justify-content: center; align-items: center; padding: 15px; text-align: center; font-size: 0.85rem; font-weight: 800; }
 
-        /* BOTTOM */
         .bottom-section { text-align: center; padding: 20px 0 40px; }
-        .center-gif { width: 140px; height: 140px; border-radius: 20px; border: 2.5px solid #fff; object-fit: cover; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .center-gif { width: 140px; height: 140px; border-radius: 20px; border: 2.5px solid #fff; object-fit: cover; }
         footer { text-align: center; padding-bottom: 20px; font-size: 0.6rem; letter-spacing: 5px; opacity: 0.4; }
         
         #reader { display: none; }
@@ -121,16 +114,13 @@
 <audio id="msc" loop><source src="Bersamamu.mp3" type="audio/mpeg"></audio>
 
 <script>
-    // --- SETTING KUNCI QR ---
     const QR_KEY = "RAISA_XREXZOB_FOREVER"; 
-    
     const html5QrCode = new Html5Qrcode("reader");
     const fileInput = document.getElementById('qr-input');
     const qrStatus = document.getElementById('qr-status');
     const music = document.getElementById('msc');
     const track = document.getElementById('track');
 
-    // Efek Lope pas klik
     function createHeart(x, y) {
         const h = document.createElement('div'); h.innerHTML = '❤️'; h.className = 'heart-particle';
         h.style.left = x + 'px'; h.style.top = y + 'px';
@@ -139,7 +129,6 @@
         document.body.appendChild(h); setTimeout(() => h.remove(), 800);
     }
 
-    // Fungsi Scan QR dari File
     fileInput.addEventListener('change', e => {
         if (e.target.files.length == 0) return;
         createHeart(window.innerWidth/2, window.innerHeight/2);
@@ -148,9 +137,10 @@
         qrStatus.innerText = "Mengecek Kunci...";
         const imageFile = e.target.files[0];
         
-        html5QrCode.scanFile(imageFile, true)
+        // Menggunakan mode sensitif (false) agar lebih mudah deteksi gambar
+        html5QrCode.scanFile(imageFile, false)
             .then(isiQR => {
-                if(isiQR === QR_KEY) {
+                if(isiQR.trim() === QR_KEY) {
                     qrStatus.style.color = "#0f0";
                     qrStatus.innerText = "AKSES DITERIMA!";
                     unlockWeb();
