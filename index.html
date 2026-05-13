@@ -1,210 +1,709 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>XREXZOB & RAISA</title>
-    <script src="https://unpkg.com/html5-qrcode"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Quicksand:wght@700&family=Reenie+Beanie&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Untuk Kamu ❤️</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; min-height: 100vh; width: 100%; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .heart-particle { position: fixed; pointer-events: none; font-size: 20px; z-index: 10000; animation: heartFly 0.8s ease-out forwards; }
-        @keyframes heartFly { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5) rotate(var(--r)); opacity: 0; } }
+    html, body {
+      width: 100%; min-height: 100vh;
+      background: #0a0010;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      color: #fff;
+    }
 
-        #pin-overlay { position: fixed; inset: 0; background: #0a0a0a; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: 0.8s; }
-        .pin-gif { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 30px; object-fit: cover; border: 2px solid #ffb6c1; box-shadow: 0 0 20px rgba(255,182,193,0.3); }
-        
-        .upload-area {
-            text-align: center;
-            padding: 30px 20px;
-            border: 2px dashed rgba(255,182,193,0.4);
-            border-radius: 25px;
-            width: 85%;
-            max-width: 320px;
-            background: rgba(255, 182, 193, 0.05);
-        }
-        .upload-label {
-            display: inline-block;
-            background: #ffb6c1;
-            color: #000;
-            padding: 12px 35px;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(255,182,193,0.4);
-        }
-        #qr-status { margin-top: 15px; font-size: 0.8rem; color: #ffb6c1; font-weight: bold; min-height: 20px; }
+    /* ===== STARS CANVAS ===== */
+    #starCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-        #main-content { display: none; opacity: 0; transition: 2s; position: relative; z-index: 2; }
-        #starCanvas { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #001220 0%, #000 100%); }
+    /* ===== FLOATING HEARTS ===== */
+    .heart-bg {
+      position: fixed;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: floatHeart linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+    @keyframes floatHeart {
+      0%   { transform: translateY(110vh) scale(0.5); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
 
-        .timer-header { text-align: center; padding: 40px 20px 10px; }
-        #timer { font-family: 'Quicksand', sans-serif; font-size: 1rem; color: #fff; line-height: 1.8; }
-        .timer-label {
-            background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000);
-            background-size: 400% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: rainbowShift 5s linear infinite; font-weight: 800;
-        }
-        .timer-unit { color: #fff; font-weight: 800; font-size: 1.4rem; margin: 0 4px; }
-        @keyframes rainbowShift { 0% { background-position: 0% center; } 100% { background-position: 400% center; } }
+    /* ===== INTRO OVERLAY ===== */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, #1a0030 0%, #0a0010 100%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      transition: opacity 0.8s ease;
+    }
+    #intro.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
 
-        .photo-container { width: 100%; overflow: hidden; padding: 20px 0; position: relative; }
-        .photo-track { display: flex; width: max-content; animation: scrollTrack 25s linear infinite; }
-        .photo-track.paused { animation-play-state: paused !important; }
-        @keyframes scrollTrack { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .gif-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+    .gif-row img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #ff6eb4;
+      box-shadow: 0 0 20px #ff6eb4aa;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .gif-row img:nth-child(2) { animation-delay: 0.5s; }
 
-        .card { min-width: 160px; height: 220px; perspective: 1000px; margin: 0 10px; }
-        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer; }
-        .card.flipped .card-inner { transform: rotateY(180deg); }
-        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 12px; border: 2px solid #fff; overflow: hidden; }
-        .card-front img { width: 100%; height: 100%; object-fit: cover; }
-        .card-back { background: #ffb6c1; color: #000; transform: rotateY(180deg); display: flex; justify-content: center; align-items: center; padding: 15px; text-align: center; font-size: 0.85rem; font-weight: 800; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px #ff6eb4aa; transform: scale(1); }
+      50% { box-shadow: 0 0 35px #ff6eb4ff; transform: scale(1.05); }
+    }
 
-        .bottom-section { text-align: center; padding: 20px 0 40px; }
-        .center-gif { width: 140px; height: 140px; border-radius: 20px; border: 2.5px solid #fff; object-fit: cover; }
-        footer { text-align: center; padding-bottom: 20px; font-size: 0.6rem; letter-spacing: 5px; opacity: 0.4; }
-        
-        #reader { display: none; }
-    </style>
+    .intro-text {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #ffb3d9;
+      text-align: center;
+      text-shadow: 0 0 20px #ff6eb4;
+      animation: glow 2s ease-in-out infinite;
+    }
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 10px #ff6eb4, 0 0 20px #ff6eb4; }
+      50% { text-shadow: 0 0 20px #ff6eb4, 0 0 40px #ff6eb4, 0 0 60px #ff6eb4; }
+    }
+
+    .intro-sub {
+      font-size: 0.9rem;
+      color: #cc88aa;
+      text-align: center;
+      line-height: 1.6;
+      max-width: 280px;
+    }
+
+    #openBtn {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #ff6eb4, #c84b9e);
+      border: none;
+      color: #fff;
+      font-size: 1.1rem;
+      font-family: 'Dancing Script', cursive;
+      padding: 14px 36px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px #ff6eb455;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: btnPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes btnPulse {
+      0%, 100% { box-shadow: 0 4px 20px #ff6eb455; }
+      50% { box-shadow: 0 6px 35px #ff6eb4aa; }
+    }
+    #openBtn:active { transform: scale(0.96); }
+
+    /* ===== MAIN CONTENT ===== */
+    #main {
+      position: relative;
+      z-index: 10;
+      padding: 0 0 60px 0;
+      display: none;
+    }
+    #main.visible { display: block; }
+
+    /* ===== HEADER ===== */
+    .header {
+      text-align: center;
+      padding: 50px 20px 20px;
+    }
+    .header h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      color: #ffb3d9;
+      text-shadow: 0 0 20px #ff6eb4;
+      line-height: 1.2;
+      animation: glow 2s ease-in-out infinite;
+    }
+    .header p {
+      color: #cc88aa;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    /* ===== TIMER ===== */
+    .timer-section {
+      margin: 30px 16px;
+      background: rgba(255,110,180,0.08);
+      border: 1px solid rgba(255,110,180,0.25);
+      border-radius: 20px;
+      padding: 24px 16px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .timer-label {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: #ffb3d9;
+      margin-bottom: 16px;
+    }
+    .timer-grid {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .timer-box {
+      background: rgba(255,110,180,0.15);
+      border: 1px solid rgba(255,110,180,0.3);
+      border-radius: 14px;
+      padding: 12px 10px;
+      min-width: 62px;
+    }
+    .timer-box .num {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #ff6eb4;
+      font-family: 'Dancing Script', cursive;
+      line-height: 1;
+    }
+    .timer-box .lbl {
+      font-size: 0.65rem;
+      color: #cc88aa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    .timer-date {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: #cc88aa;
+    }
+
+    /* ===== SLIDESHOW ===== */
+    .slideshow-section {
+      margin: 20px 16px;
+    }
+    .slideshow-section h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: #ffb3d9;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .slideshow-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 40px #ff6eb455;
+      border: 2px solid rgba(255,110,180,0.3);
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .slide.active { opacity: 1; }
+    .slide img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .slide-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      padding: 30px 16px 14px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      color: #ffb3d9;
+      text-align: center;
+    }
+    .slide-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,110,180,0.3);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .dot.active { background: #ff6eb4; transform: scale(1.4); }
+
+    /* ===== LOVE NOTE ===== */
+    .love-note {
+      margin: 20px 16px;
+      background: rgba(255,110,180,0.06);
+      border: 1px solid rgba(255,110,180,0.2);
+      border-radius: 20px;
+      padding: 28px 20px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    .love-note h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: #ffb3d9;
+      margin-bottom: 16px;
+    }
+    .love-note p {
+      color: #cc99bb;
+      font-size: 0.9rem;
+      line-height: 1.9;
+      text-align: left;
+    }
+    .love-note .signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: #ff6eb4;
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    /* ===== MUSIC PLAYER ===== */
+    .music-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 50;
+      background: rgba(10,0,20,0.85);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255,110,180,0.2);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .music-icon {
+      font-size: 1.4rem;
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .music-info {
+      flex: 1;
+      overflow: hidden;
+    }
+    .music-title {
+      font-size: 0.8rem;
+      color: #ffb3d9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .music-artist {
+      font-size: 0.68rem;
+      color: #884466;
+    }
+    .music-bars {
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+      height: 20px;
+    }
+    .music-bars span {
+      display: block;
+      width: 3px;
+      background: #ff6eb4;
+      border-radius: 2px;
+      animation: bar 0.8s ease-in-out infinite alternate;
+    }
+    .music-bars span:nth-child(1) { animation-delay: 0s; animation-duration: 0.6s; }
+    .music-bars span:nth-child(2) { animation-delay: 0.1s; animation-duration: 0.8s; }
+    .music-bars span:nth-child(3) { animation-delay: 0.2s; animation-duration: 0.5s; }
+    .music-bars span:nth-child(4) { animation-delay: 0.15s; animation-duration: 0.9s; }
+    .music-bars span:nth-child(5) { animation-delay: 0.05s; animation-duration: 0.7s; }
+    @keyframes bar {
+      from { height: 4px; }
+      to { height: 18px; }
+    }
+    .music-bars.paused span { animation-play-state: paused; height: 6px; }
+
+    .play-btn {
+      background: linear-gradient(135deg, #ff6eb4, #c84b9e);
+      border: none;
+      color: #fff;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px #ff6eb455;
+      flex-shrink: 0;
+    }
+
+    /* ===== WISHES ===== */
+    .wishes-section {
+      margin: 20px 16px 90px;
+      text-align: center;
+    }
+    .wishes-section h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: #ffb3d9;
+      margin-bottom: 20px;
+    }
+    .wish-card {
+      background: rgba(255,110,180,0.06);
+      border: 1px solid rgba(255,110,180,0.15);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 12px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.05rem;
+      color: #cc99bb;
+      line-height: 1.6;
+      animation: fadeInUp 0.6s ease both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RIPPLE ===== */
+    .ripple {
+      position: fixed;
+      border-radius: 50%;
+      border: 2px solid rgba(255,110,180,0.4);
+      animation: rippleOut 1s ease-out forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    @keyframes rippleOut {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(8); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
 
-<div id="pin-overlay">
-    <img src="1.gif" class="pin-gif">
-    <div class="upload-area">
-        <p style="font-size: 0.9rem; color: #fff; font-weight: 800;">SISTEM TERKUNCI</p>
-        <p style="font-size: 0.7rem; color: #888; margin-top: 5px;">Upload QR Raisa untuk masuk</p>
-        <input type="file" id="qr-input" accept="image/*" style="display:none">
-        <label for="qr-input" class="upload-label">UPLOAD QR</label>
-        <div id="qr-status">Menunggu file...</div>
-    </div>
-    <div id="reader"></div>
+<!-- Stars background -->
+<canvas id="starCanvas"></canvas>
+
+<!-- Intro / Opening Screen -->
+<div id="intro">
+  <div class="gif-row">
+    <img src="1.gif" alt="gif1" onerror="this.style.display='none'" />
+    <img src="2.gif" alt="gif2" onerror="this.style.display='none'" />
+  </div>
+  <div class="intro-text">Buka ini sayang... 💕</div>
+  <div class="intro-sub">Ada sesuatu yang spesial<br>menunggu kamu di sini ✨</div>
+  <button id="openBtn" onclick="openMain()">Buka Hadiah ❤️</button>
 </div>
 
-<div id="main-content">
-    <canvas id="starCanvas"></canvas>
-    <div class="timer-header"><div id="timer">Loading...</div></div>
+<!-- Main Romantic Page -->
+<div id="main">
 
-    <div class="photo-container">
-        <div class="photo-track" id="track">
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="1.jpg"></div><div class="card-back">"Kamu cantik banget hari ini."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="2.jpg"></div><div class="card-back">"Makasih ya udah sabar."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="3.jpg"></div><div class="card-back">"Jangan pernah pergi ya."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="4.jpg"></div><div class="card-back">"I love you Raisa."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="5.jpg"></div><div class="card-back">"Cuma kamu di hatiku."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="6.jpg"></div><div class="card-back">"Bahagia terus ya kita."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="8.jpg"></div><div class="card-back">"Semangat terus sayang."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="9.jpg"></div><div class="card-back">"Selamanya bareng kamu."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="1.jpg"></div><div class="card-back">"Kamu cantik banget hari ini."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="2.jpg"></div><div class="card-back">"Makasih ya udah sabar."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="3.jpg"></div><div class="card-back">"Jangan pernah pergi ya."</div></div></div>
-            <div class="card" onclick="flipCard(this)"><div class="card-inner"><div class="card-front"><img src="4.jpg"></div><div class="card-back">"I love you Raisa."</div></div></div>
-        </div>
+  <div class="header">
+    <h1>Untuk Kamu,<br>Sayangku 💖</h1>
+    <p>Setiap hari bersamamu adalah hadiah terindah</p>
+  </div>
+
+  <!-- Timer Section -->
+  <div class="timer-section">
+    <div class="timer-label">💑 Sudah Bersama Selama...</div>
+    <div class="timer-grid">
+      <div class="timer-box">
+        <div class="num" id="t-months">0</div>
+        <div class="lbl">Bulan</div>
+      </div>
+      <div class="timer-box">
+        <div class="num" id="t-days">0</div>
+        <div class="lbl">Hari</div>
+      </div>
+      <div class="timer-box">
+        <div class="num" id="t-hours">0</div>
+        <div class="lbl">Jam</div>
+      </div>
+      <div class="timer-box">
+        <div class="num" id="t-minutes">0</div>
+        <div class="lbl">Menit</div>
+      </div>
+      <div class="timer-box">
+        <div class="num" id="t-seconds">0</div>
+        <div class="lbl">Detik</div>
+      </div>
     </div>
+    <div class="timer-date">💗 Sejak 5 Februari 2026 kita resmi jadian 💗</div>
+  </div>
 
-    <div class="bottom-section"><img src="2.gif" class="center-gif"></div>
-    <footer>XREXZOB ❤️ RAISA</footer>
+  <!-- Photo Slideshow -->
+  <div class="slideshow-section">
+    <h2>📸 Kenangan Kita</h2>
+    <div class="slideshow-wrap" id="slideshow">
+      <!-- slides injected by JS -->
+    </div>
+    <div class="slide-dots" id="dots"></div>
+  </div>
+
+  <!-- Love Note -->
+  <div class="love-note">
+    <h2>💌 Surat Cinta</h2>
+    <p>
+      Hai sayang,<br><br>
+      Gak tau harus mulai dari mana, tapi yang pasti...<br>
+      kamu itu salah satu hal terbaik yang pernah ada di hidup aku. 🌹<br><br>
+      Setiap hari yang aku habiskan bareng kamu terasa beda banget. Kamu bikin hari-hari aku lebih berwarna, lebih bermakna.<br><br>
+      Makasih ya udah mau ada, udah mau sabar sama aku yang kadang nyebelin ini. Makasih udah milih aku. 💕<br><br>
+      Aku mau terus jaga kamu, terus ada buat kamu, dan terus bikin kamu senyum setiap hari.<br><br>
+      Aku sayang kamu banget, lebih dari yang bisa aku ucapin... ❤️
+    </p>
+    <div class="signature">— Sayang kamu 💋</div>
+  </div>
+
+  <!-- Wishes -->
+  <div class="wishes-section">
+    <h2>✨ Harapan Aku Buat Kamu</h2>
+    <div class="wish-card" style="animation-delay:0.1s">🌸 Semoga kamu selalu sehat dan bahagia setiap harinya</div>
+    <div class="wish-card" style="animation-delay:0.2s">⭐ Semoga semua impian kamu terwujud satu per satu</div>
+    <div class="wish-card" style="animation-delay:0.3s">💪 Semoga kamu kuat melewati semua rintangan yang ada</div>
+    <div class="wish-card" style="animation-delay:0.4s">🌙 Semoga kita bisa terus bareng lama banget ya sayang</div>
+    <div class="wish-card" style="animation-delay:0.5s">💖 Aku akan selalu ada buat kamu, apapun yang terjadi</div>
+  </div>
+
+</div><!-- #main -->
+
+<!-- Music Bar -->
+<div class="music-bar" id="musicBar" style="display:none">
+  <div class="music-icon">💿</div>
+  <div class="music-info">
+    <div class="music-title">Bersamamu</div>
+    <div class="music-artist">♪ Untuk Kamu ♪</div>
+  </div>
+  <div class="music-bars" id="musicBars">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <button class="play-btn" id="playBtn" onclick="toggleMusic()">⏸</button>
 </div>
 
-<audio id="msc" loop><source src="Bersamamu.mp3" type="audio/mpeg"></audio>
+<!-- Audio -->
+<audio id="bgMusic" loop>
+  <source src="Bersamamu.mp3" type="audio/mpeg" />
+</audio>
 
 <script>
-    const QR_KEY = "RAISA_XREXZOB_FOREVER"; 
-    const html5QrCode = new Html5Qrcode("reader");
-    const fileInput = document.getElementById('qr-input');
-    const qrStatus = document.getElementById('qr-status');
-    const music = document.getElementById('msc');
-    const track = document.getElementById('track');
+  // ===== STARS =====
+  const canvas = document.getElementById('starCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
 
-    function createHeart(x, y) {
-        const h = document.createElement('div'); h.innerHTML = '❤️'; h.className = 'heart-particle';
-        h.style.left = x + 'px'; h.style.top = y + 'px';
-        h.style.setProperty('--x', (Math.random()*100-50)+'px'); h.style.setProperty('--y', (Math.random()*-100-20)+'px');
-        h.style.setProperty('--r', (Math.random()*40-20)+'deg');
-        document.body.appendChild(h); setTimeout(() => h.remove(), 800);
-    }
+  function resizeCanvas() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
-    fileInput.addEventListener('change', e => {
-        if (e.target.files.length == 0) return;
-        createHeart(window.innerWidth/2, window.innerHeight/2);
-        
-        qrStatus.style.color = "#ffb6c1";
-        qrStatus.innerText = "Mengecek Kunci...";
-        const imageFile = e.target.files[0];
-        
-        // Menggunakan mode sensitif (false) agar lebih mudah deteksi gambar
-        html5QrCode.scanFile(imageFile, false)
-            .then(isiQR => {
-                if(isiQR.trim() === QR_KEY) {
-                    qrStatus.style.color = "#0f0";
-                    qrStatus.innerText = "AKSES DITERIMA!";
-                    unlockWeb();
-                } else {
-                    qrStatus.style.color = "#f00";
-                    qrStatus.innerText = "QR TIDAK COCOK!";
-                }
-            })
-            .catch(err => {
-                qrStatus.style.color = "#f00";
-                qrStatus.innerText = "QR TIDAK TERDETEKSI!";
-            });
+  function makeStar() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * -H,
+      size: Math.random() * 2.5 + 0.5,
+      speed: Math.random() * 1.5 + 0.3,
+      opacity: Math.random() * 0.8 + 0.2,
+      twinkle: Math.random() * Math.PI * 2
+    };
+  }
+
+  for (let i = 0; i < 180; i++) {
+    const s = makeStar();
+    s.y = Math.random() * H;
+    stars.push(s);
+  }
+
+  function animateStars() {
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach((s, i) => {
+      s.y += s.speed;
+      s.twinkle += 0.04;
+      const opacity = s.opacity * (0.7 + 0.3 * Math.sin(s.twinkle));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,220,${opacity})`;
+      ctx.fill();
+
+      if (Math.random() < 0.003) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size * 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,182,193,${opacity * 0.3})`;
+        ctx.fill();
+      }
+
+      if (s.y > H + 10) {
+        stars[i] = makeStar();
+      }
     });
+    requestAnimationFrame(animateStars);
+  }
+  animateStars();
 
-    function unlockWeb() {
-        setTimeout(() => {
-            document.getElementById('pin-overlay').style.opacity = "0";
-            setTimeout(() => {
-                document.getElementById('pin-overlay').style.display = "none";
-                document.getElementById('main-content').style.display = "block";
-                setTimeout(() => { 
-                    document.getElementById('main-content').style.opacity = "1"; 
-                    startTimer(); 
-                    music.play(); 
-                    initStars(); 
-                }, 50);
-            }, 800);
-        }, 500);
-    }
+  // ===== FLOATING HEARTS =====
+  const heartEmojis = ['❤️','💕','💖','💗','💓','💞','🌹','✨'];
+  function spawnHeart() {
+    const el = document.createElement('div');
+    el.className = 'heart-bg';
+    el.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    el.style.left = (Math.random() * 100) + 'vw';
+    el.style.fontSize = (Math.random() * 1.2 + 0.7) + 'rem';
+    const dur = Math.random() * 8 + 7;
+    el.style.animationDuration = dur + 's';
+    el.style.animationDelay = (Math.random() * 3) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), (dur + 3) * 1000);
+  }
+  setInterval(spawnHeart, 1200);
 
-    function flipCard(el) {
-        el.classList.toggle('flipped');
-        const anyFlipped = document.querySelector('.card.flipped');
-        if (anyFlipped) track.classList.add('paused');
-        else track.classList.remove('paused');
-    }
+  // ===== TOUCH RIPPLE =====
+  document.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    const r = document.createElement('div');
+    r.className = 'ripple';
+    const size = 40;
+    r.style.cssText = `width:${size}px;height:${size}px;top:${t.clientY - size/2}px;left:${t.clientX - size/2}px`;
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 1000);
+  });
 
-    function startTimer() {
-        const start = new Date("February 5, 2026 00:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime(); const diff = now - start;
-            const mo = Math.floor(diff / 2629746000);
-            const d = Math.floor((diff % 2629746000) / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            document.getElementById('timer').innerHTML = 
-                `<span class="timer-unit">${mo}</span> <span class="timer-label">Bulan</span> <span class="timer-unit">${d}</span> <span class="timer-label">Hari</span><br>` +
-                `<span class="timer-unit">${h}</span> <span class="timer-label">Jam</span> <span class="timer-unit">${m}</span> <span class="timer-label">Menit</span> <span class="timer-unit">${s}</span> <span class="timer-label">Detik</span>`;
-        }, 1000);
-    }
+  // ===== OPEN MAIN =====
+  function openMain() {
+    const intro = document.getElementById('intro');
+    const main = document.getElementById('main');
+    const music = document.getElementById('bgMusic');
+    const bar = document.getElementById('musicBar');
 
-    function initStars() {
-        const canvas = document.getElementById('starCanvas'); const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const stars = [];
-        for(let i=0; i<80; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5, v: Math.random()*0.3});
-        function draw() {
-            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "white";
-            stars.forEach(st => { ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, Math.PI*2); ctx.fill(); st.y += st.v; if(st.y > canvas.height) st.y = 0; });
-            requestAnimationFrame(draw);
-        }
-        draw();
+    intro.classList.add('fade-out');
+    setTimeout(() => {
+      intro.style.display = 'none';
+      main.classList.add('visible');
+      bar.style.display = 'flex';
+    }, 800);
+
+    music.play().catch(() => {});
+  }
+
+  // ===== SLIDESHOW =====
+  const photos = [
+    { src: '1.jpg', caption: 'Kamu selalu bikin aku senyum 💕' },
+    { src: '2.jpg', caption: 'Setiap momen sama kamu itu berharga ❤️' },
+    { src: '3.jpg', caption: 'Kamu yang paling cantik di mataku 🌹' },
+    { src: '4.jpg', caption: 'Bersama kamu aku merasa lengkap 💖' },
+    { src: '5.jpg', caption: 'Aku mau selalu di sisimu 💗' },
+    { src: '6.jpg', caption: 'Terima kasih sudah ada 🌸' },
+    { src: '8.jpg', caption: 'Hari-hari indah bersamamu ✨' },
+    { src: '9.jpg', caption: 'Kamu adalah segalanya bagiku 💞' }
+  ];
+
+  const slideshowEl = document.getElementById('slideshow');
+  const dotsEl = document.getElementById('dots');
+  let currentSlide = 0;
+
+  photos.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'slide' + (i === 0 ? ' active' : '');
+    div.innerHTML = `<img src="${p.src}" alt="foto ${i+1}" loading="lazy" /><div class="slide-caption">${p.caption}</div>`;
+    slideshowEl.appendChild(div);
+
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goSlide(i);
+    dotsEl.appendChild(dot);
+  });
+
+  function goSlide(n) {
+    document.querySelectorAll('.slide')[currentSlide].classList.remove('active');
+    document.querySelectorAll('.dot')[currentSlide].classList.remove('active');
+    currentSlide = (n + photos.length) % photos.length;
+    document.querySelectorAll('.slide')[currentSlide].classList.add('active');
+    document.querySelectorAll('.dot')[currentSlide].classList.add('active');
+  }
+
+  setInterval(() => goSlide(currentSlide + 1), 4000);
+
+  // swipe support
+  let touchStartX = 0;
+  slideshowEl.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, {passive:true});
+  slideshowEl.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goSlide(diff > 0 ? currentSlide + 1 : currentSlide - 1);
+  }, {passive:true});
+
+  // ===== MUSIC =====
+  const audio = document.getElementById('bgMusic');
+  const barsEl = document.getElementById('musicBars');
+  const playBtnEl = document.getElementById('playBtn');
+  let playing = true;
+
+  function toggleMusic() {
+    if (playing) {
+      audio.pause();
+      playBtnEl.textContent = '▶';
+      barsEl.classList.add('paused');
+    } else {
+      audio.play();
+      playBtnEl.textContent = '⏸';
+      barsEl.classList.remove('paused');
     }
+    playing = !playing;
+  }
+
+  // ===== TIMER =====
+  const startDate = new Date('2026-02-05T00:00:00');
+
+  function updateTimer() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const totalSec = Math.floor(diff / 1000);
+    const sec = totalSec % 60;
+    const totalMin = Math.floor(totalSec / 60);
+    const min = totalMin % 60;
+    const totalHour = Math.floor(totalMin / 60);
+    const hour = totalHour % 24;
+    const totalDays = Math.floor(totalHour / 24);
+
+    const months = Math.floor(totalDays / 30);
+    const days = totalDays % 30;
+
+    document.getElementById('t-months').textContent = String(months).padStart(2, '0');
+    document.getElementById('t-days').textContent = String(days).padStart(2, '0');
+    document.getElementById('t-hours').textContent = String(hour).padStart(2, '0');
+    document.getElementById('t-minutes').textContent = String(min).padStart(2, '0');
+    document.getElementById('t-seconds').textContent = String(sec).padStart(2, '0');
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 1000);
 </script>
 </body>
 </html>
+
